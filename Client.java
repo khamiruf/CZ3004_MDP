@@ -26,8 +26,16 @@ public class Client {
                 dout.writeBytes(str);
                 System.out.println("sending: " + str);
                 dout.flush();
-                str2 = din.readUTF();
-                System.out.println("Server says: " + str2);
+                
+                /** could not read from client with these method below */
+                // str2 = din.readUTF();
+                // System.out.println("Server says: " + str2);
+                
+                /** replaced with this method instead. Works */
+                Scanner scan = new Scanner(din).useDelimiter("\\A");
+                String result = scan.hasNext() ? scan.next() : "";
+                
+                System.out.println("Server says: " + result);
             }
 
             dout.close();
