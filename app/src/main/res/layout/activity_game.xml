@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="20dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="154dp"
+            android:gravity="center"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/fastestTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#000000"
+                android:textColor="#FFFFFF"
+                android:gravity="center"
+                android:text="Fastest Path"
+                android:textSize="20sp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:id="@+id/fastestTimeTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:gravity="center"
+                android:text="00:00"
+                android:textSize="26sp" />
+
+            <LinearLayout
+                android:layout_width="265dp"
+                android:layout_height="70dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ToggleButton
+                    android:id="@+id/fastestToggleBtn"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="FASTEST"
+                    android:textOff="FASTEST"
+                    android:textOn="STOP" />
+
+                <ImageButton
+                    android:id="@+id/fastestResetImageBtn"
+                    style="@style/Widget.AppCompat.ImageButton"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.4"
+                    android:layout_height="50dp"
+                    app:srcCompat="@drawable/ic_refresh" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="147dp"
+            android:gravity="center"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/exploreTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#000000"
+                android:textColor="#FFFFFF"
+                android:gravity="center"
+                android:text="Exploration Time"
+                android:textSize="20sp"
+                android:textStyle="italic"
+                tools:ignore="MissingConstraints" />
+
+            <TextView
+                android:id="@+id/exploreTimeTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFFFFF"
+                android:gravity="center"
+                android:text="00:00"
+                android:textSize="26sp" />
+
+            <LinearLayout
+                android:layout_width="265dp"
+                android:layout_height="70dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ToggleButton
+                    android:id="@+id/exploreToggleBtn"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="Exploration"
+                    android:textOff="EXPLORE"
+                    android:textOn="STOP" />
+
+                <ImageButton
+                    android:id="@+id/exploreResetImageBtn"
+                    style="@style/Widget.AppCompat.ImageButton"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.4"
+                    android:layout_height="50dp"
+                    app:srcCompat="@drawable/ic_refresh" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

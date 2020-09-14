@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bgapps"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Robot Controller by Group 8"
+                android:textSize="36sp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textColor="@color/colorBlack"></TextView>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                >
+                <Button
+                    android:id="@+id/mapInfoButton"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:text="Map Info"
+                    android:background="@drawable/transparent_bg_bordered_button"
+                    android:drawableLeft="@drawable/ic_info"
+                    android:textSize="12sp"/>
+
+                <Button
+                    android:id="@+id/bluetoothButton"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:padding="16dp"
+                    android:text="Bluetooth"
+                    android:background="@drawable/transparent_bg_bordered_button"
+                    android:drawableLeft="@drawable/ic_bluetooth"
+                    android:textSize="12sp"/>
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1.5"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginBottom="20dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:layout_marginRight="5dp"
+                        android:gravity="center">
+
+
+                        <TextView
+                            android:id="@+id/robotStatusTitleTextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="25dp"
+                            android:background="#000000"
+                            android:textColor="@color/colorWhite"
+                            android:text="Robot Status"
+                            android:textAlignment="center"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/robotStatusTextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:background="#FFFFFF"
+                            android:gravity="center"
+                            android:scrollbars="vertical"
+                            android:text="Not Available"
+                            android:textAlignment="center"
+                            android:textColor="@color/colorRed"
+                            android:textSize="15sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:layout_marginHorizontal="5dp"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/directionLabelTextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="25dp"
+                            android:background="#000000"
+                            android:textColor="@color/colorWhite"
+                            android:text="Direction"
+                            android:textAlignment="center"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+
+                        <TextView
+                            android:id="@+id/directionAxisTextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:background="#FFFFFF"
+                            android:gravity="center"
+                            android:scrollbars="vertical"
+                            android:text="None"
+                            android:textAlignment="center"
+                            android:textColor="@color/colorRed"
+                            android:textSize="15sp" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="0.5"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:layout_marginHorizontal="5dp"
+                        android:gravity="center">
+
+                        <TextView
+                            android:id="@+id/xLabelTextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="25dp"
+                            android:background="#000000"
+                            android:textColor="@color/colorWhite"
+                            android:text="X"
+                            android:textAlignment="center"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+
+                        <TextView
+                            android:id="@+id/xAxisTextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:background="#FFFFFF"
+                            android:gravity="center"
+                            android:scrollbars="vertical"
+                            android:text="0"
+                            android:textAlignment="center"
+                            android:textColor="@color/colorRed"
+                            android:textSize="15sp" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_weight="0.5"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:layout_marginLeft="5dp"
+                        android:gravity="center">
+
+
+                        <TextView
+                            android:id="@+id/yLabelTextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="25dp"
+                            android:background="#000000"
+                            android:textColor="@color/colorWhite"
+                            android:text="Y"
+                            android:textAlignment="center"
+                            android:textSize="15sp"
+                            android:textStyle="bold" />
+
+
+                        <TextView
+                            android:id="@+id/yAxisTextView"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:background="#FFFFFF"
+                            android:gravity="center"
+                            android:scrollbars="vertical"
+                            android:text="0"
+                            android:textAlignment="center"
+                            android:textColor="@color/colorRed"
+                            android:textSize="15sp" />
+
+
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/view_pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+                    <com.google.android.material.tabs.TabLayout
+                        android:id="@+id/tabs"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#000000"
+                        app:tabTextColor="#FFFFFF"
+                        app:tabGravity="fill" />
+
+
+                </androidx.viewpager.widget.ViewPager>
+            </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <view
+                        android:id="@+id/mapView"
+                        class="com.example.robot_controller_group8.ui.main.GridMap"
+                        android:layout_width="339dp"
+                        android:layout_height="431dp" />
+                </LinearLayout>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

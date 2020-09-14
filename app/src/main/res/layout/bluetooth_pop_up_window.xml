@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/bgapps"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="400dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_margin="20dp">
+            <ImageButton
+                android:id="@+id/backBtn"
+                android:layout_width="80dp"
+                android:layout_height="27dp"
+                android:adjustViewBounds="false"
+                android:background="@color/colorBlack"
+                android:cropToPadding="false"
+                android:elevation="14dp"
+                android:src="@drawable/ic_back" />
+            <TextView
+                android:id="@+id/connStatusTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:gravity="center"
+                android:text="Disconnected"
+                android:textAllCaps="true"
+                android:textSize="16dp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
+            <Switch
+                android:id="@+id/bluetoothSwitch"
+                android:layout_width="160dp"
+                android:layout_marginRight="20dp"
+                android:layout_height="wrap_content"
+                android:splitTrack="false"
+                android:text="OFF"
+                tools:layout_editor_absoluteY="33dp"
+                android:layout_marginBottom="10dp"/>
+            <Button
+                android:id="@+id/searchBtn"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:onClick="toggleButtonScan"
+                android:text="SEARCH" />
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_margin="20dp">
+
+
+            <TextView
+                android:id="@+id/otherDevicesTitleTextView"
+                android:layout_width="380dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="#000000"
+                android:listSelector="#bdb9b9"
+                android:text="Device Found"
+                android:textAlignment="center"
+                android:textColor="@color/colorWhite"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <ListView
+                android:id="@+id/pairedDevicesListView"
+                android:layout_width="379dp"
+                android:layout_height="100dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/border_white_background"
+                android:gravity="bottom"
+                android:listSelector="#bdb9b9"
+                android:scrollbars="vertical"
+                android:text=""
+                android:textColor="@color/colorBlack"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/pairedDevicesTitleTextView"
+                android:layout_width="380dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="#000000"
+                android:text="Paired Devices"
+                android:textAlignment="center"
+                android:textColor="@color/colorWhite"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <ListView
+                android:id="@+id/otherDevicesListView"
+                android:layout_width="379dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@drawable/border_white_background"
+                android:gravity="bottom"
+                android:scrollbars="vertical"
+                android:text=""
+                android:textColor="@color/colorBlack"
+                android:textSize="14sp"/>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/connectBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="CONNECT"
+                    android:layout_weight="1"/>
+                <Button
+                    android:id="@+id/disconnectBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="48dp"
+                    android:gravity="center"
+                    android:text="DISCONNECT"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:padding="20dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/commChannelTitle"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:gravity="center"
+                android:text="Robot Communcation"
+                android:textAlignment="center"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/messageReceivedTitleTextView"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="#000000"
+                android:gravity="center"
+                android:text="Message"
+                android:textAlignment="center"
+                android:textColor="@color/colorWhite"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+            <TextView
+                android:id="@+id/messageReceivedTextView"
+                android:layout_width="fill_parent"
+                android:layout_height="180dp"
+                android:layout_weight="1"
+                android:background="@drawable/rounded_corner"
+                android:gravity="bottom"
+                android:scrollbars="vertical"
+                android:textSize="12sp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="15dp">
+
+                <EditText
+                    android:id="@+id/typeBoxEditText"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_corner"
+                    android:gravity="center|start"
+                    android:hint="Type something..."
+                    android:textColor="@color/colorBlack"
+                    android:textSize="14sp" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/messageButton"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center_horizontal"
+                    android:foreground="@drawable/ic_send"
+                    android:foregroundGravity="center"
+                    app:backgroundTint="#00000000">
+
+                </com.google.android.material.floatingactionbutton.FloatingActionButton>
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
