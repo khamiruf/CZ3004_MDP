@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:dist="http://schemas.android.com/apk/distribution"
-    package="com.example.mdp_android_grp15"
+    package="com.example.robot_controller_group8"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -37,9 +37,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:testOnly="true"
         android:theme="@style/AppTheme.NoActionBar" >
         <activity
-            android:name="com.example.mdp_android_grp15.MainActivity"
+            android:name="com.example.robot_controller_group8.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" >
@@ -49,8 +50,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.mdp_android_grp15.ui.main.BluetoothPopUp" />
-        <activity android:name="com.example.mdp_android_grp15.ui.main.MapInformation" />
+        <activity android:name="com.example.robot_controller_group8.ui.main.BluetoothPopUp" />
+        <activity android:name="com.example.robot_controller_group8.ui.main.MapInformation" />
         <!-- Needs to be explicitly declared on P+ -->
         <uses-library
             android:name="org.apache.http.legacy"
@@ -67,7 +68,7 @@
 
         <provider
             android:name="androidx.lifecycle.ProcessLifecycleOwnerInitializer"
-            android:authorities="com.example.mdp_android_grp15.lifecycle-process"
+            android:authorities="com.example.robot_controller_group8.lifecycle-process"
             android:exported="false"
             android:multiprocess="true" />
     </application>

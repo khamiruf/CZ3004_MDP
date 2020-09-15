@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-fa/values-fa.xml",
+            "outputFile": "/Users/delphine_lee/Documents/GitHub/CZ3004/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-fa/values-fa.xml",
             "map": [
                 {
                     "source": "/Users/delphine_lee/.gradle/caches/transforms-2/files-2.1/2fa8149434e34508fb656a3764e548df/jetified-play-services-basement-17.0.0/res/values-fa/values.xml",

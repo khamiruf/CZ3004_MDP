@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-tr/values-tr.xml",
+            "outputFile": "/Users/delphine_lee/Documents/GitHub/CZ3004/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-tr/values-tr.xml",
             "map": [
                 {
                     "source": "/Users/delphine_lee/.gradle/caches/transforms-2/files-2.1/77c2fc448e2bd0738fd67dce062b1efd/play-services-base-17.0.0/res/values-tr/values.xml",

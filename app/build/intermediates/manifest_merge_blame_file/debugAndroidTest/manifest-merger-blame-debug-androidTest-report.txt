@@ -1,37 +1,37 @@
 1<?xml version="1.0" encoding="utf-8"?>
 2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-3    package="com.example.mdp_android_grp15.test" >
+3    package="com.example.robot_controller_group8.test" >
 4
 5    <uses-sdk
-5-->/Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger5573358297710957901.xml:5:5-74
+5-->/Users/delphine_lee/Documents/GitHub/CZ3004/app/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger2956796122345367418.xml:5:5-74
 6        android:minSdkVersion="15"
-6-->/Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger5573358297710957901.xml:5:15-41
+6-->/Users/delphine_lee/Documents/GitHub/CZ3004/app/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger2956796122345367418.xml:5:15-41
 7        android:targetSdkVersion="29" />
-7-->/Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger5573358297710957901.xml:5:42-71
+7-->/Users/delphine_lee/Documents/GitHub/CZ3004/app/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger2956796122345367418.xml:5:42-71
 8
 9    <instrumentation
-9-->/Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger5573358297710957901.xml:11:5-15:79
+9-->/Users/delphine_lee/Documents/GitHub/CZ3004/app/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger2956796122345367418.xml:11:5-15:85
 10        android:name="androidx.test.runner.AndroidJUnitRunner"
-10-->/Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger5573358297710957901.xml:11:22-76
+10-->/Users/delphine_lee/Documents/GitHub/CZ3004/app/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger2956796122345367418.xml:11:22-76
 11        android:functionalTest="false"
-11-->/Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger5573358297710957901.xml:14:22-52
+11-->/Users/delphine_lee/Documents/GitHub/CZ3004/app/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger2956796122345367418.xml:14:22-52
 12        android:handleProfiling="false"
-12-->/Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger5573358297710957901.xml:13:22-53
-13        android:label="Tests for com.example.mdp_android_grp15"
-13-->/Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger5573358297710957901.xml:15:22-77
-14        android:targetPackage="com.example.mdp_android_grp15" />
-14-->/Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger5573358297710957901.xml:12:22-75
+12-->/Users/delphine_lee/Documents/GitHub/CZ3004/app/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger2956796122345367418.xml:13:22-53
+13        android:label="Tests for com.example.robot_controller_group8"
+13-->/Users/delphine_lee/Documents/GitHub/CZ3004/app/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger2956796122345367418.xml:15:22-83
+14        android:targetPackage="com.example.robot_controller_group8" />
+14-->/Users/delphine_lee/Documents/GitHub/CZ3004/app/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger2956796122345367418.xml:12:22-81
 15
 16    <uses-permission android:name="android.permission.REORDER_TASKS" />
 16-->[androidx.test:core:1.2.0] /Users/delphine_lee/.gradle/caches/transforms-2/files-2.1/b84e39374531a9cc1088cbb1e2cc9cc2/core-1.2.0/AndroidManifest.xml:24:5-72
 16-->[androidx.test:core:1.2.0] /Users/delphine_lee/.gradle/caches/transforms-2/files-2.1/b84e39374531a9cc1088cbb1e2cc9cc2/core-1.2.0/AndroidManifest.xml:24:22-69
 17
 18    <application android:debuggable="true" >
-18-->/Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger5573358297710957901.xml:7:5-9:19
-18-->/Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger5573358297710957901.xml:7:18-43
+18-->/Users/delphine_lee/Documents/GitHub/CZ3004/app/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger2956796122345367418.xml:7:5-9:19
+18-->/Users/delphine_lee/Documents/GitHub/CZ3004/app/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger2956796122345367418.xml:7:18-43
 19        <uses-library android:name="android.test.runner" />
-19-->/Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger5573358297710957901.xml:8:9-60
-19-->/Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger5573358297710957901.xml:8:23-57
+19-->/Users/delphine_lee/Documents/GitHub/CZ3004/app/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger2956796122345367418.xml:8:9-60
+19-->/Users/delphine_lee/Documents/GitHub/CZ3004/app/build/intermediates/tmp/manifest/androidTest/debug/manifestMerger2956796122345367418.xml:8:23-57
 20
 21        <activity
 21-->[androidx.test:core:1.2.0] /Users/delphine_lee/.gradle/caches/transforms-2/files-2.1/b84e39374531a9cc1088cbb1e2cc9cc2/core-1.2.0/AndroidManifest.xml:27:9-33:20

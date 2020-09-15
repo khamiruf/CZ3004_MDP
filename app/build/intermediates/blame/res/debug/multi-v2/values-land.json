@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "/Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-land/values-land.xml",
+            "outputFile": "/Users/delphine_lee/Documents/GitHub/CZ3004/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-land/values-land.xml",
             "map": [
                 {
                     "source": "/Users/delphine_lee/.gradle/caches/transforms-2/files-2.1/c7eb9cd3508ac3959447c14fd76c9fb9/material-1.0.0/res/values-land/values-land.xml",

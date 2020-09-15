@@ -207,9 +207,9 @@ public class MainActivity extends AppCompatActivity {
             BluetoothConnectionService.write(bytes);
         }
         showLog(message);
-        editor.putString("message", CommsFragment.getMessageReceivedTextView().getText() + "\n" + message);
-        editor.commit();
-        refreshMessageReceived();
+//        editor.putString("message", CommsFragment.getMessageReceivedTextView().getText() + "\n" + message);
+//        editor.commit();
+//        refreshMessageReceived();
         showLog("Exiting printMessage");
     }
 
@@ -232,8 +232,8 @@ public class MainActivity extends AppCompatActivity {
                 message = "Unexpected default for printMessage: " + name;
                 break;
         }
-        editor.putString("message", CommsFragment.getMessageReceivedTextView().getText() + "\n" + message);
-        editor.commit();
+//        editor.putString("message", CommsFragment.getMessageReceivedTextView().getText() + "\n" + message);
+//        editor.commit();
         if (BluetoothConnectionService.BluetoothConnectionStatus == true) {
             byte[] bytes = message.getBytes(Charset.defaultCharset());
             BluetoothConnectionService.write(bytes);

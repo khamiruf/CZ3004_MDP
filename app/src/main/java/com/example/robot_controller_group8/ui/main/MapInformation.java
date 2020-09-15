@@ -74,4 +74,9 @@ public class MapInformation extends AppCompatActivity {
     private void showLog(String message) {
         Log.d(TAG, message);
     }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 }

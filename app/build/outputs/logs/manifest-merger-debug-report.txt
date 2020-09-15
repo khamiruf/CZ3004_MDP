@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml:2:1-42:12
-INJECTED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml:2:1-42:12
-INJECTED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml:2:1-42:12
-INJECTED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml:2:1-42:12
+ADDED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml:2:1-42:12
+INJECTED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml:2:1-42:12
+INJECTED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml:2:1-42:12
+INJECTED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml:2:1-42:12
 MERGED from [com.google.android.material:material:1.0.0] /Users/delphine_lee/.gradle/caches/transforms-2/files-2.1/c7eb9cd3508ac3959447c14fd76c9fb9/material-1.0.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.appcompat:appcompat:1.1.0] /Users/delphine_lee/.gradle/caches/transforms-2/files-2.1/6119d746697059b7e1b74aab4d181f56/appcompat-1.1.0/AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] /Users/delphine_lee/.gradle/caches/transforms-2/files-2.1/3ec6fa8458ddbe732478393a9f9e6c77/constraintlayout-1.1.3/AndroidManifest.xml:2:1-11:12
@@ -47,59 +47,59 @@ MERGED from [androidx.interpolator:interpolator:1.0.0] /Users/delphine_lee/.grad
 MERGED from [androidx.documentfile:documentfile:1.0.0] /Users/delphine_lee/.gradle/caches/transforms-2/files-2.1/f582580d3eb247a74d915a27810a4674/documentfile-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] /Users/delphine_lee/.gradle/caches/transforms-2/files-2.1/c75155371656c04dff3a027cdeb13e8a/localbroadcastmanager-1.0.0/AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.print:print:1.0.0] /Users/delphine_lee/.gradle/caches/transforms-2/files-2.1/53b4a4cf87c0ff501a8c414cec884555/print-1.0.0/AndroidManifest.xml:17:1-22:12
-INJECTED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml:2:1-42:12
-INJECTED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml:2:1-42:12
-INJECTED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml:2:1-42:12
+INJECTED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml:2:1-42:12
+INJECTED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml:2:1-42:12
+INJECTED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml:2:1-42:12
 	package
-		ADDED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml:4:5-44
-		INJECTED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml
-		INJECTED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml
+		ADDED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml:4:5-50
+		INJECTED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml
 	android:versionName
-		INJECTED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml
-		ADDED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml:2:1-42:12
-		INJECTED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml
+		ADDED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml:2:1-42:12
+		INJECTED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml
 	xmlns:dist
-		ADDED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml:3:5-61
+		ADDED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml:3:5-61
 	android:versionCode
-		INJECTED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml
-		ADDED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml:2:1-42:12
-		INJECTED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml
+		ADDED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml:2:1-42:12
+		INJECTED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml
 	xmlns:android
-		ADDED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml:2:11-69
+		ADDED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml:2:11-69
 dist:module
-ADDED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml:6:5-40
+ADDED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml:6:5-40
 	dist:instant
-		ADDED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml:6:18-37
+		ADDED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml:6:18-37
 uses-feature#android.hardware.bluetooth
-ADDED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml:9:5-63
+ADDED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml:9:5-63
 	android:name
-		ADDED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml:9:19-60
+		ADDED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml:9:19-60
 uses-permission#android.permission.BLUETOOTH
-ADDED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml:11:5-68
+ADDED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml:11:5-68
 	android:name
-		ADDED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml:11:22-65
+		ADDED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml:11:22-65
 uses-permission#android.permission.BLUETOOTH_ADMIN
-ADDED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml:12:5-74
+ADDED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml:12:5-74
 	android:name
-		ADDED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml:12:22-71
+		ADDED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml:12:22-71
 uses-permission#android.permission.READ_PHONE_STATE
-ADDED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml:13:5-75
+ADDED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml:13:5-75
 	android:name
-		ADDED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml:13:22-72
+		ADDED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml:13:22-72
 uses-permission#android.permission.ACCESS_COARSE_LOCATION
-ADDED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml:15:5-80
+ADDED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml:15:5-80
 	android:name
-		ADDED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml:15:22-78
+		ADDED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml:15:22-78
 uses-permission#android.permission.ACCESS_FINE_LOCATION
-ADDED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml:16:5-78
+ADDED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml:16:5-78
 	android:name
-		ADDED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml:16:22-76
+		ADDED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml:16:22-76
 uses-permission#android.permission.BLUETOOTH_PRIVILEGED
-ADDED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml:18:5-79
+ADDED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml:18:5-79
 	android:name
-		ADDED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml:18:22-76
+		ADDED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml:18:22-76
 application
-ADDED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml:20:5-40:19
+ADDED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml:20:5-40:19
 MERGED from [com.google.android.material:material:1.0.0] /Users/delphine_lee/.gradle/caches/transforms-2/files-2.1/c7eb9cd3508ac3959447c14fd76c9fb9/material-1.0.0/AndroidManifest.xml:22:5-20
 MERGED from [com.google.android.material:material:1.0.0] /Users/delphine_lee/.gradle/caches/transforms-2/files-2.1/c7eb9cd3508ac3959447c14fd76c9fb9/material-1.0.0/AndroidManifest.xml:22:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:1.1.3] /Users/delphine_lee/.gradle/caches/transforms-2/files-2.1/3ec6fa8458ddbe732478393a9f9e6c77/constraintlayout-1.1.3/AndroidManifest.xml:9:5-20
@@ -123,49 +123,49 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] /Users/delp
 	android:appComponentFactory
 		ADDED from [androidx.core:core:1.1.0] /Users/delphine_lee/.gradle/caches/transforms-2/files-2.1/e9dab9c67c1ee3668e0bbf86c6d8cbd8/core-1.1.0/AndroidManifest.xml:24:18-86
 	android:supportsRtl
-		ADDED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml:25:9-35
+		ADDED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml:25:9-35
 	android:label
-		ADDED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml:23:9-41
+		ADDED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml:23:9-41
 	android:roundIcon
-		ADDED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml:24:9-54
+		ADDED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml:24:9-54
 	android:icon
-		ADDED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml:22:9-43
+		ADDED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml:22:9-43
 	android:allowBackup
-		ADDED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml:21:9-35
+		ADDED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml:21:9-35
 	android:theme
-		ADDED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml:26:9-52
-activity#com.example.mdp_android_grp15.MainActivity
-ADDED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml:27:9-37:20
+		ADDED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml:26:9-52
+activity#com.example.robot_controller_group8.MainActivity
+ADDED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml:27:9-37:20
 	android:label
-		ADDED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml:29:13-45
+		ADDED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml:29:13-45
 	android:windowSoftInputMode
-		ADDED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml:31:13-52
+		ADDED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml:31:13-52
 	android:theme
-		ADDED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml:30:13-56
+		ADDED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml:30:13-56
 	android:name
-		ADDED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml:28:13-41
+		ADDED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml:28:13-76
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml:32:13-36:29
+ADDED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml:32:13-36:29
 action#android.intent.action.MAIN
-ADDED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml:33:17-69
+ADDED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml:33:17-69
 	android:name
-		ADDED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml:33:25-66
+		ADDED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml:33:25-66
 category#android.intent.category.LAUNCHER
-ADDED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml:35:17-77
+ADDED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml:35:17-77
 	android:name
-		ADDED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml:35:27-74
-activity#com.example.mdp_android_grp15.ui.main.BluetoothPopUp
-ADDED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml:38:9-69
+		ADDED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml:35:27-74
+activity#com.example.robot_controller_group8.ui.main.BluetoothPopUp
+ADDED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml:38:9-104
 	android:name
-		ADDED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml:38:19-57
-activity#com.example.mdp_android_grp15.ui.main.MapInformation
-ADDED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml:39:9-60
+		ADDED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml:38:19-92
+activity#com.example.robot_controller_group8.ui.main.MapInformation
+ADDED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml:39:9-95
 	android:name
-		ADDED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml:39:19-57
+		ADDED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml:39:19-92
 uses-sdk
-INJECTED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
-INJECTED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml
-INJECTED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml
+INJECTED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml
+INJECTED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml
 MERGED from [com.google.android.material:material:1.0.0] /Users/delphine_lee/.gradle/caches/transforms-2/files-2.1/c7eb9cd3508ac3959447c14fd76c9fb9/material-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [com.google.android.material:material:1.0.0] /Users/delphine_lee/.gradle/caches/transforms-2/files-2.1/c7eb9cd3508ac3959447c14fd76c9fb9/material-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.appcompat:appcompat:1.1.0] /Users/delphine_lee/.gradle/caches/transforms-2/files-2.1/6119d746697059b7e1b74aab4d181f56/appcompat-1.1.0/AndroidManifest.xml:20:5-22:41
@@ -252,16 +252,16 @@ MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] /Users/
 MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] /Users/delphine_lee/.gradle/caches/transforms-2/files-2.1/c75155371656c04dff3a027cdeb13e8a/localbroadcastmanager-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.print:print:1.0.0] /Users/delphine_lee/.gradle/caches/transforms-2/files-2.1/53b4a4cf87c0ff501a8c414cec884555/print-1.0.0/AndroidManifest.xml:20:5-44
 MERGED from [androidx.print:print:1.0.0] /Users/delphine_lee/.gradle/caches/transforms-2/files-2.1/53b4a4cf87c0ff501a8c414cec884555/print-1.0.0/AndroidManifest.xml:20:5-44
-INJECTED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml
-INJECTED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml
+INJECTED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml
+INJECTED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml
 	android:targetSdkVersion
-		INJECTED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml
-		ADDED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml
-		INJECTED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml
+		ADDED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml
 	android:minSdkVersion
-		INJECTED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml
-		ADDED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml
-		INJECTED from /Users/delphine_lee/Desktop/MDP_reference/MDP-Android/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml
+		ADDED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/delphine_lee/Documents/GitHub/CZ3004/app/src/main/AndroidManifest.xml
 uses-permission#android.permission.ACCESS_NETWORK_STATE
 ADDED from [com.google.android.gms:play-services-maps:17.0.0] /Users/delphine_lee/.gradle/caches/transforms-2/files-2.1/a3d702a77cbfacefb23de82416a0cb1f/play-services-maps-17.0.0/AndroidManifest.xml:23:5-79
 	android:name

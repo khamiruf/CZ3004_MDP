@@ -1,4 +1,4 @@
-com.example.mdp_android_grp15
+com.example.robot_controller_group8
 anim abc_fade_in
 anim abc_fade_out
 anim abc_grow_fade_in_from_bottom
