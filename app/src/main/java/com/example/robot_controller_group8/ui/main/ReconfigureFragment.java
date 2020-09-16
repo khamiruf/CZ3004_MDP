@@ -39,7 +39,7 @@ public class ReconfigureFragment extends DialogFragment {
 
         super.onCreate(savedInstanceState);
 
-        getDialog().setTitle("Reconfiguration");
+//        getDialog().setTitle("Reconfiguration");
 
         saveBtn = rootView.findViewById(R.id.saveBtn);
         cancelReconfigureBtn = rootView.findViewById(R.id.cancelReconfigureBtn);
@@ -95,12 +95,12 @@ public class ReconfigureFragment extends DialogFragment {
         cancelReconfigureBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showLog("Clicked cancel ReconfigureationBtn");
+                showLog("Clicked cancel ReconfigurationBtn");
                 if (sharedPreferences.contains("F1"))
                     f1ValueEditText.setText(sharedPreferences.getString("F1", ""));
                 if (sharedPreferences.contains("F2"))
                     f2ValueEditText.setText(sharedPreferences.getString("F2", ""));
-                showLog("Exiting cancel ReconfigureationBtn");
+                showLog("Exiting cancel ReconfigurationBtn");
                 getDialog().dismiss();
             }
         });

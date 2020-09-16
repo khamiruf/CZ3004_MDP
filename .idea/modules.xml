@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Robot_Controller_Group8.iml" filepath="$PROJECT_DIR$/Robot_Controller_Group8.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Robot_Controller_Group8.iml" filepath="$PROJECT_DIR$/Robot_Controller_Group8.iml" group="Robot_Controller_Group8" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="Robot_Controller_Group8/app" />
     </modules>
   </component>
 </project>

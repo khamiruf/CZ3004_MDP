@@ -1,5 +1,6 @@
 package com.example.robot_controller_group8.ui.main;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -142,14 +143,15 @@ public class MapTabFragment extends Fragment {
             }
         });
 
-//        reconfigure.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                showLog("Clicked reconfigureBtn");
-//                reconfigureFragment.show(getFragmentManager(), "Reconfigure Fragment");
-//                showLog("Exiting reconfigureBtn");
-//            }
-//        });
+        reconfigure.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showLog("Clicked reconfigureBtn");
+//                startActivity(new Intent(MapTabFragment.this,ReconfigureFragment.class));
+                reconfigureFragment.show(getActivity().getFragmentManager(), "Reconfigure Fragment");
+                showLog("Exiting reconfigureBtn");
+            }
+        });
 
         setStartPointToggleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
