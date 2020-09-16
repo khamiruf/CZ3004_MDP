@@ -29,6 +29,7 @@ public class ReconfigureFragment extends DialogFragment {
     View rootView;
     View commsView;
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -81,6 +82,15 @@ public class ReconfigureFragment extends DialogFragment {
                 getDialog().dismiss();
             }
         });
+
+//            reconfigure.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                showLog("Clicked reconfigureBtn");
+//                reconfigureFragment.show(getFragmentManager(), "Reconfigure Fragment");
+//                showLog("Exiting reconfigureBtn");
+//            }
+//        });
 
         cancelReconfigureBtn.setOnClickListener(new View.OnClickListener() {
             @Override

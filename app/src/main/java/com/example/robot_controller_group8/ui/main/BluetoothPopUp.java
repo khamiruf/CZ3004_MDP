@@ -13,12 +13,14 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.method.ScrollingMovementMethod;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Switch;
@@ -29,7 +31,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.example.robot_controller_group8.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.UUID;
@@ -54,6 +58,10 @@ public class BluetoothPopUp extends AppCompatActivity {
     BluetoothConnectionService mBluetoothConnection;
     private static final UUID myUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
     public static BluetoothDevice mBTDevice;
+
+    FloatingActionButton send;
+    private static TextView messageReceivedTextView;
+    private EditText typeBoxEditText;
 
     boolean retryConnection = false;
     Handler reconnectionHandler = new Handler();
@@ -86,6 +94,37 @@ public class BluetoothPopUp extends AppCompatActivity {
 
         int width = dm.widthPixels;
         int height = dm.heightPixels;
+
+        send = (FloatingActionButton) findViewById(R.id.messageButton);
+
+
+        // Message Box
+        messageReceivedTextView = (TextView) findViewById(R.id.messageReceivedTextView);
+        messageReceivedTextView.setMovementMethod(new ScrollingMovementMethod());
+        typeBoxEditText = (EditText) findViewById(R.id.typeBoxEditText);
+
+        // get shared preferences
+//        sharedPreferences = getActivity().getSharedPreferences("Shared Preferences", Context.MODE_PRIVATE);
+
+        send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showLog("Clicked sendTextBtn");
+                String sentText = "" + typeBoxEditText.getText().toString();
+
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("message", sharedPreferences.getString("message", "") + '\n' + sentText);
+                editor.commit();
+                messageReceivedTextView.setText(sharedPreferences.getString("message", ""));
+                typeBoxEditText.setText("");
+
+                if (BluetoothConnectionService.BluetoothConnectionStatus == true) {
+                    byte[] bytes = sentText.getBytes(Charset.defaultCharset());
+                    BluetoothConnectionService.write(bytes);
+                }
+                showLog("Exiting sendTextBtn");
+            }
+        });
 
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         Switch bluetoothSwitch = (Switch) findViewById(R.id.bluetoothSwitch);
@@ -467,5 +506,9 @@ public class BluetoothPopUp extends AppCompatActivity {
         data.putExtra("myUUID",myUUID);
         setResult(RESULT_OK, data);
         super.finish();
+    }
+
+    private static void showLog(String message) {
+        Log.d(TAG, message);
     }
 }
