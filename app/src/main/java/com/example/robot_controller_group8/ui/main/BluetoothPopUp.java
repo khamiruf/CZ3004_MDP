@@ -511,4 +511,7 @@ public class BluetoothPopUp extends AppCompatActivity {
     private static void showLog(String message) {
         Log.d(TAG, message);
     }
+    public static TextView getMessageReceivedTextView() {
+        return messageReceivedTextView;
+    }
 }
