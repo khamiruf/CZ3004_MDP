@@ -169,7 +169,7 @@ public class GameFragment extends Fragment implements SensorEventListener {
                 }
                 else if (fastestToggleBtn.getText().equals("STOP")) {
                     showToast("Fastest timer start!");
-                    MainActivity.printMessage("FS|");
+                    MainActivity.printMessage("FP|");
                     robotStatusTextView.setText("Fastest Path Started");
                     fastestTimer = System.currentTimeMillis();
                     timerHandler.postDelayed(timerRunnableFastest, 0);
@@ -242,22 +242,24 @@ public class GameFragment extends Fragment implements SensorEventListener {
                 showLog("Sensor Move Forward Detected");
                 gridMap.moveRobot("forward");
                 MainActivity.refreshLabel();
-                MainActivity.printMessage("W1|");
+                MainActivity.printMessage("F1|");
             } else if (y > 2) {
                 showLog("Sensor Move Backward Detected");
                 gridMap.moveRobot("back");
                 MainActivity.refreshLabel();
-                MainActivity.printMessage("S1|");
+                MainActivity.printMessage("R0|");
+                MainActivity.printMessage("R0|");
+                MainActivity.printMessage("F1|");
             } else if (x > 2) {
                 showLog("Sensor Move Left Detected");
                 gridMap.moveRobot("left");
                 MainActivity.refreshLabel();
-                MainActivity.printMessage("A|");
+                MainActivity.printMessage("L0|");
             } else if (x < -2) {
                 showLog("Sensor Move Right Detected");
                 gridMap.moveRobot("right");
                 MainActivity.refreshLabel();
-                MainActivity.printMessage("D|");
+                MainActivity.printMessage("R0|");
             }
         }
         sensorFlag = false;

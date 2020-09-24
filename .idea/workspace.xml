@@ -13,22 +13,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="99840dd2-8be6-4f92-b833-eea52a507fbf" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_basement_17_0_0_aar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_android_gms_play_services_basement_17_0_0_aar.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/robot_controller_group8/ui/main/ControlFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/robot_controller_group8/ui/main/ControlFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/robot_controller_group8/ui/main/GameFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/robot_controller_group8/ui/main/GameFragment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/robot_controller_group8/ui/main/GridMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/robot_controller_group8/ui/main/GridMap.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/bluetooth_pop_up_window.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/bluetooth_pop_up_window.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="R9WMC26R86J" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="Nexus_6_API_30" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -220,6 +216,10 @@
     </state>
     <state x="-1820" y="100" width="1720" height="880" key="com.android.tools.idea.avdmanager.AvdListDialog/-1920.0.1920.1080/0.23.1280.732@-1920.0.1920.1080" timestamp="1600230691404" />
     <state x="67" y="74" width="1147" height="652" key="com.android.tools.idea.avdmanager.AvdListDialog/0.0.1280.800@0.0.1280.800" timestamp="1600940188418" />
+    <state x="656" y="344" key="com.intellij.ide.util.TipDialog" timestamp="1600961717102">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="656" y="344" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1600961717102" />
     <state x="292" y="35" width="695" height="729" key="find.popup" timestamp="1600946235392">
       <screen x="0" y="0" width="1280" height="800" />
     </state>
