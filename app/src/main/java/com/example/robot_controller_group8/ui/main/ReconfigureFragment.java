@@ -112,10 +112,10 @@ public class ReconfigureFragment extends DialogFragment {
     public void onDismiss(DialogInterface dialog) {
         showLog("Entering onDismiss");
         super.onDismiss(dialog);
-//        if (f1Value != null && !f1Value.equals(""))
-//            MainActivity.getF1().setContentDescription(f1Value);
-//        if (f2Value != null && !f2Value.equals(""))
-//            MainActivity.getF2().setContentDescription(f2Value);
+        if (f1Value != null && !f1Value.equals(""))
+            MapTabFragment.getF1().setContentDescription(f1Value);
+        if (f2Value != null && !f2Value.equals(""))
+            MapTabFragment.getF2().setContentDescription(f2Value);
         f1ValueEditText.clearFocus();
 
         showLog("Exiting onDismiss");
