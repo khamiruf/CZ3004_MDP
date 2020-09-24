@@ -46,7 +46,9 @@ public class MainActivity extends AppCompatActivity {
     private static GridMap gridMap;
     static TextView xAxisTextView, yAxisTextView, directionAxisTextView;
     static TextView robotStatusTextView;
-
+//    static Button f1, f2;
+//    Button reconfigure;
+//    ReconfigureFragment reconfigureFragment = new ReconfigureFragment();
 
     BluetoothConnectionService mBluetoothConnection;
     BluetoothDevice mBTDevice;
