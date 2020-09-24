@@ -104,7 +104,7 @@ public class BluetoothPopUp extends AppCompatActivity {
         typeBoxEditText = (EditText) findViewById(R.id.typeBoxEditText);
 
         // get shared preferences
-//        sharedPreferences = getActivity().getSharedPreferences("Shared Preferences", Context.MODE_PRIVATE);
+        sharedPreferences = this.getSharedPreferences("Shared Preferences", Context.MODE_PRIVATE);
 
         send.setOnClickListener(new View.OnClickListener() {
             @Override

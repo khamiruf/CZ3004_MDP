@@ -94,14 +94,12 @@
                 android:textStyle="bold" />
 
             <ListView
-                android:id="@+id/pairedDevicesListView"
+                android:id="@+id/otherDevicesListView"
                 android:layout_width="379dp"
-                android:layout_height="100dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:background="@drawable/border_white_background"
                 android:gravity="bottom"
-                android:listSelector="#bdb9b9"
                 android:scrollbars="vertical"
                 android:text=""
                 android:textColor="@color/colorBlack"
@@ -122,16 +120,18 @@
                 android:textStyle="bold" />
 
             <ListView
-                android:id="@+id/otherDevicesListView"
+                android:id="@+id/pairedDevicesListView"
                 android:layout_width="379dp"
-                android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_height="100dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
                 android:background="@drawable/border_white_background"
                 android:gravity="bottom"
+                android:listSelector="#bdb9b9"
                 android:scrollbars="vertical"
                 android:text=""
                 android:textColor="@color/colorBlack"
-                android:textSize="14sp"/>
+                android:textSize="14sp" />
 
             <LinearLayout
                 android:layout_width="fill_parent"
