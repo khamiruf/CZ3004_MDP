@@ -102,10 +102,11 @@ public class BluetoothPopUp extends AppCompatActivity {
         messageReceivedTextView = (TextView) findViewById(R.id.messageReceivedTextView);
         messageReceivedTextView.setMovementMethod(new ScrollingMovementMethod());
         typeBoxEditText = (EditText) findViewById(R.id.typeBoxEditText);
-        messageReceivedTextView.setText(sharedPreferences.getString("message", ""));
+
 
         // get shared preferences
         sharedPreferences = this.getSharedPreferences("Shared Preferences", Context.MODE_PRIVATE);
+        messageReceivedTextView.setText(sharedPreferences.getString("message", ""));
 
         send.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+<<<<<<< Updated upstream
   <component name="AndroidLayouts">
     <shared>
       <config>
@@ -19,12 +20,19 @@
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/robot_controller_group8/ui/main/GameFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/robot_controller_group8/ui/main/GameFragment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/robot_controller_group8/ui/main/GridMap.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/robot_controller_group8/ui/main/GridMap.java" afterDir="false" />
     </list>
+=======
+  <component name="ChangeListManager">
+    <list default="true" id="edf6db5b-fa2f-4c38-a120-1994fd23e436" name="Default Changelist" comment="" />
+>>>>>>> Stashed changes
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+<<<<<<< Updated upstream
   <component name="ExecutionTargetManager" SELECTED_TARGET="Nexus_6_API_30" />
+=======
+>>>>>>> Stashed changes
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -40,13 +48,25 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+<<<<<<< Updated upstream
   <component name="ProjectId" id="1hZmUOE5RWSrdI8q66RXKFTAV89" />
+=======
+  <component name="IgnoredFileRootStore">
+    <option name="generatedRoots">
+      <set>
+        <option value="C:\Users\TeckZ\Desktop\CZ3004\.idea" />
+      </set>
+    </option>
+  </component>
+  <component name="ProjectId" id="1hz3j0ddyvuscHFePRdUMpbNZaR" />
+>>>>>>> Stashed changes
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+<<<<<<< Updated upstream
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
@@ -86,6 +106,13 @@
     <configuration name="&lt;template&gt;" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" default="true" selected="false">
       <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
     </configuration>
+=======
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+  </component>
+  <component name="RunManager">
+>>>>>>> Stashed changes
     <configuration default="true" type="AndroidJUnit" factoryName="Android JUnit">
       <option name="TEST_OBJECT" value="class" />
       <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
@@ -93,6 +120,7 @@
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
       </method>
     </configuration>
+<<<<<<< Updated upstream
     <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
       <module name="app" />
       <option name="DEPLOY" value="true" />
@@ -159,12 +187,15 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+=======
+>>>>>>> Stashed changes
   </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
+<<<<<<< Updated upstream
       <changelist id="99840dd2-8be6-4f92-b833-eea52a507fbf" name="Default Changelist" comment="" />
       <created>1600149782542</created>
       <option name="number" value="Default" />
@@ -224,5 +255,24 @@
       <screen x="0" y="0" width="1280" height="800" />
     </state>
     <state x="292" y="35" width="695" height="729" key="find.popup/0.0.1280.800@0.0.1280.800" timestamp="1600946235392" />
+=======
+      <changelist id="edf6db5b-fa2f-4c38-a120-1994fd23e436" name="Default Changelist" comment="" />
+      <created>1601000225019</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1601000225019</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1601000486627">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1601000486627" />
+    <state x="1136" y="344" key="com.intellij.ide.util.TipDialog" timestamp="1601000405430">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="1136" y="344" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1601000405430" />
+>>>>>>> Stashed changes
   </component>
 </project>
