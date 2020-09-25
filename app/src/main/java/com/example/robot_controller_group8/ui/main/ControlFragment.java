@@ -153,7 +153,7 @@ public class ControlFragment extends Fragment implements SensorEventListener {
                         updateStatus("moving forward");
                     else
                         updateStatus("Unable to move forward");
-                    MainActivity.printMessage("F1|");
+                    MainActivity.printMessage("F01");
                 }
                 else
                     updateStatus("Please press 'STARTING POINT'");
@@ -170,7 +170,7 @@ public class ControlFragment extends Fragment implements SensorEventListener {
                 else if (gridMap.getCanDrawRobot() && !gridMap.getAutoUpdate()) {
                     gridMap.moveRobot("right");
                     MainActivity.refreshLabel();
-                    MainActivity.printMessage("R0|");
+                    MainActivity.printMessage("R0");
                 }
                 else
                     updateStatus("Please press 'STARTING POINT'");
@@ -191,9 +191,7 @@ public class ControlFragment extends Fragment implements SensorEventListener {
                         updateStatus("moving backward");
                     else
                         updateStatus("Unable to move backward");
-                    MainActivity.printMessage("R0|");
-                    MainActivity.printMessage("R0|");
-                    MainActivity.printMessage("F1|");
+                    MainActivity.printMessage("B0");
                 }
                 else
                     updateStatus("Please press 'STARTING POINT'");
@@ -211,7 +209,7 @@ public class ControlFragment extends Fragment implements SensorEventListener {
                     gridMap.moveRobot("left");
                     MainActivity.refreshLabel();
                     updateStatus("turning left");
-                    MainActivity.printMessage("L0|");
+                    MainActivity.printMessage("L0");
                 }
                 else
                     updateStatus("Please press 'STARTING POINT'");
@@ -374,24 +372,22 @@ public class ControlFragment extends Fragment implements SensorEventListener {
                 showLog("Sensor Move Forward Detected");
                 gridMap.moveRobot("forward");
                 MainActivity.refreshLabel();
-                MainActivity.printMessage("F1|");
+                MainActivity.printMessage("F01|");
             } else if (y > 2) {
                 showLog("Sensor Move Backward Detected");
                 gridMap.moveRobot("back");
                 MainActivity.refreshLabel();
-                MainActivity.printMessage("R0|");
-                MainActivity.printMessage("R0|");
-                MainActivity.printMessage("F1|");
+                MainActivity.printMessage("B0");
             } else if (x > 2) {
                 showLog("Sensor Move Left Detected");
                 gridMap.moveRobot("left");
                 MainActivity.refreshLabel();
-                MainActivity.printMessage("L0|");
+                MainActivity.printMessage("L0");
             } else if (x < -2) {
                 showLog("Sensor Move Right Detected");
                 gridMap.moveRobot("right");
                 MainActivity.refreshLabel();
-                MainActivity.printMessage("R0|");
+                MainActivity.printMessage("R0");
             }
         }
         sensorFlag = false;

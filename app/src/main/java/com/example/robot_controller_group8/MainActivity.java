@@ -344,7 +344,7 @@ public class MainActivity extends AppCompatActivity {
                     JSONObject amdMessage = new JSONObject();
                     amdMessage.put("map", amdArray);
                     message = String.valueOf(amdMessage);
-                    showLog("Executed for AMD message, message: " + message);
+                    showLog("Executed for AMD message, message: " + message );
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

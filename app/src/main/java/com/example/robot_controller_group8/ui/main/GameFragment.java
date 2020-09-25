@@ -242,24 +242,22 @@ public class GameFragment extends Fragment implements SensorEventListener {
                 showLog("Sensor Move Forward Detected");
                 gridMap.moveRobot("forward");
                 MainActivity.refreshLabel();
-                MainActivity.printMessage("F1|");
+                MainActivity.printMessage("F01");
             } else if (y > 2) {
                 showLog("Sensor Move Backward Detected");
                 gridMap.moveRobot("back");
                 MainActivity.refreshLabel();
-                MainActivity.printMessage("R0|");
-                MainActivity.printMessage("R0|");
-                MainActivity.printMessage("F1|");
+                MainActivity.printMessage("B0");
             } else if (x > 2) {
                 showLog("Sensor Move Left Detected");
                 gridMap.moveRobot("left");
                 MainActivity.refreshLabel();
-                MainActivity.printMessage("L0|");
+                MainActivity.printMessage("L0");
             } else if (x < -2) {
                 showLog("Sensor Move Right Detected");
                 gridMap.moveRobot("right");
                 MainActivity.refreshLabel();
-                MainActivity.printMessage("R0|");
+                MainActivity.printMessage("R0");
             }
         }
         sensorFlag = false;
