@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
     static TextView xAxisTextView, yAxisTextView, directionAxisTextView;
     static TextView robotStatusTextView;
 
-
     BluetoothConnectionService mBluetoothConnection;
     BluetoothDevice mBTDevice;
     private static UUID myUUID;
@@ -223,7 +222,7 @@ public class MainActivity extends AppCompatActivity {
                 jsonObject.put(name, name);
                 jsonObject.put("x", x);
                 jsonObject.put("y", y);
-                message = name + " (" + x + "," + y + ")";
+                message = name + " [" + x + "," + y + "]";
                 break;
             default:
                 message = "Unexpected default for printMessage: " + name;
@@ -247,6 +246,7 @@ public class MainActivity extends AppCompatActivity {
         gridMap.setRobotDirection(direction);
         directionAxisTextView.setText(sharedPreferences.getString("direction",""));
         printMessage("Direction is set to " + direction);
+
     }
 
     public static void refreshLabel() {
@@ -312,6 +312,31 @@ public class MainActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             String message = intent.getStringExtra("receivedMessage");
             showLog("receivedMessage: message --- " + message);
+
+            try {
+                if (message.length() < 8) {
+                    switch (message)
+                    {
+                        case "F01":
+                            gridMap.moveRobot("forward");
+                            break;
+                        case "R0":
+                            gridMap.moveRobot("right");
+                            break;
+                        case "L0":
+                            gridMap.moveRobot("left");
+                            break;
+                        case "B0":
+                            gridMap.moveRobot("back");
+                            break;
+                    }
+
+                    }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
             try {
                 if (message.length() > 7 && message.substring(2,6).equals("grid")) {
                     String resultString = "";
