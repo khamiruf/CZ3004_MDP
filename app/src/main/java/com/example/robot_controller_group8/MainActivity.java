@@ -82,15 +82,15 @@ public class MainActivity extends AppCompatActivity {
 //            public void onClick(View v) {
 //                String message = "Explored : " + GridMap.getPublicMDFExploration();
 //                editor = sharedPreferences.edit();
-//                editor.putString("message", CommsFragment.getMessageReceivedTextView().getText() + "\n" + message);
+//                editor.putString("message", BluetoothPopUp.getMessageReceivedTextView().getText() + "\n" + message);
 //                editor.commit();
 //                refreshMessageReceived();
 //                message = "Obstacle : " + GridMap.getPublicMDFObstacle() + "0";
-//                editor.putString("message", CommsFragment.getMessageReceivedTextView().getText() + "\n" + message);
+//                editor.putString("message", BluetoothPopUp.getMessageReceivedTextView().getText() + "\n" + message);
 //                editor.commit();
 //                refreshMessageReceived();
 //            }
-//        });
+ //       });
 
         // Toolbar
         Button bluetoothButton = (Button) findViewById(R.id.bluetoothButton);
