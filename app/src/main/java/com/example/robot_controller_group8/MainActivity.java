@@ -315,8 +315,7 @@ public class MainActivity extends AppCompatActivity {
 
             try {
                 if (message.length() < 8) {
-                    switch (message)
-                    {
+                    switch (message){
                         case "F01":
                             gridMap.moveRobot("forward");
                             break;
@@ -329,8 +328,7 @@ public class MainActivity extends AppCompatActivity {
                         case "B0":
                             gridMap.moveRobot("back");
                             break;
-                    }
-
+                        }
                     }
 
             } catch (Exception e) {
@@ -376,13 +374,15 @@ public class MainActivity extends AppCompatActivity {
             }
 
             try {
-                if (message.length() > 8 && message.substring(2,7).equals("image")) {
-                    JSONObject jsonObject = new JSONObject(message);
-                    JSONArray jsonArray = jsonObject.getJSONArray("image");
-                    gridMap.drawImageNumberCell(jsonArray.getInt(0),jsonArray.getInt(1),jsonArray.getInt(2));
-                    showLog("Image Added for index: " + jsonArray.getInt(0) + "," +jsonArray.getInt(1));
+                if (message.substring(0,2).equalsIgnoreCase("IM")) {
+                    String[] seperatedtext = message.split("\\|");
+                    int x = Integer.parseInt(seperatedtext[2]);
+                    int y = Integer.parseInt(seperatedtext[3]);
+                    int id = Integer.parseInt(seperatedtext[1]);
+
+                    gridMap.drawImageNumberCell(x,y,id);
                 }
-            } catch (JSONException e) {
+            } catch (Exception e) {
                 showLog("Adding Image Failed");
             }
 
@@ -396,6 +396,7 @@ public class MainActivity extends AppCompatActivity {
                     showLog("messageReceiver: try decode unsuccessful");
                 }
             }
+
             sharedPreferences();
             String receivedText = sharedPreferences.getString("message", "") + "\n" + message;
             editor.putString("message", receivedText);
