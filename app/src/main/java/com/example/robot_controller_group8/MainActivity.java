@@ -313,95 +313,120 @@ public class MainActivity extends AppCompatActivity {
             String message = intent.getStringExtra("receivedMessage");
             showLog("receivedMessage: message --- " + message);
 
-            try {
-                if (message.length() < 8) {
-                    switch (message){
-                        case "F01":
-                            gridMap.moveRobot("forward");
-                            break;
-                        case "R0":
-                            gridMap.moveRobot("right");
-                            break;
-                        case "L0":
-                            gridMap.moveRobot("left");
-                            break;
-                        case "B0":
-                            gridMap.moveRobot("back");
-                            break;
-                        }
-                    }
+            String[] septext = message.split("!");
+            for(int u=0; u <septext.length; u++) {
 
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            try {
-                if (message.length() > 7 && message.substring(2,6).equals("grid")) {
-                    String resultString = "";
-                    String amdString = message.substring(11,message.length()-2);
-                    showLog("amdString: " + amdString);
-                    BigInteger hexBigIntegerExplored = new BigInteger(amdString, 16);
-                    String exploredString = hexBigIntegerExplored.toString(2);
-
-                    while (exploredString.length() < 300)
-                        exploredString = "0" + exploredString;
-
-                    for (int i=0; i<exploredString.length(); i=i+15) {
-                        int j=0;
-                        String subString = "";
-                        while (j<15) {
-                            subString = subString + exploredString.charAt(j+i);
-                            j++;
-                        }
-                        resultString = subString + resultString;
-                    }
-                    hexBigIntegerExplored = new BigInteger(resultString, 2);
-                    resultString = hexBigIntegerExplored.toString(16);
-
-                    JSONObject amdObject = new JSONObject();
-                    amdObject.put("explored", "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
-                    amdObject.put("length", amdString.length()*4);
-                    amdObject.put("obstacle", resultString);
-                    JSONArray amdArray = new JSONArray();
-                    amdArray.put(amdObject);
-                    JSONObject amdMessage = new JSONObject();
-                    amdMessage.put("map", amdArray);
-                    message = String.valueOf(amdMessage);
-                    showLog("Executed for AMD message, message: " + message );
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-            try {
-                if (message.substring(0,2).equalsIgnoreCase("IM")) {
-                    String[] seperatedtext = message.split("\\|");
-                    int x = Integer.parseInt(seperatedtext[2]);
-                    int y = Integer.parseInt(seperatedtext[3]);
-                    int id = Integer.parseInt(seperatedtext[1]);
-
-                    gridMap.drawImageNumberCell(x,y,id);
-                }
-            } catch (Exception e) {
-                showLog("Adding Image Failed");
-            }
-
-            if (gridMap.getAutoUpdate() || MapTabFragment.manualUpdateRequest) {
                 try {
-                    gridMap.setReceivedJsonObject(new JSONObject(message));
-                    gridMap.updateMapInformation();
-                    MapTabFragment.manualUpdateRequest = false;
-                    showLog("messageReceiver: try decode successful");
-                } catch (JSONException e) {
-                    showLog("messageReceiver: try decode unsuccessful");
-                }
-            }
+                    if (septext[u].length() < 4) {
+                        switch (septext[u]) {
+                            case "F01":
+                                gridMap.moveRobot("forward");
+                                break;
+                            case "R0":
+                                gridMap.moveRobot("right");
+                                break;
+                            case "L0":
+                                gridMap.moveRobot("left");
+                                break;
+                            case "B0":
+                                gridMap.moveRobot("back");
+                                break;
+                        }
+                    }
 
-            sharedPreferences();
-            String receivedText = sharedPreferences.getString("message", "") + "\n" + message;
-            editor.putString("message", receivedText);
-            editor.commit();
-            refreshMessageReceived();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                    if (message.length() > 7 && message.substring(2, 6).equals("grid")) {
+                        String resultString = "";
+                        String amdString = message.substring(11, message.length() - 2);
+                        showLog("amdString: " + amdString);
+                        BigInteger hexBigIntegerExplored = new BigInteger(amdString, 16);
+                        String exploredString = hexBigIntegerExplored.toString(2);
+
+                        while (exploredString.length() < 300)
+                            exploredString = "0" + exploredString;
+
+                        for (int i = 0; i < exploredString.length(); i = i + 15) {
+                            int j = 0;
+                            String subString = "";
+                            while (j < 15) {
+                                subString = subString + exploredString.charAt(j + i);
+                                j++;
+                            }
+                            resultString = subString + resultString;
+                        }
+                        hexBigIntegerExplored = new BigInteger(resultString, 2);
+                        resultString = hexBigIntegerExplored.toString(16);
+
+                        JSONObject amdObject = new JSONObject();
+                        amdObject.put("explored", "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
+                        amdObject.put("length", amdString.length() * 4);
+                        amdObject.put("obstacle", resultString);
+                        JSONArray amdArray = new JSONArray();
+                        amdArray.put(amdObject);
+                        JSONObject amdMessage = new JSONObject();
+                        amdMessage.put("map", amdArray);
+                        message = String.valueOf(amdMessage);
+                        showLog("Executed for AMD message, message: " + message);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                try {
+                    if (septext[u].substring(0, 2).equalsIgnoreCase("IM")) {
+                        String[] seperatedtext = septext[u].split("\\|");
+                        int x = Integer.parseInt(seperatedtext[2]);
+                        int y = Integer.parseInt(seperatedtext[3]);
+                        int id = Integer.parseInt(seperatedtext[1]);
+
+                        gridMap.drawImageNumberCell(x, y, id);
+                    }
+                } catch (Exception e) {
+                    showLog("Adding Image Failed");
+                }
+
+                try {
+                    if (septext[u].substring(0, 2).equalsIgnoreCase("OB")) {
+                        String[] seperatedtext1 = septext[u].split("\\|");
+                        for (int k = 1; k < seperatedtext1.length; k++) {
+                            String[] seperatedtext2 = seperatedtext1[k].split(",");
+                            int x = Integer.parseInt(seperatedtext2[0]) + 1;
+                            int y = Integer.parseInt(seperatedtext2[1]) + 1;
+                            sharedPreferences();
+                            String receivedText = sharedPreferences.getString("message", "") + "\n" + "hi: " + x + " " + y;
+                            editor.putString("message", receivedText);
+                            editor.commit();
+                            refreshMessageReceived();
+                            gridMap.setObstacleCoord(x, y);
+                        }
+
+
+                    }
+                } catch (Exception e) {
+                    showLog("Adding Image Failed");
+                }
+
+                if (gridMap.getAutoUpdate() || MapTabFragment.manualUpdateRequest) {
+                    try {
+                        gridMap.setReceivedJsonObject(new JSONObject(message));
+                        gridMap.updateMapInformation();
+                        MapTabFragment.manualUpdateRequest = false;
+                        showLog("messageReceiver: try decode successful");
+                    } catch (JSONException e) {
+                        showLog("messageReceiver: try decode unsuccessful");
+                    }
+                }
+
+                sharedPreferences();
+                String receivedText = sharedPreferences.getString("message", "") + "\n" + message ;
+                editor.putString("message", receivedText);
+                editor.commit();
+                refreshMessageReceived();
+            }
         }
     };
 

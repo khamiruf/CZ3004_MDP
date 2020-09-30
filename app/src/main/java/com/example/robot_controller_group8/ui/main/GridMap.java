@@ -443,7 +443,7 @@ public class GridMap extends View {
         return waypointCoord;
     }
 
-    private void setObstacleCoord(int col, int row) {
+    public void setObstacleCoord(int col, int row) {
         showLog("Entering setObstacleCoord");
         int[] obstacleCoord = new int[]{col, row};
         GridMap.obstacleCoord.add(obstacleCoord);
