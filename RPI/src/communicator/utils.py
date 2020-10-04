@@ -70,16 +70,20 @@ def pcMsgParser(msg):
             'arduino': data[1][:-1],
         }
     
-    # EX|R0|(x,y)!
+    # EX|R0|(x,y)|(x,y)!
     elif command == 'EX':
-        cmd = data[1].split('|')
+        cmd = data[1].split('|', 1) # split exploration command from coord
+        # to return coord (x1,y1, x2,y2)
+        coord = cmd[1].replace("|", ",").replace("(", "").replace(")", "")
+        coord = "(" + coord + ")"
+
         target = 'all'
         payload = {
             'android': cmd[0], # only sending R0
             'arduino': cmd[0], # only sending R0
             'rpi': {
                 'command': 'TP',
-                'coord': cmd[1][:-1],
+                'coord': coord,
                 }, # to take picture every step of exploration IMAGE REC
         }
 
@@ -93,7 +97,7 @@ def pcMsgParser(msg):
             target = 'android'
             payload = payload + '!'
 
-    # complete exploration
+    # complete exploration 'N|!'
     elif command == 'N':
         target = 'both'
         payload = {

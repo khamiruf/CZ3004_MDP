@@ -176,11 +176,7 @@ class MultiProcess:
                         log.info("Complete message from PC: " + str(msg))
 
                 # number of '!' == number of lines/commands
-                    # count_lines = 0
-                    # for c in msg:
-                    #     if c == '!':
-                    #         count_lines += 1
-                count_lines = msg.count('!') # can try this method
+                count_lines = msg.count('!')
                 if count_lines > 1:
                     #WHEN RECEIVING DATA WITH MORE THAN 1 COMMANDS
                     log.info('More than 1 commands in read_pc (! > 1)')
