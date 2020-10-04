@@ -2,6 +2,7 @@ from picamera import PiCamera
 import time
 import sys
 import os.path
+import cv2
 
 class SymbolDetector():
     def __init__(self):
@@ -12,9 +13,9 @@ class SymbolDetector():
         print(os.getcwd())
         print('initializing camera script')
 
-    def main(self, count):
+    def main(self, fn):
         try:
-            complete = os.path.join(self.save_path, str(count)+".jpg")
+            complete = os.path.join(self.save_path, str(fn)+".jpg")
             #camera.shutter_speed = 1000000/60
             self.camera.awb_mode = 'tungsten'
             self.camera.capture(complete)
@@ -22,3 +23,12 @@ class SymbolDetector():
         except Exception as e:
             print("fail")
             print("error: ", e)
+
+    def get_frame(self,count):
+        complete = os.path.join(self.save_path, str(count)+".jpg")
+        print("GET IMAGE from: " + complete)
+        image = cv2.imread(complete)
+        return image
+
+    def detect(self, image):
+        print("DETECTINGGG IMAGE")

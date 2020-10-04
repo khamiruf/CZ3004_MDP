@@ -50,6 +50,7 @@ class Arduino:
     def write(self, msg):
         try:
             self.connection.write(str.encode(msg))
+            print('IN ARD WRITING THIS MSG ' + msg)
             log.info('Successfully wrote message to Arduino')
         except Exception as error:
             log.error('Arduino write failed: ' + str(error))
@@ -65,17 +66,7 @@ class Arduino:
             # print("from arduino.py", msg)
 
             if len(msg) > 0:
-                print("read from arduino msg", msg)
-#                if(msg[0]=='@'):
- #                   setBufFlag(True)
-  #              elif(msg[0]!='!' and getBufFlag()):
-   #                 buff.append(msg[0])
-    #            elif(msg[0]=='!' and getBufFlag()):
-     #               setBufFlag(False)
-      #              print("BUFFER COMPLETE", buff)
-       #             return buff
-                
-        #        print("Buffer", buff)
+                log.info("Arduino.read: " + str(msg))
                 return ardMsgParser(msg)
             return None       
         except Exception as error:

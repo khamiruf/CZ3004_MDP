@@ -12,7 +12,7 @@ def main():
         filename = count           
         camera = PiCamera()
         camera.resolution = (450, 400)
-        camera.hflip = True
+        camera.hflip = False
         complete = os.path.join(save_path, str(filename)+".jpg")
         #camera.shutter_speed = 1000000/60
         camera.awb_mode = 'tungsten'

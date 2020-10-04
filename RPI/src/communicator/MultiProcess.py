@@ -30,11 +30,11 @@ class MultiProcess:
         self.android = Android()
         self.arduino = Arduino()
         self.pc = PC()
-        self.detector = SymbolDetector()
+        self.detector = SymbolDetector()  ##IMAGE REC
 
         # queues
         self.msg_queue = Queue()
-        self.img_queue = Queue()
+        self.img_queue = Queue()    ##IMAGE REC
 
         # processes
         self.read_android_process = Process(target=self.read_android, args=(self.msg_queue,))
@@ -58,27 +58,27 @@ class MultiProcess:
 
             self.write_process.start()
             
-            log.info('Launching Symbol Detector')
-            # self.detector()
+            # log.info('Launching Symbol Detector')
+            # self.detector()  #quite useless - only useless cause we havent write the class yet
 
             log.info('Multiprocess Communication Session Started')
 
-            count = 20
+            img_count = 0  ##IMAGE REC
             while True:
                 if not self.img_queue.empty():
-                    print("img queue not empty")
+                    log.info('img_queue not empty')
                     msg = self.img_queue.get_nowait()
-                    msg = json.loads(msg)
-                    payload = msg['payload']
-                    print("msg: ", msg)
-                    if payload == 'TP':
-                        print("calling img detector")
-                        self.detector.main(count=count)
+                    msg = json.loads(msg) # returns a dict
+                    cmd = msg['payload']['command']
+                    if cmd == 'TP':
+                        log.info('Calling img detector')
+                        fn = msg['payload']['coord']
+                        self.detector.main(fn=fn)
                         log.info("Successfully took a picture")
-                        count += 1
-                        # log.info('Detecting for Symbols')
-                        # frame = self.detector.get_frame()
-                        # symbol_match = self.detector.detect(frame)
+                        log.info('Detecting for Symbols')
+                        frame = self.detector.get_frame(fn)
+                        symbol_match = self.detector.detect(frame)
+                        img_count += 1
                         # if symbol_match is not None:
                         #     log.info('Symbol Match ID: ' + str(symbol_match))
                         #     self.pc.write('TC|' + str(symbol_match))
@@ -89,78 +89,9 @@ class MultiProcess:
             raise
         except Exception as error:
             raise error
-        
-        # time.sleep(1)
-        # self._allow_reconnection()
 
     def end(self):
         log.info('Multiprocess Communication Session Ended')
-
-    def _allow_reconnection(self):
-        # log.info('You can reconnect to RPi after disconnecting now')
-
-        while True:
-            try:
-                # if self.android.client_sock is None:
-                #     log.info("android was disconnected from rpi")
-                #     self._reconect_android()
-
-
-                # if not self.read_android_process.is_alive():
-                #     self._reconect_android()
-                
-                # can try this
-                if self.pc.client_sock is None:
-                    log.info("pc was disconnected from rpi")
-                    self._reconnect_pc()
-
-                # doesnt actually detect the disconnection
-                if not self.read_pc_process.is_alive():
-                    log.info("read pc process is not alive!")
-                    self._reconnect_pc()
-
-                # if not self.read_arduino_process.is_alive():
-                #     self._reconnect_arduino()
-                # if self.arduino.connection is None:
-                #     log.info("arduino was disconnected from rpi")
-                #     self._reconnect_pc()
-            except Exception as error:
-                log.error("Error during reconnection: ", error)
-                raise error
-    
-    def _reconect_android(self):
-        self.android.disconnect()
-        self.read_android_process.terminate()
-
-        self.android.connect()
-
-        self.read_android_process = Process(target=self.read_android, args=(self.msg_queue,))
-        self.read_android_process.start()
-        
-        log.info("Reconnected to Android")
-
-    def _reconnect_pc(self):
-        log.info("PC disconnected")
-        self.pc.disconnect()
-        self.read_pc_process.terminate()
-        
-        self.pc.connect()
-
-        self.read_pc_process = Process(target=self.read_pc, args=(self.msg_queue,))
-        self.read_pc_process.start()
-
-        log.info("Reconnected to PC")
-
-    def _reconnect_arduino(self):
-        self.arduino.disconnect()
-        self.read_arduino_process.terminate()
-        
-        self.arduino.connect()
-
-        self.read_arduino_process = Process(target=self.read_arduino, args=(self.msg_queue,))
-        self.read_arduino_process.start()
-
-        log.info("Reconnected to Arduino")
 
 
     def read_android(self, msg_queue):
@@ -170,7 +101,7 @@ class MultiProcess:
                 if msg is not None:
                     if self.verbose:
                         log.info('Read Android: ' + str(msg))
-                    # for checklist -- remote commands
+                    # for remote commands
                     if msg == 'F01':
                         # msg_queue.put_nowait(format_for('AND', Status.STATUS_MOVING_FORWARD))
                         msg_queue.put_nowait(format_for('ARD', msg))
@@ -185,14 +116,19 @@ class MultiProcess:
                         msg_queue.put_nowait(format_for('ARD', msg))
                     # start exploration
                     elif msg == 'ES|':
-                        # to be confirmed
                         log.info('in exploration case')
                         msg_queue.put_nowait(format_for('ARD', 'S0'))
                         # msg_queue.put_nowait(format_for('AND', Status.STATUS_EXPLORING))
                         # msg_queue.put_nowait(format_for('PC', msg))
+                    # fastest path
                     elif msg == 'FP|':
                         # to be confirmed
                         # msg_queue.put_nowait(format_for('AND', Status.STATUS_FASTEST_PATH))
+                        log.info('in fastest path case')
+                        msg_queue.put_nowait(format_for('PC', msg))
+                    elif msg == 'WP|': 
+                        #WP|[X,Y] -- technically don't need this branch. can just go into `else`
+                        log.info('waypoint')
                         msg_queue.put_nowait(format_for('PC', msg))
                     else:
                         msg_queue.put_nowait(format_for('PC', msg))
@@ -202,109 +138,125 @@ class MultiProcess:
                 log.error('Android read failed: ' + str(e))
                 self.android.connect()
 
+
     def read_arduino(self, msg_queue):
         while True:
             msg = self.arduino.read()
-            # log.info("msg from arduino: " + msg)
             if msg is not None and msg != 'Connected':
+                log.info('Put message into msg queue from arduino' + str(msg))
                 if self.verbose:
                     log.info('Read Arduino: ' + str(msg))
-                msg_queue.put_nowait(format_for('PC', msg))
-                log.info('put message into msg queue from arduino')
-                log.info(msg)
+                if msg['target'] == 'android':
+                    # sending FP movements
+                    msg_queue.put_nowait(format_for('AND', msg['payload']))
+                    msg_queue.put_nowait(format_for('PC', msg['payload']))
+                else:
+                    #sensor data
+                    msg_queue.put_nowait(format_for('PC', msg))
+                
 
     def read_pc(self, msg_queue, img_queue):
         while True:
             msg = ''
             data = self.pc.read()
-            print("data string: ", data)
+            log.info("Msg from PC: " + str(data))
+            
+            # Not a full command
             if not isinstance(data, dict):
                 msg += data
 
+                # check last char != '!'
                 while msg[-1] != '!':
                     data = self.pc.read()
-                    print("data in while: ", data)
+                    log.info("Data in while: " + str(data))
                     if not data:
                         break
                     msg += data
                     if msg is not None:
-                        log.info("Message from PC:")
-                        log.info(msg)
+                        log.info("Complete message from PC: " + str(msg))
 
-                count_lines = 0
-                for c in msg:
-                    if c == '!':
-                        count_lines += 1
+                # number of '!' == number of lines/commands
+                    # count_lines = 0
+                    # for c in msg:
+                    #     if c == '!':
+                    #         count_lines += 1
+                count_lines = msg.count('!') # can try this method
                 if count_lines > 1:
-                    print('more than 1 exclamation (if)')
+                    #WHEN RECEIVING DATA WITH MORE THAN 1 COMMANDS
+                    log.info('More than 1 commands in read_pc (! > 1)')
                     msg_list = msg.split("!")
-                    print(msg_list)
+                    log.info("List of message: " + str(msg_list))
                     for i in range(0,len(msg_list) - 1):
-                        print(msg_list[i])
                         msg = pcMsgParser(msg_list[i])
-
-                        if msg is not None:
-                            if self.verbose:
-                                log.info('Read PC: ' + str(msg['target']) + '; ' + str(msg['payload']))
-                            if msg['target'] == 'android':
-                                msg_queue.put_nowait(format_for('AND', msg['payload']))
-                            elif msg['target'] == 'arduino':
-                                msg_queue.put_nowait(format_for('ARD', msg['payload']))
-                            elif msg['target'] == 'rpi':
-                                img_queue.put_nowait(msg['payload'])
-                            elif msg['target'] == 'both':
-                                msg_queue.put_nowait(format_for('AND', msg['payload']['android']))
-                                msg_queue.put_nowait(format_for('ARD', msg['payload']['arduino']))
-                            elif msg['target'] == 'all':
-                                msg_queue.put_nowait(format_for('ARD', msg['payload']['arduino']))
-                                msg_queue.put_nowait(format_for('AND', msg['payload']['android']))
-                                img_queue.put_nowait(format_for('RPI', msg['payload']['rpi'])) #input into img queue with 'TP' command
+                        log.info('Sending message from PC (MORE THAN ONE command) to respective targets')
+                        send_from_pc(msg)
                 else:
-                    print('in else of read_pc')
+                    log.info('Only received one command')
                     msg_list = msg.split("!")
-                    print("else msg_list: ", msg_list)
+                    log.info('Else msg_list: ' + str(msg_list))
                     msg = pcMsgParser(msg_list[0])
+                    log.info('Sending message from PC (ONE COMMAND) to respective target')
+                    send_from_pc(msg)
+            else: 
+                #WHEN DATA IS A DICTIONARY // ACTUAL COMMAND
+                log.info("Data is a dictionary, an actual command: " + str(data))
+                log.info('Sending message from PC (ACTUAL COMMAND) to respective target')
+                send_from_pc(msg, ard=True)
+                # if new func doesn't work just use old one below
 
-                    if msg is not None:
-                        if self.verbose:
-                            log.info('Read PC: ' + str(msg['target']) + '; ' + str(msg['payload']))
-                        if msg['target'] == 'android':
-                            msg_queue.put_nowait(format_for('AND', msg['payload']))
-                        elif msg['target'] == 'arduino':
-                            msg_queue.put_nowait(format_for('ARD', msg['payload']))
-                        elif msg['target'] == 'rpi':
-                            img_queue.put_nowait(msg['payload'])
-                        elif msg['target'] == 'both':
-                            msg_queue.put_nowait(format_for('AND', msg['payload']['android']))
-                            msg_queue.put_nowait(format_for('ARD', msg['payload']['arduino']))
-                        elif msg['target'] == 'all':
-                            msg_queue.put_nowait(format_for('ARD', msg['payload']['arduino']))
-                            msg_queue.put_nowait(format_for('AND', msg['payload']['android']))
-                            img_queue.put_nowait(format_for('RPI', msg['payload']['rpi'])) #input into img queue with 'TP' command
-            else:
-                if msg is not None:
-                        if self.verbose:
-                            log.info('Read PC: ' + str(msg['target']) + '; ' + str(msg['payload']))
-                        if msg['target'] == 'android':
-                            msg_queue.put_nowait(format_for('AND', msg['payload']))
-                        elif msg['target'] == 'arduino':
-                            msg_queue.put_nowait(format_for('ARD', msg['payload']))
-                        elif msg['target'] == 'rpi':
-                            img_queue.put_nowait(msg['payload'])
-                        elif msg['target'] == 'both':
-                            msg_queue.put_nowait(format_for('AND', msg['payload']['android']))
-                            msg_queue.put_nowait(format_for('ARD', msg['payload']['arduino']))
-                        elif msg['target'] == 'all':
-                            msg_queue.put_nowait(format_for('ARD', msg['payload']['arduino']))
-                            msg_queue.put_nowait(format_for('AND', msg['payload']['android']))
-                            img_queue.put_nowait(format_for('RPI', msg['payload']['rpi'])) #input into img queue with 'TP' command
+                # if data is not None:  
+                #     if self.verbose:
+                #         log.info('Read PC: ' + str(data['target']) + '; ' + str(data['payload']))
+                #     if data['target'] == 'android':
+                #         msg_queue.put_nowait(format_for('AND', data['payload']))
+                #     elif data['target'] == 'arduino':
+                #         if(data['payload'][-1] == "!"):
+                #             print("DATA IN EXCLAMATION CONDITION: " + str(data))
+                #             msg_queue.put_nowait(format_for('ARD', data['payload'][:-1]))
+                #         else:
+                #             msg_queue.put_nowait(format_for('ARD', data['payload']))
+                #     elif data['target'] == 'rpi':
+                #         img_queue.put_nowait(msg['payload'])
+                #     elif data['target'] == 'both':
+                #         msg_queue.put_nowait(format_for('AND', data['payload']['android']))
+                #         msg_queue.put_nowait(format_for('ARD', data['payload']['arduino']))
+                #     elif data['target'] == 'all':
+                #         msg_queue.put_nowait(format_for('ARD', data['payload']['arduino'][:-1])) # edge case: arduino not removing '!' ?
+                #         msg_queue.put_nowait(format_for('AND', data['payload']['android']))
+                #         img_queue.put_nowait(format_for('RPI', data['payload']['rpi'])) #input into img queue with 'TP' command IMAGE REC
+
+    def send_from_pc(self, msg, ard=False):
+        if msg is not None:
+            if self.verbose:
+                log.info('Read PC: ' + str(msg['target']) + '; ' + str(msg['payload']))
+            if msg['target'] == 'android':
+                msg_queue.put_nowait(format_for('AND', msg['payload']))
+            elif msg['target'] == 'arduino':
+                if ard:
+                    # for the edge case when the parser never remove '!'
+                    msg_queue.put_nowait(format_for('ARD', msg['payload'][:-1]))
+                else:
+                    msg_queue.put_nowait(format_for('ARD', msg['payload']))
+            elif msg['target'] == 'rpi':
+                img_queue.put_nowait(msg['payload'])
+            elif msg['target'] == 'both':
+                msg_queue.put_nowait(format_for('AND', msg['payload']['android']))
+                msg_queue.put_nowait(format_for('ARD', msg['payload']['arduino']))
+            elif msg['target'] == 'all':
+                if ard:
+                    msg_queue.put_nowait(format_for('ARD', msg['payload']['arduino'][:-1]))
+                else:
+                    msg_queue.put_nowait(format_for('ARD', msg['payload']['arduino']))
+                msg_queue.put_nowait(format_for('AND', msg['payload']['android']))
+                img_queue.put_nowait(format_for('RPI', msg['payload']['rpi'])) #input into img queue with 'TP' command IMAGE REC
+                        
 
     def write_target(self, msg_queue):
 
         while True:
             if not msg_queue.empty():
                 msg = msg_queue.get_nowait()
-                print(msg)
+                log.info("write_target msg: " + str(msg))
                 msg = json.loads(msg)
                 payload = msg['payload']
 
@@ -321,5 +273,4 @@ class MultiProcess:
                 elif msg['target'] == 'ARD':
                     if self.verbose:
                         log.info('Write Arduino:' + str(payload))
-                    self.arduino.write(payload)
-                    
+                    self.arduino.write(payload)                    

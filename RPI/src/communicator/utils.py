@@ -5,7 +5,7 @@ from src.protocols import *
 
 log = Logger()
 
-arduino_commands = ['@S'] #sensor only for now
+arduino_commands = ['@S', 'FP'] #sensor only for now
 arduino_out = ['SD', 'MC', 'CC', 'EC'] #TODO -- what kind of commands will Arduino be sending?
 
 def format_for(target, payload):
@@ -19,15 +19,20 @@ Parse messages received from Arduino, essentially filters out
 unnecessary messages
 '''
 def ardMsgParser(msg):
-    #@|-8|-2|-22|1|1|1!
-    #@s|888888
+    #@S|888888, FP|command!
     data = msg.split('|', 1)
-    if data[0] in arduino_commands:
-        sensor_data = data[1]
-        # list_of_sensors = process.split('|')
-        # sensor_data = [int(x) for x in list_of_sensors]
-        return sensor_data
-        # return 'S0|{x}'.format(x=sensor_data) #test if can write array to PC otherwise send a string
+    
+    if data[0] == 'FP':
+        target = 'android'
+        payload = data[1]
+
+        return {
+            'target': target,
+            'payload': payload
+        }
+    elif data[0] == '@S':
+        send_data = data[1]
+        return send_data
     else:
         # for checklist
         # log.info("checklist: reading from Arduino")
@@ -65,13 +70,17 @@ def pcMsgParser(msg):
             'arduino': data[1][:-1],
         }
     
-    # EX|R0!
+    # EX|R0|(x,y)!
     elif command == 'EX':
+        cmd = data[1].split('|')
         target = 'all'
         payload = {
-            'android': data[1],
-            'arduino': data[1],
-            'rpi': 'TP', # to take picture every step of exploration
+            'android': cmd[0], # only sending R0
+            'arduino': cmd[0], # only sending R0
+            'rpi': {
+                'command': 'TP',
+                'coord': cmd[1][:-1],
+                }, # to take picture every step of exploration IMAGE REC
         }
 
     # OB|(x,y)|(x,y)|!
@@ -96,16 +105,6 @@ def pcMsgParser(msg):
     elif command == 'IM':
         target = 'android'
         payload = payload
-
-    # testing case
-    elif command == 'TEST':
-        target = 'android'
-        payload = data[1]
-    
-    #test pc
-    elif command == 'TPC':
-        target = 'pc'
-        payload = {'pc': data[1]}
 
     else:
         log.error('pcMsgParser unknown command: ' + str(command))

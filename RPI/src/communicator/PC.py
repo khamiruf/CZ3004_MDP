@@ -50,16 +50,7 @@ class PC:
             msg = self.client_sock.recv(2048)
             msg = msg.decode('utf-8')
             if len(msg) > 0:
-                print("PC read:", msg)
-                # pcBuff = msg.split("!")
-                # if(len(pcBuff)>=1):   
-                #     print(pcBuff)
-                #     for i in range(len(pcBuff)):
-                #         print("After PCMsgParser", pcMsgParser(pcBuff[i]))
-                #         return pcMsgParser(pcBuff[i])
-
-                # print("After PCMsgParser", pcMsgParser(pcBuff[0]))
-                # return pcMsgParser(pcBuff[0])
+                log.info("PC.read: " +  str(msg))
                 return pcMsgParser(msg)
             return None
         except Exception as error:
