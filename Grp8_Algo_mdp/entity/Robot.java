@@ -57,6 +57,7 @@ public class Robot {
 	        this.reachedGoal = reachedGoal;
 	    }
 	    */
+	    
 	    public void move(MOVEMENT m){
 	        switch(m){
 	            case FORWARD:

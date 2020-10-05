@@ -8,7 +8,7 @@ public class Client {
 	
 	public static void main(String[] args) {
 		
-		TCPComm tcpObj = new TCPComm();
+		TCPComm tcpObj = TCPComm.getInstance();
 		tcpObj.establishConnection();
 		System.out.println("Start");
 		Scanner sc = new Scanner(System.in);
@@ -19,7 +19,7 @@ public class Client {
 			enteredMsg = sc.nextLine();
 			tcpObj.sendMessage(enteredMsg);
 			System.out.println("Waiting for reply..");
-			tcpObj.readMessage();
+			//tcpObj.readMessage();
 		}		
 		//tcpObj.closeConnection();
 	}

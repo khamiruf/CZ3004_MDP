@@ -6,6 +6,8 @@ import entity.Robot;
 import util.FileManager;
 
 import javax.swing.*;
+
+import Communication.TCPComm;
 import constant.Constants;
 import constant.Constants.DIRECTION;
 
@@ -28,7 +30,7 @@ public class MainGUI extends JFrame{
     
  
     //ZW NEWLY ADD
-     Thread simExplore, simFastest, simRealRun;
+     Thread simExplore, simFastest, simRealRun, simb4;
 	 Map initialMap;
 	 Robot rBot;
 	 static MainGUI mGui=null;
@@ -85,9 +87,9 @@ public class MainGUI extends JFrame{
         JButton fastestBtn = new JButton("Fastest Path");
         JButton resetBtn = new JButton("Reset");
         JButton realrunBtn = new JButton("Real Run");
-        JButton b4 = new JButton("button 3");
+        JButton b3 = new JButton("button 3");
         
-        
+        JButton b4 = new JButton("button 4");
         exploreBtn.setPreferredSize(new Dimension(70, 70));
         
         String[] fileList = FileManager.getAllFileNames();
@@ -97,9 +99,7 @@ public class MainGUI extends JFrame{
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				
-				//main.executeExplorateSimulation(fileDDL.getSelectedItem().toString());
-				
+						
 				simExplore = new Thread(new simulateExploration1(mGui,initialMap,rBot,fileDDL.getSelectedItem().toString()));
 			    simExplore.start();
 				
@@ -112,9 +112,7 @@ public class MainGUI extends JFrame{
     		@Override
     		public void actionPerformed(ActionEvent e) {
 		
-    			//main.executeFastestPathSimulation();
-    			//rBot =  new Robot(1, 1, DIRECTION.NORTH, false);	//Teleport robot back to 1,1
-    			
+ 			
     	    	simFastest = new Thread(new simulateFastestPath(mGui,rBot,initialMap));
     	    	simFastest.start();
     	    	
@@ -139,7 +137,7 @@ public class MainGUI extends JFrame{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
+				
 				if(simExplore!=null) {
 					simExplore.interrupt();
 					simExplore = null;
@@ -149,10 +147,19 @@ public class MainGUI extends JFrame{
 					simFastest = null;
 				}
 				if(simRealRun != null) {
+					System.out.println("RealRunGUIinterrupt");
+					
+				
+					TCPComm.getInstance().closeConnection();
 					simRealRun.interrupt();
 					simRealRun = null;
 				}
 				
+				if(simb4!=null) {
+					System.out.println("Enter");
+					simb4.interrupt();
+					simb4 = null;
+				}
 				
 				displayMsgToUI("Map and robot has been reset!");
 				//main.resetMap();
@@ -172,7 +179,7 @@ public class MainGUI extends JFrame{
 			}
     		
     	});
-    	b4.addActionListener(new ActionListener() {
+    	b3.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -187,7 +194,18 @@ public class MainGUI extends JFrame{
 			    	
 				}
 			});
-    	
+    	b4.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				
+			
+				simb4 = new Thread(new testingone());
+			    simb4.start();
+				
+			    	
+				}
+			});
     	
         // Define panels to hold the control buttons
         controlPanel = new JPanel();
@@ -225,10 +243,10 @@ public class MainGUI extends JFrame{
     	JTextArea ta_speed = new JTextArea("10");
     	JTextArea ta_timelimit = new JTextArea("0");
     	
-    	JButton upMoveBtn = new JButton("↑");
-    	JButton leftMoveBtn = new JButton("←");
-    	JButton rightMoveBtn= new JButton("→");
-    	JButton downMoveBtn = new JButton("↓");
+    	//JButton upMoveBtn = new JButton("↑");
+    	//JButton leftMoveBtn = new JButton("←");
+    	//JButton rightMoveBtn= new JButton("→");
+    	//JButton downMoveBtn = new JButton("↓");
     	
     	
     	JComboBox waypointRow_cb = new JComboBox(getNumString(1,18));
@@ -246,10 +264,10 @@ public class MainGUI extends JFrame{
         editTextArea.setEditable(false);
         scroll.getViewport().add(editTextArea);
         
-        upMoveBtn.setFont(new Font("Monospaced",Font.PLAIN,10));
-        leftMoveBtn.setFont(new Font("Monospaced",Font.PLAIN,10));
-        downMoveBtn.setFont(new Font("Monospaced",Font.PLAIN,10));
-        rightMoveBtn.setFont(new Font("Monospaced",Font.PLAIN,10));
+       // upMoveBtn.setFont(new Font("Monospaced",Font.PLAIN,10));
+       // leftMoveBtn.setFont(new Font("Monospaced",Font.PLAIN,10));
+       // downMoveBtn.setFont(new Font("Monospaced",Font.PLAIN,10));
+       // rightMoveBtn.setFont(new Font("Monospaced",Font.PLAIN,10));
         
         lb_percentDisplayHeader.setBounds(mainXcoord +10, mainYcoord +10,120,40);
         lb_percentDisplay.setBounds(mainXcoord+150,mainYcoord+10,120,40);
@@ -258,26 +276,26 @@ public class MainGUI extends JFrame{
         lb_timerDisplay.setBounds(mainXcoord + 150,mainYcoord+60,120,40);
         
          // Set the size (x, y, width, height) of the UI label
-        lb_movecontrol.setBounds(mainXcoord + 10, mainYcoord + 120,100,20);	
-        upMoveBtn.setBounds(mainXcoord + 210, mainYcoord + 110,40,30);	
-        leftMoveBtn.setBounds(mainXcoord + 150, mainYcoord + 150,45,30);	
-        downMoveBtn.setBounds(mainXcoord + 210, mainYcoord + 150,40,30);	
-        rightMoveBtn.setBounds(mainXcoord + 270, mainYcoord + 150,45,30);	
+        //lb_movecontrol.setBounds(mainXcoord + 10, mainYcoord + 120,100,20);	
+        //  upMoveBtn.setBounds(mainXcoord + 210, mainYcoord + 110,40,30);	
+        // leftMoveBtn.setBounds(mainXcoord + 150, mainYcoord + 150,45,30);	
+        //  downMoveBtn.setBounds(mainXcoord + 210, mainYcoord + 150,40,30);	
+        // rightMoveBtn.setBounds(mainXcoord + 270, mainYcoord + 150,45,30);	
         
-         lb_waypoint.setBounds(mainXcoord + 10, mainYcoord + 200,100,20);
-         waypointRow_cb.setBounds(mainXcoord + 150, mainYcoord + 200,100,30);
-         waypointCol_cb.setBounds(mainXcoord + 300, mainYcoord + 200,100,30);        
+         lb_waypoint.setBounds(mainXcoord + 10, mainYcoord + 110,100,20);
+         waypointRow_cb.setBounds(mainXcoord + 150, mainYcoord + 110,100,30);
+         waypointCol_cb.setBounds(mainXcoord + 300, mainYcoord + 110,100,30);        
          
-         lb_percent.setBounds(mainXcoord + 10, mainYcoord + 240,150,20);
-         ta_percent.setBounds(mainXcoord + 150, mainYcoord + 240,150,20);
+         lb_percent.setBounds(mainXcoord + 10, mainYcoord + 150,150,20);
+         ta_percent.setBounds(mainXcoord + 150, mainYcoord + 150,150,20);
            
-         lb_speed.setBounds(mainXcoord + 10, mainYcoord + 270,100,20);
-         ta_speed.setBounds(mainXcoord + 150, mainYcoord + 270,100,20);
+         lb_speed.setBounds(mainXcoord + 10, mainYcoord + 180,100,20);
+         ta_speed.setBounds(mainXcoord + 150, mainYcoord + 180,100,20);
          
-         lb_timelimit.setBounds(mainXcoord+ 10, mainYcoord + 300,100,20);
-         ta_timelimit.setBounds(mainXcoord+ 150, mainYcoord + 300,100,20);
+         lb_timelimit.setBounds(mainXcoord+ 10, mainYcoord + 210,100,20);
+         ta_timelimit.setBounds(mainXcoord+ 150, mainYcoord + 210,100,20);
          
-         scroll.setBounds(mainXcoord + 10, mainYcoord + 350,550,400);
+         scroll.setBounds(mainXcoord + 10, mainYcoord + 250,550,500);
         
          lb_percentDisplay.setPreferredSize(new Dimension(300, 700));
      	lb_percentDisplay.setOpaque(true);
@@ -299,11 +317,11 @@ public class MainGUI extends JFrame{
          add(lb_timerDisplay);
          add(lb_percentDisplay);
                 
-         add(lb_movecontrol);
-         add(upMoveBtn);
-         add(rightMoveBtn);
-         add(leftMoveBtn);
-         add(downMoveBtn);
+         //add(lb_movecontrol);
+         //add(upMoveBtn);
+         //add(rightMoveBtn);
+         //add(leftMoveBtn);
+         //add(downMoveBtn);
              
          add(lb_waypoint);
          add(waypointRow_cb);

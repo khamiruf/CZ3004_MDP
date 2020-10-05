@@ -71,8 +71,6 @@ public class simulateExploration1 implements Runnable{
 		
 		mGui.displayMsgToUI("SimulateExplorationThread Started");
 		
-		
-		while (!Thread.currentThread().isInterrupted()) {
 			try {
 				
 				initialiseTimer();
@@ -83,10 +81,10 @@ public class simulateExploration1 implements Runnable{
 					if(robot.isMovementValid(exploreMap, MOVEMENT.RIGHT)){
 						 robot.turn(MOVEMENT.RIGHT);
 						 
-	                        exploreMap.setExploredCells(robot, realMap);
-	                        displayToUI();			//repaint GUI to show turning
-	                        robot.move(MOVEMENT.FORWARD);
-	                        exploreMap.setExploredCells(robot, realMap);
+	                      exploreMap.setExploredCells(robot, realMap);
+	                      displayToUI();		
+	                      robot.move(MOVEMENT.FORWARD);
+	                      exploreMap.setExploredCells(robot, realMap);
 	                        
 			        }
 			        else if(robot.isMovementValid(exploreMap, MOVEMENT.FORWARD)){
@@ -97,41 +95,23 @@ public class simulateExploration1 implements Runnable{
 			        else if(robot.isMovementValid(exploreMap, MOVEMENT.LEFT)){
 			        	 robot.turn(MOVEMENT.LEFT);
 	                        exploreMap.setExploredCells(robot, realMap);
-	                       // mGui.paintResult();				//repaint GUI to show turning
-	                       // robot.move(MOVEMENT.FORWARD);                   
-	                       // exploreMap.setExploredCells(robot, realMap);
-	                      
+	                   
+	                      	                      
 			        }
 			        else if(robot.isMovementValid(exploreMap, MOVEMENT.BACKWARD)){
 			        	  robot.turn(MOVEMENT.RIGHT);
 	                        exploreMap.setExploredCells(robot, realMap);
-	                        displayToUI();					//repaint GUI to show turning
+	                        displayToUI();					
 	                        robot.turn(MOVEMENT.RIGHT);
 	                        exploreMap.setExploredCells(robot, realMap);      
-	                        displayToUI();					//repaint GUI to show turning
+	                        displayToUI();					
 	                        robot.move(MOVEMENT.FORWARD);
 	                        exploreMap.setExploredCells(robot, realMap);
 	                      
 			        }
-					displayToUI();					//repaint GUI to show moving forward
+					displayToUI();				
 	                
-					//Check coverage percentage
-					/*
-					currentCoverage = getMapPercentCoverage();
-					mGui.displayMapCoverToUI(currentCoverage);
-	                if(this.userPercent != 100) {	                	
-	                	if( currentCoverage> userPercent) {                		
-	                		return;
-	                	}
-	                }
-	                
-	                if(timeLimit != 0) {                	
-	                	if((int)mTimer.getElapsedTime()>=timeLimit) {
-	                		return;
-	                	}
-	                	
-	                }
-	                */
+					
 	                if(checkLimitConditions()) {
 	                	this.mTimer.cancel();
 	    				this.mTimer.purge();
@@ -151,124 +131,8 @@ public class simulateExploration1 implements Runnable{
 						unexploredList.remove(0);
 					}
 					else {
-						//printMovement(cellStep);
-						
-						int currRow = robot.getPosRow();
-					     int currCol = robot.getPosCol();
-					     
-						 for(int i=0; i < cellStep.size(); i++){
-					            int destRow = cellStep.get(i).getRowPos();
-					            int destCol = cellStep.get(i).getColPos();
-					            switch(robot.getCurrDir()){
-					                case NORTH:
-					                    if(currCol == destCol){
-					                        if(currRow < destRow){					                        	
-					                        	robot.move(MOVEMENT.FORWARD);
-					                        	}
-					                        else if(currRow > destRow){
-					                        	robot.turn(MOVEMENT.RIGHT); displayToUI();	
-					                        	robot.turn(MOVEMENT.RIGHT); displayToUI();	
-					                        	robot.move(MOVEMENT.FORWARD);
-					                        	}
-					                    }
-					                    else if(currRow == destRow){
-					                        if(currCol < destCol){
-					                        	robot.turn(MOVEMENT.RIGHT);displayToUI();	
-					                        	robot.move(MOVEMENT.FORWARD);
-					                        }
-					                        else if(currCol > destCol){
-					                        	robot.turn(MOVEMENT.LEFT);displayToUI();	
-					                        	robot.move(MOVEMENT.FORWARD);
-					                        }
-					                    }
-					                    break;
-					                case SOUTH:
-					                    if(currCol == destCol){
-					                        if(currRow < destRow){
-					                        	robot.turn(MOVEMENT.RIGHT);displayToUI();	
-					                        	robot.turn(MOVEMENT.RIGHT);displayToUI();	
-					                        	robot.move(MOVEMENT.FORWARD);
-					                        	}
-					                        else if(currRow > destRow){ 
-					                        	robot.move(MOVEMENT.FORWARD);
-					                        }
-					                    }
-					                    else if(currRow == destRow){
-					                        if(currCol < destCol){
-					                        	robot.turn(MOVEMENT.LEFT);displayToUI();	
-					                        	robot.move(MOVEMENT.FORWARD);
-					                        }
-					                        else if(currCol > destCol){ 
-					                        	robot.turn(MOVEMENT.RIGHT);displayToUI();	
-					                        	robot.move(MOVEMENT.FORWARD);
-					                        }
-					                    }
-					                    break;
-					                case EAST:
-					                    if(currCol == destCol){
-					                        if(currRow < destRow){
-					                        	robot.turn(MOVEMENT.LEFT); displayToUI();	
-					                        	robot.move(MOVEMENT.FORWARD);
-					                        }
-					                        else if(currRow > destRow){
-					                        	robot.turn(MOVEMENT.RIGHT); displayToUI();	
-					                        	robot.move(MOVEMENT.FORWARD);
-					                        }
-					                    }
-					                    else if(currRow == destRow){
-					                        if(currCol < destCol){
-					                        	robot.move(MOVEMENT.FORWARD);}
-					                        else if(currCol > destCol){
-					                        	robot.turn(MOVEMENT.RIGHT); displayToUI();	
-					                        	robot.turn(MOVEMENT.RIGHT); displayToUI();	
-					                        	robot.move(MOVEMENT.FORWARD);}
-					                    }
-					                    break;
-					                case WEST:
-					                if(currCol == destCol){
-					                    if(currRow < destRow){
-					                    	robot.turn(MOVEMENT.RIGHT); displayToUI();	
-					                    	robot.move(MOVEMENT.FORWARD);
-					                    	}
-					                    else if(currRow > destRow){
-					                    	robot.turn(MOVEMENT.LEFT); displayToUI();	
-					                    	robot.move(MOVEMENT.FORWARD);
-					                    	}
-					                }
-					                else if(currRow == destRow){
-					                    if(currCol < destCol){
-					                    	robot.turn(MOVEMENT.RIGHT); displayToUI();	
-					                    	robot.turn(MOVEMENT.RIGHT); displayToUI();	
-					                    	robot.move(MOVEMENT.FORWARD);
-					                    	}
-					                    else if(currCol > destCol){ 
-					                    	robot.move(MOVEMENT.FORWARD);
-					                    	}
-					                }
-					                break;
-					            }
-					            exploreMap.setExploredCells(robot, realMap);
-					            displayToUI();						//repaint GUI to show robot movement on map
-				          							            
-					            currRow = robot.getPosRow();
-					            currCol = robot.getPosCol();
-					            System.out.println("Location: " + currRow + "_" +currCol);
-					        }
-						
-						//exploreMap.setExploredCells(robot, realMap);
-						//displayToUI();
-						
-						//Check coverage percentage
-						/*
-						currentCoverage = getMapPercentCoverage();
-						mGui.displayMapCoverToUI(currentCoverage);
-		                if(this.userPercent != 100) {	                	
-		                	if( currentCoverage> userPercent) {                		
-		                		return;
-		                	}
-		                }
-		                */
-						
+						printMovement(cellStep);
+																	
 						 if(checkLimitConditions()) {
 								this.mTimer.cancel();
 								this.mTimer.purge();
@@ -279,27 +143,7 @@ public class simulateExploration1 implements Runnable{
 				}
 					
 					
-				
-				
-				/*
-				Cell unexploredCell = getUnexploredCell(exploreMap);
-				list
-				if(unexploredCell!=null) {
-					FastestPath fastobj = new FastestPath(robot, exploreMap);
-					
-					while(unexploredCell != null) {
-					System.out.println("UnexploredLoc:" + unexploredCell.getRowPos() + "_"+ unexploredCell.getColPos());	
-					ArrayList<Cell> cellStep = fastobj.calculateFastestPath2(exploreMap, unexploredCell.getRowPos(), unexploredCell.getColPos());
-					if(null){add UnexploredCell to a list}
-					printMovement(cellStep);
-					exploreMap.setExploredCells(robot, realMap);
-					mGui.paintResult(exploreMap, robot);
-					unexploredCell = getUnexploredCell(exploreMap);
-					fastobj.setMockRobot(robot);	
-					}
-				}
-				*/
-				//System.out.println("ZW: " + robot.getPosRow() +"_"+ robot.getPosCol());
+							
 				if(!exploreMap.checkIfRobotAtStartPos(robot)) {
 					FastestPath fastobj = new FastestPath(robot, exploreMap);
 					ArrayList<Cell> cellStep = fastobj.calculateFastestPath(exploreMap, exploreMap.getStartGoalPosition().getRowPos(), exploreMap.getStartGoalPosition().getColPos());
@@ -310,29 +154,39 @@ public class simulateExploration1 implements Runnable{
 				this.mTimer.cancel();
 				this.mTimer.purge();
 				
-					break;  	//break out from thread
+					
 					
 			} catch (InterruptedException e) {
-				mGui.displayMsgToUI("SimulateExplorationThread Interrupted!");
 				this.mTimer.cancel();
 				this.mTimer.purge();
+				mGui.displayMsgToUI("SimulateExplorationThread Interrupted!");
+				return;
+			}
+			catch(Exception e) {
+				this.mTimer.cancel();
+				this.mTimer.purge();
+				mGui.displayMsgToUI("SimulateExplorationThread unknown error: "+ e.getMessage());
 				return;
 			}
 			
 			
-		}
-		mGui.printFinal();			//Print the final map that robot knows on system console
-		mGui.displayMsgToUI("MDF1: " + exploreMap.getMDF1());
-		mGui.displayMsgToUI("MDF2: " + exploreMap.getMDF2());
-		System.out.println("MDF1: " + exploreMap.getMDF1());
-		System.out.println("MDF2: " + exploreMap.getMDF2());
-		try {
-			this.playSpeed=1;
-			faceNorthDirection();
-		} catch (InterruptedException e) {
+			this.mTimer.cancel();
+			this.mTimer.purge();
+			mGui.printFinal();			//Print the final map that robot knows on system console
+			mGui.displayMsgToUI("MDF1: " + exploreMap.getMDF1());
+			mGui.displayMsgToUI("MDF2: " + exploreMap.getMDF2());
+			System.out.println("MDF1: " + exploreMap.getMDF1());
+			System.out.println("MDF2: " + exploreMap.getMDF2());
+			try {
+				this.playSpeed=1;
+				faceNorthDirection();
+			} catch (InterruptedException e) {
+				
+				e.printStackTrace();
+			}
 			
-			e.printStackTrace();
-		}
+			printVirtualWall();
+		
 	}
 	
 	private void printMovement(ArrayList<Cell> cellStep) throws InterruptedException {
@@ -453,7 +307,7 @@ public class simulateExploration1 implements Runnable{
 	            
 	            currRow = robot.getPosRow();
 	            currCol = robot.getPosCol();
-	            System.out.println("Location: " + currRow + "_" +currCol);
+	            System.out.println("Robot Scan at: " + currRow + "_" +currCol);
 	        }
 		
 		
@@ -480,22 +334,7 @@ public class simulateExploration1 implements Runnable{
 		return unexploredList;
 		 
 	}
-	
-	private Cell getUnexploredCell(Map exploredMap) {
-		
-		Cell unexploredCell;
-		
-	      for (int r = 0; r < Constants.MAX_ROW; r++) {
-	            for (int c = 0; c < Constants.MAX_COL; c++) {
-	                Cell cell = exploredMap.getMapGrid()[r][c];
-	                if(cell.getExploredState()==false) {
-	                 return cell;
-	                }
-	            }
-	        }
-		return null;
-	}
-	
+
 	
 	private ArrayList<Cell> updateUnexploreList(ArrayList<Cell> clist) {
 		for(int i = 0;i<clist.size();i++) {
@@ -539,15 +378,7 @@ public class simulateExploration1 implements Runnable{
         if(this.timeLimit != 0 && timerStop) {
         	return true;
         }
-        /*
-        mGui.displayTimerToUI((int)mTimer.getElapsedTime());
-        if(this.timeLimit != 0) {                	
-        	if((int)mTimer.getElapsedTime()>=this.timeLimit) {
-        		return true;
-        	}
-        	
-        }
-        */
+     
 		return false;		
 	}
 	
@@ -586,37 +417,43 @@ public class simulateExploration1 implements Runnable{
 				timeElapsed = (System.currentTimeMillis() - startTime) / 1000;
 				mGui.displayTimerToUI((int)timeElapsed);
 				if(timeLimit != 0) {
-					//System.out.println((int)timeElapsed +"-" +timeLimit);
-					if((int)timeElapsed>=timeLimit) {
-						//System.out.println("Ent");
+			
+					if((int)timeElapsed>=timeLimit) {					
 						timerStop= true;
 					}
 				}
-				/*
-				long timeLimitMillis = TimeUnit.MINUTES.toMillis(timeLimit[0])
-						+ TimeUnit.SECONDS.toMillis(timeLimit[1]);
-
-				if (timeLimitMillis != 0) {
-					long timeDifference = timeLimitMillis - timeElapsed;
-					long minutesLeft = TimeUnit.MILLISECONDS.toMinutes(timeDifference);
-					long secondsLeft = TimeUnit.MILLISECONDS.toSeconds(timeDifference + 10);
-
-					if (secondsLeft <= 0) {
-						System.out.println("Time limit reached - stop exploration.");
-						timerStop = true;
-					}
-
-					gui.setTimer(String.format("%02d", minutesLeft) + ":" + String.format("%02d", secondsLeft % 60));
-				} else {
-					gui.setTimer(String.format("%02d", TimeUnit.MILLISECONDS.toMinutes(timeElapsed)) + ":"
-							+ String.format("%02d", TimeUnit.MILLISECONDS.toSeconds(timeElapsed) % 60));
-				}*/
-				
-				
+						
 			}
 		}, 0, 1000);
 	}
-	
+	  public void printVirtualWall() {
+	    			
+			for(int i=Constants.MAX_ROW-1;i>=0;i--) {
+				
+				for(int y=0;y<Constants.MAX_COL;y++) {
+					Cell cellObj = exploreMap.getMapGrid()[i][y];
+					if(cellObj.getExploredState()) {
+						if(cellObj.isVirtualWall()&& !cellObj.isObstacle()) {
+							System.out.print("W"+" ");
+							
+						}
+						else if(cellObj.isObstacle()) {
+							System.out.print("X"+" ");
+							
+						}
+						else
+							System.out.print("O"+" ");
+					}
+					else {
+						System.out.print("Z"+" ");
+						
+					}
+				}
+				System.out.println("");
+				
+			}
+		
+		}
 }
 
 

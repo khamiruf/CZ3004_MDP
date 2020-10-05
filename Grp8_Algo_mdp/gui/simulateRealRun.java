@@ -21,92 +21,80 @@ public class simulateRealRun implements Runnable {
 		this.mGui = mGUI;
 		this.exploreMap = eMap;
 		this.robot = rBot;
-		this.tcpObj = new TCPComm();
-		//tcpObj = TCPComm.getInstance();
-		//tcpObj.establishConnection(mGui);
-
+		this.tcpObj = TCPComm.getInstance();
+	
 	}
 
 	@Override
 	public void run() {
 		
-		mGui.displayMsgToUI("RealRun Started!");
+		mGui.displayMsgToUI("RealRunThread Started!");
 
-		while (!Thread.currentThread().isInterrupted()) {
 			try {
-				String obst ="";
 				
 				establishCommsToRPI();
-								
-				mGui.displayMsgToUI("Waiting for start coordinate...");
-				//String recMsg = tcpObj.readMessage();
+				checkandPlotSC();	//waiting for start coord from RPI
+				displayToUI();
+				mGui.displayMsgToUI("Exploration Started, Waiting for sensor data...");
+			
 				String recMsg = readMsg();
-				mGui.displayMsgToUI("Exploration Started, Waiting for sensor data... : ");
-				//recMsg = tcpObj.readMessage();
-				recMsg = readMsg();
-				sendToAndroid(exploreMap.setExploredCells(robot, recMsg));
-				
-				//Thread.sleep((long) (0.5 * 1000));
+				sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+								
 				displayToUI();
 				
 				do {
 
 					if (robot.isMovementValid(exploreMap, MOVEMENT.RIGHT)) {
 						robot.turn(MOVEMENT.RIGHT);
-						//tcpObj.sendMessage("EX|R0");
-						//recMsg = tcpObj.readMessage();
-						sendMsg("EX|R0");
+						sendMsg("EX|R0"+ exploreMap.rpiImageString(robot));
 						recMsg = readMsg();
-						sendToAndroid(exploreMap.setExploredCells(robot, recMsg));
+						sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
 						displayToUI(); 
 						
 						robot.move(MOVEMENT.FORWARD);
-						//tcpObj.sendMessage("EX|F01");
-						//recMsg = tcpObj.readMessage();
-						sendMsg("EX|F01");
+						sendMsg("EX|F01"+ exploreMap.rpiImageString(robot));
 						recMsg = readMsg();
-						sendToAndroid(exploreMap.setExploredCells(robot, recMsg));
+						sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
 
 					} else if (robot.isMovementValid(exploreMap, MOVEMENT.FORWARD)) {
 						robot.move(MOVEMENT.FORWARD);
-						//tcpObj.sendMessage("EX|F01");
-						//recMsg = tcpObj.readMessage();
-						sendMsg("EX|F01");
+						
+						sendMsg("EX|F01"+ exploreMap.rpiImageString(robot));
 						recMsg = readMsg();
-						sendToAndroid(exploreMap.setExploredCells(robot, recMsg));
+						sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
 
 					} else if (robot.isMovementValid(exploreMap, MOVEMENT.LEFT)) {
 						robot.turn(MOVEMENT.LEFT);
-						//tcpObj.sendMessage("EX|L0");
-						//recMsg = tcpObj.readMessage();
-						sendMsg("EX|L0");
+					
+						sendMsg("EX|L0"+ exploreMap.rpiImageString(robot));
 						recMsg = readMsg();
-						sendToAndroid(exploreMap.setExploredCells(robot, recMsg));
+						sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
 						
 					} else if (robot.isMovementValid(exploreMap, MOVEMENT.BACKWARD)) {
 						robot.turn(MOVEMENT.RIGHT);
-						//tcpObj.sendMessage("EX|R0");
-						//recMsg = tcpObj.readMessage();
-						sendMsg("EX|R0");
+						
+						sendMsg("EX|R0"+ exploreMap.rpiImageString(robot));
 						recMsg = readMsg();
-						sendToAndroid(exploreMap.setExploredCells(robot, recMsg));
-						displayToUI(); // repaint GUI to show turning
+						sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+						displayToUI();
 						
 						robot.turn(MOVEMENT.RIGHT);
-						//tcpObj.sendMessage("EX|R0");
-						//recMsg = tcpObj.readMessage();
-						sendMsg("EX|R0");
+						
+						sendMsg("EX|R0"+ exploreMap.rpiImageString(robot));
 						recMsg = readMsg();
-						sendToAndroid(exploreMap.setExploredCells(robot, recMsg));
+						sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
 						displayToUI();
 						
 						robot.move(MOVEMENT.FORWARD);
-						//tcpObj.sendMessage("EX|F01");
-						//recMsg = tcpObj.readMessage();
-						sendMsg("EX|F01");
+					
+						sendMsg("EX|F01"+ exploreMap.rpiImageString(robot));
 						recMsg = readMsg();
-						sendToAndroid(exploreMap.setExploredCells(robot, recMsg));
+						sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
 
+					}
+					else {
+						//No Valid movement, therefore throw an exception to display error msg & close connection		
+						throw new Exception("No Valid Movement for Exploration! kill thread...");
 					}
 					displayToUI(); 
 
@@ -123,203 +111,7 @@ public class simulateRealRun implements Runnable {
 					if (cellStep == null) {
 						unexploredList.remove(0);
 					} else {
-						
-
-						int currRow = robot.getPosRow();
-						int currCol = robot.getPosCol();
-
-						for (int i = 0; i < cellStep.size(); i++) {
-							int destRow = cellStep.get(i).getRowPos();
-							int destCol = cellStep.get(i).getColPos();
-							switch (robot.getCurrDir()) {
-							case NORTH:
-								if (currCol == destCol) {
-									if (currRow < destRow) {
-										robot.move(MOVEMENT.FORWARD);
-										sendMsg("EX|F01");
-									} else if (currRow > destRow) {
-										robot.turn(MOVEMENT.RIGHT);
-										sendMsg("EX|R0");
-										recMsg = readMsg();
-										sendToAndroid(exploreMap.setExploredCells(robot, recMsg));
-										displayToUI();
-										
-										robot.turn(MOVEMENT.RIGHT);
-										sendMsg("EX|R0");
-										recMsg = readMsg();
-										sendToAndroid(exploreMap.setExploredCells(robot, recMsg));
-										displayToUI();
-										
-										robot.move(MOVEMENT.FORWARD);
-										sendMsg("EX|F01");
-									}
-								} else if (currRow == destRow) {
-									if (currCol < destCol) {
-										robot.turn(MOVEMENT.RIGHT);
-										sendMsg("EX|R0");
-										recMsg = readMsg();
-										sendToAndroid(exploreMap.setExploredCells(robot, recMsg));
-										displayToUI();
-										
-										robot.move(MOVEMENT.FORWARD);
-										sendMsg("EX|F01");
-									} else if (currCol > destCol) {
-										robot.turn(MOVEMENT.LEFT);
-										sendMsg("EX|L0");
-										recMsg = readMsg();
-										sendToAndroid(exploreMap.setExploredCells(robot, recMsg));
-										displayToUI();
-										
-										robot.move(MOVEMENT.FORWARD);
-										sendMsg("EX|F01");
-									}
-								}
-								break;
-							case SOUTH:
-								if (currCol == destCol) {
-									if (currRow < destRow) {
-										robot.turn(MOVEMENT.RIGHT);
-										sendMsg("EX|R0");
-										recMsg = readMsg();
-										sendToAndroid(exploreMap.setExploredCells(robot, recMsg));
-										displayToUI();
-										
-										robot.turn(MOVEMENT.RIGHT);
-										sendMsg("EX|R0");
-										recMsg = readMsg();
-										sendToAndroid(exploreMap.setExploredCells(robot, recMsg));
-										displayToUI();
-										
-										robot.move(MOVEMENT.FORWARD);
-										sendMsg("EX|F01");
-										
-									} else if (currRow > destRow) {
-										robot.move(MOVEMENT.FORWARD);
-										sendMsg("EX|F01");
-									}
-								} else if (currRow == destRow) {
-									if (currCol < destCol) {
-										robot.turn(MOVEMENT.LEFT);
-										sendMsg("EX|L0");
-										recMsg = readMsg();
-										sendToAndroid(exploreMap.setExploredCells(robot, recMsg));
-										displayToUI();
-										
-										robot.move(MOVEMENT.FORWARD);
-										sendMsg("EX|F01");
-										
-									} else if (currCol > destCol) {
-										robot.turn(MOVEMENT.RIGHT);
-										sendMsg("EX|R0");
-										recMsg = readMsg();
-										sendToAndroid(exploreMap.setExploredCells(robot, recMsg));
-										displayToUI();
-										
-										robot.move(MOVEMENT.FORWARD);
-										sendMsg("EX|F01");
-									}
-								}
-								break;
-							case EAST:
-								if (currCol == destCol) {
-									if (currRow < destRow) {
-										robot.turn(MOVEMENT.LEFT);
-										sendMsg("EX|L0");
-										recMsg = readMsg();
-										sendToAndroid(exploreMap.setExploredCells(robot, recMsg));
-										
-										displayToUI();
-										
-										robot.move(MOVEMENT.FORWARD);
-										sendMsg("EX|F01");
-										
-									} else if (currRow > destRow) {
-										robot.turn(MOVEMENT.RIGHT);
-										sendMsg("EX|R0");
-										recMsg = readMsg();
-										sendToAndroid(exploreMap.setExploredCells(robot, recMsg));
-										displayToUI();
-										
-										robot.move(MOVEMENT.FORWARD);
-										sendMsg("EX|F01");
-									}
-								} else if (currRow == destRow) {
-									if (currCol < destCol) {
-										robot.move(MOVEMENT.FORWARD);
-										sendMsg("EX|F01");
-									} else if (currCol > destCol) {
-										robot.turn(MOVEMENT.RIGHT);
-										sendMsg("EX|R0");
-										recMsg = readMsg();
-										sendToAndroid(exploreMap.setExploredCells(robot, recMsg));
-										displayToUI();
-										
-										robot.turn(MOVEMENT.RIGHT);
-										sendMsg("EX|R0");
-										recMsg = readMsg();
-										sendToAndroid(exploreMap.setExploredCells(robot, recMsg));
-										displayToUI();
-										
-										robot.move(MOVEMENT.FORWARD);
-										sendMsg("EX|F01");
-									}
-								}
-								break;
-							case WEST:
-								if (currCol == destCol) {
-									if (currRow < destRow) {
-										robot.turn(MOVEMENT.RIGHT);
-										sendMsg("EX|R0");
-										recMsg = readMsg();
-										sendToAndroid(exploreMap.setExploredCells(robot, recMsg));
-										displayToUI();
-										
-										robot.move(MOVEMENT.FORWARD);
-										sendMsg("EX|F01");
-							
-									} else if (currRow > destRow) {
-										robot.turn(MOVEMENT.LEFT);
-										sendMsg("EX|L0");
-										recMsg = readMsg();
-										sendToAndroid(exploreMap.setExploredCells(robot, recMsg));
-										displayToUI();
-										
-										robot.move(MOVEMENT.FORWARD);
-										sendMsg("EX|F01");
-									}
-								} else if (currRow == destRow) {
-									if (currCol < destCol) {
-										robot.turn(MOVEMENT.RIGHT);
-										sendMsg("EX|R0");
-										recMsg = readMsg();
-										sendToAndroid(exploreMap.setExploredCells(robot, recMsg));
-										displayToUI();
-										
-										robot.turn(MOVEMENT.RIGHT);
-										sendMsg("EX|R0");
-										recMsg = readMsg();
-										sendToAndroid(exploreMap.setExploredCells(robot, recMsg));
-										displayToUI();
-										
-										robot.move(MOVEMENT.FORWARD);
-										sendMsg("EX|F01");
-									} else if (currCol > destCol) {
-										robot.move(MOVEMENT.FORWARD);
-										sendMsg("EX|F01");
-									}
-								}
-								break;
-							}
-							//recMsg = tcpObj.readMessage();
-							recMsg = readMsg();
-							sendToAndroid(exploreMap.setExploredCells(robot, recMsg));
-							displayToUI(); // repaint GUI to show robot movement on map
-
-							currRow = robot.getPosRow();
-							currCol = robot.getPosCol();
-							
-						}
-
+						printMovement(cellStep,true);
 						unexploredList = updateUnexploreList(unexploredList);
 					}
 				}
@@ -330,227 +122,326 @@ public class simulateRealRun implements Runnable {
 					ArrayList<Cell> cellStep = fastobj.calculateFastestPath(exploreMap,
 							exploreMap.getStartGoalPosition().getRowPos(),
 							exploreMap.getStartGoalPosition().getColPos());
-					printMovement(cellStep);
+					printMovement(cellStep,false);
 
 				}
 				
+				
+				
+				//============== Calibrating Robot to face North ============
+				faceNorthDirection();
+				sendMsg("N|"); 	//Send to Arduino to signify end of exploration		
+				
+				//============== Sending MDF to Android ===========================
+				String mdfvalue1 = exploreMap.getMDF1();
+				String mdfvalue2 = exploreMap.getMDF2();
+				sendMDFInfo(mdfvalue1,mdfvalue2); // Sending MDF1&2 to RPI
 				mGui.printFinal(); // Print the final map that robot knows on system console
 				mGui.displayMsgToUI("MDF1: " + exploreMap.getMDF1());
 				mGui.displayMsgToUI("MDF2: " + exploreMap.getMDF2());
 				System.out.println("MDF1: " + exploreMap.getMDF1());
 				System.out.println("MDF2: " + exploreMap.getMDF2());
 				
-				//=========== Calibrating Robot to face North ============
-				faceNorthDirection();
 				
 				//==================== Fastest Path =========================
 				 mGui.displayMsgToUI("Starting Fastest Path..");
+				 /*
 				 FastestPath fastestPath = new FastestPath(this.robot, exploreMap);
 				 ArrayList<Cell> cellsInPath  = fastestPath.calculateFastestPath(exploreMap, exploreMap.getWayPoint().getRowPos(), exploreMap.getWayPoint().getColPos());
 				 sendMsg(convertCellsToMovements(cellsInPath));
-				 printMoveONLY(cellsInPath);
+				 printMovement(cellsInPath, false);
 				
 				 fastestPath = new FastestPath(this.robot, exploreMap);
 				 cellsInPath = fastestPath.calculateFastestPath(exploreMap, exploreMap.getEndGoalPosition().getRowPos(), exploreMap.getEndGoalPosition().getColPos());
 				 sendMsg(convertCellsToMovements(cellsInPath));
-			     printMoveONLY(cellsInPath);
+			     printMovement(cellsInPath, false);
+				*/
+				FastestPath fastestPath = new FastestPath(this.robot,exploreMap);
+				ArrayList<Cell> cellsInPath=fastestPath.findAllWPEndPaths(exploreMap);	
+				String movementString = convertCellsToMovements(cellsInPath); //Generate movement string based on cell list.
+				waitForFastestPath();	   // Waiting for fastest path command 
+				sendMsg(movementString);
 				
-				
-				break; // break out from thread
-
 			} catch (InterruptedException e) {
-				mGui.displayMsgToUI("**********   ReadRun Thread Interrupted!   **********");
-
-				return;
+				System.out.println("RealRun thread InterruptedException" + e.getMessage());
+				//mGui.displayMsgToUI("**********   RealRun Thread Interrupted!   **********");
+				tcpObj.closeConnection();
+				
 			}
-
-		}
-		
-		
+			catch(Exception e) {
+				System.out.println("RealRun thread exception.."+ e.getMessage());
+				//mGui.displayMsgToUI("RealRun thread Exception Error: " + e.getMessage());
+				tcpObj.closeConnection();
+				
+			}
+				
 		mGui.displayMsgToUI("**********   RealRun Thread Ended Successfully!  ************ ");
 	}
 
-	//This method is movement of robot WITHOUT reading sensors value
-	private void printMovement(ArrayList<Cell> cellStep) throws InterruptedException {
-		int currRow = robot.getPosRow();
-		int currCol = robot.getPosCol();
 
-		for (int i = 0; i < cellStep.size(); i++) {
-			int destRow = cellStep.get(i).getRowPos();
-			int destCol = cellStep.get(i).getColPos();
-			switch (robot.getCurrDir()) {
-			case NORTH:
-				if (currCol == destCol) {
-					if (currRow < destRow) {
+	/**
+	 * This method move and send movement commands meant for fastest path. 
+	 * @param cellStep ArrayList of cells the robot need to move to.
+	 * @param setSensorData To accept sensor data and send obstacle data to android. TRUE is to send. FALSE to ignore sensor
+	 * @throws InterruptedException
+	 */
+		private void printMovement(ArrayList<Cell> cellStep, boolean setSensorData) throws InterruptedException {
+			int currRow = robot.getPosRow();
+			int currCol = robot.getPosCol();
+			String recMsg="";
+			for (int i = 0; i < cellStep.size(); i++) {
+				int destRow = cellStep.get(i).getRowPos();
+				int destCol = cellStep.get(i).getColPos();
+				switch (robot.getCurrDir()) {
+				case NORTH:
+					if (currCol == destCol) {
+						if (currRow < destRow) {
+							robot.move(MOVEMENT.FORWARD);
+							sendMsg("EX|F01"+ exploreMap.rpiImageString(robot));
+							
+						} else if (currRow > destRow) {
+							robot.turn(MOVEMENT.RIGHT);
+							sendMsg("EX|R0"+ exploreMap.rpiImageString(robot));
+							recMsg = readMsg();
+							if(setSensorData) {sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));}
+							displayToUI();
+							
+							robot.turn(MOVEMENT.RIGHT);
+							sendMsg("EX|R0"+ exploreMap.rpiImageString(robot));
+							recMsg = readMsg();
+							if(setSensorData) {sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));}
+							displayToUI();
+							
+							robot.move(MOVEMENT.FORWARD);
+							sendMsg("EX|F01"+ exploreMap.rpiImageString(robot));
+						}
+					} else if (currRow == destRow) {
+						if (currCol < destCol) {
+							robot.turn(MOVEMENT.RIGHT);
+							sendMsg("EX|R0"+ exploreMap.rpiImageString(robot));
+							recMsg = readMsg();
+							if(setSensorData) {sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));}
+							displayToUI();
+							
+							robot.move(MOVEMENT.FORWARD);
+							sendMsg("EX|F01"+ exploreMap.rpiImageString(robot));
+						} else if (currCol > destCol) {
+							robot.turn(MOVEMENT.LEFT);
+							sendMsg("EX|L0"+ exploreMap.rpiImageString(robot));
+							recMsg = readMsg();
+							if(setSensorData) {sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));}
+							displayToUI();
+							
+							robot.move(MOVEMENT.FORWARD);
+							sendMsg("EX|F01"+ exploreMap.rpiImageString(robot));
+						}
+					}
+					break;
+				case SOUTH:
+					if (currCol == destCol) {
+						if (currRow < destRow) {
+							robot.turn(MOVEMENT.RIGHT);
+							sendMsg("EX|R0"+ exploreMap.rpiImageString(robot));
+							recMsg = readMsg();
+							if(setSensorData) {sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));}
+							displayToUI();
+							
+							robot.turn(MOVEMENT.RIGHT);
+							sendMsg("EX|R0"+ exploreMap.rpiImageString(robot));
+							recMsg = readMsg();
+							if(setSensorData) {sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));}
+							displayToUI();
+							
+							robot.move(MOVEMENT.FORWARD);
+							sendMsg("EX|F01"+ exploreMap.rpiImageString(robot));
+							
+						} else if (currRow > destRow) {
+							robot.move(MOVEMENT.FORWARD);
+							sendMsg("EX|F01"+ exploreMap.rpiImageString(robot));
+						}
+					} else if (currRow == destRow) {
+						if (currCol < destCol) {
+							robot.turn(MOVEMENT.LEFT);
+							sendMsg("EX|L0"+ exploreMap.rpiImageString(robot));
+							recMsg = readMsg();
+							if(setSensorData) {sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));}
+							displayToUI();
+							
+							robot.move(MOVEMENT.FORWARD);
+							sendMsg("EX|F01"+ exploreMap.rpiImageString(robot));
+						} else if (currCol > destCol) {
+							robot.turn(MOVEMENT.RIGHT);
+							sendMsg("EX|R0"+ exploreMap.rpiImageString(robot));
+							recMsg = readMsg();
+							if(setSensorData) {sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));}
+							displayToUI();
+							
+							robot.move(MOVEMENT.FORWARD);
+							sendMsg("EX|F01"+ exploreMap.rpiImageString(robot));
+						}
+					}
+					break;
+				case EAST:
+					if (currCol == destCol) {
+						if (currRow < destRow) {
+							robot.turn(MOVEMENT.LEFT);
+							sendMsg("EX|L0"+ exploreMap.rpiImageString(robot));
+							recMsg = readMsg();
+							if(setSensorData) {sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));}
+							displayToUI();
+							
+							robot.move(MOVEMENT.FORWARD);
+							sendMsg("EX|F01"+ exploreMap.rpiImageString(robot));
+						} else if (currRow > destRow) {
+							robot.turn(MOVEMENT.RIGHT);
+							sendMsg("EX|R0"+ exploreMap.rpiImageString(robot));
+							recMsg = readMsg();
+							if(setSensorData) {sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));}
+							displayToUI();
+							
+							robot.move(MOVEMENT.FORWARD);
+							sendMsg("EX|F01"+ exploreMap.rpiImageString(robot));
+						}
+					} else if (currRow == destRow) {
+						if (currCol < destCol) {
+							robot.move(MOVEMENT.FORWARD);
+							sendMsg("EX|F01"+ exploreMap.rpiImageString(robot));
+						} else if (currCol > destCol) {
+							robot.turn(MOVEMENT.RIGHT);
+							sendMsg("EX|R0"+ exploreMap.rpiImageString(robot));
+							recMsg = readMsg();
+							if(setSensorData) {
+								sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+							}
+							displayToUI();
+							
+							robot.turn(MOVEMENT.RIGHT);
+							sendMsg("EX|R0"+ exploreMap.rpiImageString(robot));
+							recMsg = readMsg();
+							if(setSensorData) {sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));}
+							displayToUI();
+							
+							robot.move(MOVEMENT.FORWARD);
+							sendMsg("EX|F01"+ exploreMap.rpiImageString(robot));
+						}
+					}
+					break;
+				case WEST:
+					if (currCol == destCol) {
+						if (currRow < destRow) {
+							robot.turn(MOVEMENT.RIGHT);
+							sendMsg("EX|R0"+ exploreMap.rpiImageString(robot));
+							recMsg = readMsg();
+							if(setSensorData) {sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));}
+							displayToUI();
+							
+							robot.move(MOVEMENT.FORWARD);
+							sendMsg("EX|F01"+ exploreMap.rpiImageString(robot));
+						} else if (currRow > destRow) {
+							robot.turn(MOVEMENT.LEFT);
+							sendMsg("EX|L0"+ exploreMap.rpiImageString(robot));
+							recMsg = readMsg();
+							if(setSensorData) {sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));}
+							displayToUI();
+							
+							robot.move(MOVEMENT.FORWARD);
+							sendMsg("EX|F01"+ exploreMap.rpiImageString(robot));
+						}
+					} else if (currRow == destRow) {
+						if (currCol < destCol) {
+							robot.turn(MOVEMENT.RIGHT);
+							sendMsg("EX|R0"+ exploreMap.rpiImageString(robot));
+							recMsg = readMsg();
+							if(setSensorData) {sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));}
+							displayToUI();
+							
+							robot.turn(MOVEMENT.RIGHT);
+							sendMsg("EX|R0"+ exploreMap.rpiImageString(robot));
+							recMsg = readMsg();
+							if(setSensorData) {sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));}
+							displayToUI();
+							
+							robot.move(MOVEMENT.FORWARD);
+							sendMsg("EX|F01"+ exploreMap.rpiImageString(robot));
+							
+						} else if (currCol > destCol) {
+							robot.move(MOVEMENT.FORWARD);
+							sendMsg("EX|F01"+ exploreMap.rpiImageString(robot));
+						}
+					}
+					break;
+				}
+			
+				recMsg = readMsg();
+				if(setSensorData) {sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));}
+				displayToUI(); 
 
-						robot.move(MOVEMENT.FORWARD);
-						sendMsg("EX|F01");
-					} else if (currRow > destRow) {
-						robot.turn(MOVEMENT.RIGHT);
-						sendMsg("EX|R0");
-						readMsg();
-						displayToUI();
-						
-						robot.turn(MOVEMENT.RIGHT);
-						sendMsg("EX|R0");
-						readMsg();
-						displayToUI();
-						
-						robot.move(MOVEMENT.FORWARD);
-						sendMsg("EX|F01");
-					}
-				} else if (currRow == destRow) {
-					if (currCol < destCol) {
-						robot.turn(MOVEMENT.RIGHT);
-						sendMsg("EX|R0");
-						readMsg();
-						displayToUI();
-						
-						robot.move(MOVEMENT.FORWARD);
-						sendMsg("EX|F01");
-					} else if (currCol > destCol) {
-						robot.turn(MOVEMENT.LEFT);
-						sendMsg("EX|L0");
-						readMsg();
-						displayToUI();
-						
-						robot.move(MOVEMENT.FORWARD);
-						sendMsg("EX|F01");
-					}
-				}
-				break;
-			case SOUTH:
-				if (currCol == destCol) {
-					if (currRow < destRow) {
-						robot.turn(MOVEMENT.RIGHT);
-						sendMsg("EX|R0");
-						readMsg();
-						displayToUI();
-						
-						robot.turn(MOVEMENT.RIGHT);
-						sendMsg("EX|R0");
-						readMsg();
-						displayToUI();
-						
-						robot.move(MOVEMENT.FORWARD);
-						sendMsg("EX|F01");
-						
-					} else if (currRow > destRow) {
-						robot.move(MOVEMENT.FORWARD);
-						sendMsg("EX|F01");
-					}
-				} else if (currRow == destRow) {
-					if (currCol < destCol) {
-						robot.turn(MOVEMENT.LEFT);
-						sendMsg("EX|L0");
-						readMsg();
-						displayToUI();
-						
-						robot.move(MOVEMENT.FORWARD);
-						sendMsg("EX|F01");
-					} else if (currCol > destCol) {
-						robot.turn(MOVEMENT.RIGHT);
-						sendMsg("EX|R0");
-						readMsg();
-						displayToUI();
-						
-						robot.move(MOVEMENT.FORWARD);
-						sendMsg("EX|F01");
-					}
-				}
-				break;
-			case EAST:
-				if (currCol == destCol) {
-					if (currRow < destRow) {
-						robot.turn(MOVEMENT.LEFT);
-						sendMsg("EX|L0");
-						readMsg();
-						displayToUI();
-						
-						robot.move(MOVEMENT.FORWARD);
-						sendMsg("EX|F01");
-					} else if (currRow > destRow) {
-						robot.turn(MOVEMENT.RIGHT);
-						sendMsg("EX|R0");
-						readMsg();
-						displayToUI();
-						
-						robot.move(MOVEMENT.FORWARD);
-						sendMsg("EX|F01");
-					}
-				} else if (currRow == destRow) {
-					if (currCol < destCol) {
-						robot.move(MOVEMENT.FORWARD);
-						sendMsg("EX|F01");
-					} else if (currCol > destCol) {
-						robot.turn(MOVEMENT.RIGHT);
-						sendMsg("EX|R0");
-						readMsg();
-						displayToUI();
-						
-						robot.turn(MOVEMENT.RIGHT);
-						sendMsg("EX|R0");
-						readMsg();
-						displayToUI();
-						
-						robot.move(MOVEMENT.FORWARD);
-						sendMsg("EX|F01");
-					}
-				}
-				break;
-			case WEST:
-				if (currCol == destCol) {
-					if (currRow < destRow) {
-						robot.turn(MOVEMENT.RIGHT);
-						sendMsg("EX|R0");
-						readMsg();
-						displayToUI();
-						
-						robot.move(MOVEMENT.FORWARD);
-						sendMsg("EX|F01");
-					} else if (currRow > destRow) {
-						robot.turn(MOVEMENT.LEFT);
-						sendMsg("EX|L0");
-						readMsg();
-						displayToUI();
-						
-						robot.move(MOVEMENT.FORWARD);
-						sendMsg("EX|F01");
-					}
-				} else if (currRow == destRow) {
-					if (currCol < destCol) {
-						robot.turn(MOVEMENT.RIGHT);
-						sendMsg("EX|R0");
-						readMsg();
-						displayToUI();
-						
-						robot.turn(MOVEMENT.RIGHT);
-						sendMsg("EX|R0");
-						readMsg();
-						displayToUI();
-						
-						robot.move(MOVEMENT.FORWARD);
-						sendMsg("EX|F01");
-						
-					} else if (currCol > destCol) {
-						robot.move(MOVEMENT.FORWARD);
-						sendMsg("EX|F01");
-					}
-				}
-				break;
+				currRow = robot.getPosRow();
+				currCol = robot.getPosCol();
+				
 			}
-			//String recMsg = tcpObj.readMessage();
-			//sendMsg(exploreMap.setExploredCells(robot, recMsg));
-			readMsg();
-			displayToUI(); // repaint GUI to show robot movement on map
 
-			currRow = robot.getPosRow();
-			currCol = robot.getPosCol();
-			System.out.println("Location: " + currRow + "_" + currCol);
 		}
-
+		
+		private void printFastestPathMovement(String moveString) throws InterruptedException {
+			
+			// FP|F6|R0|F1|L0|F2
+			String[] arr = moveString.split("\\|");
+			
+			for(int i=1;i<arr.length;i++) {
+				switch(arr[i].substring(0,1)) {
+					
+				case "F":
+					for(int y=0;y<Integer.parseInt(arr[i].substring(1,arr[i].length()));y++) {					
+						this.robot.move(MOVEMENT.FORWARD);
+						mGui.paintResult();
+						Thread.sleep((long)500);	
+						}
+						break;
+				case "R":
+					for(int y=0;y<Integer.parseInt(arr[i].substring(1,arr[i].length()));y++) {
+						this.robot.turn(MOVEMENT.RIGHT);
+						mGui.paintResult();
+						Thread.sleep((long)500);
+						this.robot.move(MOVEMENT.FORWARD);
+						mGui.paintResult();
+						Thread.sleep((long)500);
+							
+						}
+						break;
+				case "L":	
+					for(int y=0;y<Integer.parseInt(arr[i].substring(1,arr[i].length()));y++) {					
+						this.robot.turn(MOVEMENT.LEFT);
+						mGui.paintResult();
+						Thread.sleep((long)500);
+						this.robot.move(MOVEMENT.FORWARD);
+						mGui.paintResult();
+						Thread.sleep((long)500);
+							
+						}
+						break;
+					case "B":
+						for(int y=0;y<Integer.parseInt(arr[i].substring(1,arr[i].length()));y++) {					
+							this.robot.turn(MOVEMENT.RIGHT);
+							mGui.paintResult();
+							Thread.sleep((long)500);
+							this.robot.turn(MOVEMENT.RIGHT);
+							mGui.paintResult();
+							Thread.sleep((long)500);
+							this.robot.move(MOVEMENT.FORWARD);
+							mGui.paintResult();
+							Thread.sleep((long)500);
+							
+						}
+						break;
+					default:
+						break;
+					}				
+				}
+			
+			
 	}
-
+		
 	private ArrayList<Cell> getUnexploredList(Map exploredMap) {
 
 		ArrayList<Cell> unexploredList = new ArrayList<Cell>();
@@ -580,47 +471,49 @@ public class simulateRealRun implements Runnable {
 	
 	// This method is for calibrating Robot to face North
 	private void faceNorthDirection() throws InterruptedException {
-		mGui.displayMsgToUI("Calibrating ROBOT!");
+		mGui.displayMsgToUI("Calibrating ROBOT..!");
 		switch(robot.getCurrDir()) {
 		case NORTH: break;
 		case SOUTH:
 			this.robot.turn(MOVEMENT.RIGHT);
-			sendMsg("R0");
+			sendMsg("EX|R0"+ exploreMap.rpiImageString(robot));
 			readMsg();
 			displayToUI();	 
 			
 			this.robot.turn(MOVEMENT.RIGHT);
-			sendMsg("R0");
+			sendMsg("EX|R0"+ exploreMap.rpiImageString(robot));
 			readMsg();
 			displayToUI();
 			
 			break;
 		case EAST: 
 			this.robot.turn(MOVEMENT.LEFT);
-			sendMsg("L0");
+			sendMsg("EX|L0"+ exploreMap.rpiImageString(robot));
 			readMsg();
 			displayToUI();
 			break;
 		case WEST:
 			this.robot.turn(MOVEMENT.RIGHT);
-			sendMsg("R0");
+			sendMsg("EX|R0"+ exploreMap.rpiImageString(robot));
 			readMsg();
 			displayToUI();	
 			break;
 		}
+		
 	}
 	
-	//==================== FastestPath ==============================
+	//============================ FastestPath =======================================
 	
 	public String parseFPMovement(ArrayList<MOVEMENT> fastestPathMovements){
         int i = 0;
+        int j= 0;
         int counter = 1;
         String result = "FP|";
-        
-        while(true){
+    
+        while(i<fastestPathMovements.size()){
+        	
             switch(fastestPathMovements.get(i)){
-                case BACKWARD:
-                    break;
+             
                 case FORWARD:
                     result += "F";
                     break;
@@ -630,31 +523,34 @@ public class simulateRealRun implements Runnable {
                 case RIGHT:
                     result += "R";
                     break;
+                case BACKWARD:
+                	result += "B";
+                    break;
                 default:
                     break;
                 
             }
-            for(int j = i+1; j< fastestPathMovements.size(); j++){
-                if(fastestPathMovements.get(i) == fastestPathMovements.get(j)){
-                    counter++;
-                }
-                else{
-                    result += Integer.toString(counter);
-                    result += "|";
-                    counter = 1;
-                    i=j;
-                    break;
-                }
+            for(j = i+1; j< fastestPathMovements.size(); j++){
+                if(fastestPathMovements.get(i)==fastestPathMovements.get(j)){              
+                    counter++;    
+                }      
+                else{                            	
+                  break;
+                }      
             }
-            if(i==fastestPathMovements.size() - 1){
-                break;
+           
+            if(fastestPathMovements.get(i)==MOVEMENT.FORWARD && counter<10) {
+            	result += "0"+Integer.toString(counter);
+            }else {
+            	 result += Integer.toString(counter);
             }
-        }
-
-        //result += "!";
-        System.out.println(result);
+            i=j;
+            result += "|";
+            counter = 1;
+                           
+       }
+        System.out.println("parseFPMovements():" +result);
         return result;
-
     }
 
 	public String convertCellsToMovements(ArrayList<Cell> cellsInPath){
@@ -668,7 +564,7 @@ public class simulateRealRun implements Runnable {
         for(int i=0; i < cellsInPath.size(); i++){
             int destRow = cellsInPath.get(i).getRowPos();
             int destCol = cellsInPath.get(i).getColPos();
-            switch(robot.getCurrDir()){
+            switch(mBot.getCurrDir()){
                 case NORTH:
                     if(currCol == destCol){
                         if(currRow < destRow){
@@ -695,7 +591,8 @@ public class simulateRealRun implements Runnable {
                     if(currCol == destCol){
                         if(currRow < destRow){
                         	fastestPathMovements.add(MOVEMENT.BACKWARD); 
-                        	mBot.turn(MOVEMENT.RIGHT); robot.turn(MOVEMENT.RIGHT); 
+                        	mBot.turn(MOVEMENT.RIGHT); 
+                        	mBot.turn(MOVEMENT.RIGHT); 
                         	mBot.move(MOVEMENT.FORWARD);}
                         else if(currRow > destRow){
                         	fastestPathMovements.add(MOVEMENT.FORWARD); 
@@ -765,162 +662,13 @@ public class simulateRealRun implements Runnable {
             currCol = mBot.getPosCol();
         }
 
-        //printMovementArray(fastestPathMovements);
+  
         String result = parseFPMovement(fastestPathMovements);
         return result;	
     }
-	private void printMoveONLY(ArrayList<Cell> cellStep)throws InterruptedException {
-		 int currRow = robot.getPosRow();
-	     int currCol = robot.getPosCol();
-	     
-		 for(int i=0; i < cellStep.size(); i++){
-	            int destRow = cellStep.get(i).getRowPos();
-	            int destCol = cellStep.get(i).getColPos();
-	            switch(robot.getCurrDir()){
-	                case NORTH:
-	                    if(currCol == destCol){
-	                        if(currRow < destRow){
-	                        	
-	                        	robot.move(MOVEMENT.FORWARD);
-	                        	}
-	                        else if(currRow > destRow){
-	                        	robot.turn(MOVEMENT.RIGHT); 
-	                        	readMsg();
-	                        	displayToUI();	
-	                        	
-	                        	robot.turn(MOVEMENT.RIGHT); 
-	                        	readMsg();
-	                        	displayToUI();	
-	                        	
-	                        	robot.move(MOVEMENT.FORWARD);
-	                        	}
-	                    }
-	                    else if(currRow == destRow){
-	                        if(currCol < destCol){
-	                        	robot.turn(MOVEMENT.RIGHT);
-	                        	readMsg();
-	                        	displayToUI();	
-	                        	
-	                        	robot.move(MOVEMENT.FORWARD);
-	                        }
-	                        else if(currCol > destCol){
-	                        	robot.turn(MOVEMENT.LEFT); 
-	                        	readMsg();
-	                        	displayToUI();	
-	                        	
-	                        	robot.move(MOVEMENT.FORWARD);
-	                        }
-	                    }
-	                    break;
-	                case SOUTH:
-	                    if(currCol == destCol){
-	                        if(currRow < destRow){
-	                        	robot.turn(MOVEMENT.RIGHT); 
-	                        	readMsg();
-	                        	displayToUI();	
-	                        	
-	                        	robot.turn(MOVEMENT.RIGHT); 
-	                        	readMsg();
-	                        	displayToUI();	
-	                        	
-	                        	robot.move(MOVEMENT.FORWARD);
-	                        	}
-	                        else if(currRow > destRow){ 
-	                        	robot.move(MOVEMENT.FORWARD);
-	                        }
-	                    }
-	                    else if(currRow == destRow){
-	                        if(currCol < destCol){
-	                        	robot.turn(MOVEMENT.LEFT); 
-	                        	displayToUI();	
-	                        	robot.move(MOVEMENT.FORWARD);
-	                        }
-	                        else if(currCol > destCol){ 
-	                        	robot.turn(MOVEMENT.RIGHT); 
-	                        	readMsg();
-	                        	displayToUI();	
-	                        	
-	                        	robot.move(MOVEMENT.FORWARD);
-	                        }
-	                    }
-	                    break;
-	                case EAST:
-	                    if(currCol == destCol){
-	                        if(currRow < destRow){
-	                        	robot.turn(MOVEMENT.LEFT); 
-	                        	readMsg();
-	                        	displayToUI();	
-	                        	
-	                        	robot.move(MOVEMENT.FORWARD);
-	                        }
-	                        else if(currRow > destRow){
-	                        	robot.turn(MOVEMENT.RIGHT); 
-	                        	readMsg();
-	                        	displayToUI();	
-	                        	robot.move(MOVEMENT.FORWARD);
-	                        }
-	                    }
-	                    else if(currRow == destRow){
-	                        if(currCol < destCol){
-	                        	robot.move(MOVEMENT.FORWARD);}
-	                        else if(currCol > destCol){
-	                        	robot.turn(MOVEMENT.RIGHT); 
-	                        	readMsg();
-	                        	displayToUI();	
-	                        	
-	                        	robot.turn(MOVEMENT.RIGHT); 
-	                        	readMsg();
-	                        	displayToUI();	
-	                        	
-	                        	robot.move(MOVEMENT.FORWARD);}
-	                    }
-	                    break;
-	                case WEST:
-	                if(currCol == destCol){
-	                    if(currRow < destRow){
-	                    	robot.turn(MOVEMENT.RIGHT); 
-	                    	readMsg();
-	                    	displayToUI();	
-	                    	
-	                    	robot.move(MOVEMENT.FORWARD);
-	                    	}
-	                    else if(currRow > destRow){
-	                    	robot.turn(MOVEMENT.LEFT); 
-	                    	readMsg();
-	                    	displayToUI();	
-	                    	robot.move(MOVEMENT.FORWARD);
-	                    	}
-	                }
-	                else if(currRow == destRow){
-	                    if(currCol < destCol){
-	                    	robot.turn(MOVEMENT.RIGHT);
-	                    	readMsg();
-	                    	displayToUI();	
-	                    	
-	                    	robot.turn(MOVEMENT.RIGHT); 
-	                    	readMsg();
-	                    	displayToUI();	
-	                    	
-	                    	robot.move(MOVEMENT.FORWARD);
-	                    	}
-	                    else if(currCol > destCol){ 
-	                    	robot.move(MOVEMENT.FORWARD);
-	                    	}
-	                }
-	                break;
-	            }
-	            readMsg();
-	            displayToUI();						
-        		
-	            
-	            currRow = robot.getPosRow();
-	            currCol = robot.getPosCol();
-	            System.out.println("Location: " + currRow + "_" +currCol);
-	        }
-		
-		
-	}
-	//==================== GUI PAINTING ================================
+	
+	
+	//======================= GUI PAINTING ===================================
 	
 	//Painting the current map result to GUI with delay
 	private void displayToUI() throws InterruptedException {
@@ -931,48 +679,129 @@ public class simulateRealRun implements Runnable {
 	
 	// ==================== Communication Methods with RPI ==========================
 	
+	//Establish connection with RPI
 	private void establishCommsToRPI() throws InterruptedException{
 		String msg ="";
+		
 		do {
 			mGui.displayMsgToUI("Establishing connection to RPI..  :D ");
 			msg = this.tcpObj.establishConnection();
 			if(msg.length()!=0) {
 				mGui.displayMsgToUI(msg);
+				
 				Thread.sleep((long) (1 * 1000));
+			
 			}
 			else {
-			mGui.displayMsgToUI("Connected Successfully :DD ");
-				break;
+				mGui.displayMsgToUI("Connected Successfully :DD ");
+					break;
 			}
-		}
-		while(true);
 		
+		}while(!Thread.currentThread().isInterrupted());			
 	}
-	
-	private String readMsg() {
+	/*
+	private String readMsg() throws InterruptedException {
 		String msg = "";
 		msg = tcpObj.readMessage();
 		mGui.displayMsgToUI("Received: " + msg);
 		return msg;
 	}
+	*/
+	//*
+	private String readMsg() throws InterruptedException{
+	//private String readMsg(){
+		String msg ="";
+		
+		do {
+			//if(!Thread.currentThread().isInterrupted()) {
+				msg = tcpObj.readMessage();		
+			//}
+			//else {
+			//	throw new InterruptedException("realrun readMsg() interrupt");
+			//}
+			
+		}while(msg==null||msg.length()==0);
+		
+		mGui.displayMsgToUI("Received: " + msg);
+		return msg;
+	}
+	//*/
 	
+	//Send String message to RPI
 	private void sendMsg(String msg) {
 		String rmsg = tcpObj.sendMessage(msg);
 		mGui.displayMsgToUI("Sent: " + rmsg);
 		
 	}
 	
-	//==================== Communication to android =================
-	
-	
-	public void sendToAndroid(String rmsg) {
+	// plot robot according to start coordinates received from RPI
+	private void checkandPlotSC() throws Exception {
+		String rmsg ="";
+		// SC|[1,1]
+		mGui.displayMsgToUI("Waiting for start coordinate...");
+		do {
+			
+			 rmsg = readMsg();	
+			 if(rmsg.substring(0,3).equals("SC|")) {
+				 String[] arr = rmsg.substring(4,7).split(",");
+				this.robot.setPosRow(Integer.parseInt(arr[0]));		 
+				this.robot.setPosCol(Integer.parseInt(arr[1]));
+				return;
+			 }
+			
+		}while(true);
 		
+		
+	}
+	//Waiting for fastest path command from RPI
+	private void waitForFastestPath() throws Exception{
+		String rmsg="";
+		mGui.displayMsgToUI("Waiting for command to start FastestPath...");
+			do {
+				
+				 rmsg = readMsg();	
+				 if(rmsg.substring(0,3).equals("FP|")) {
+					
+					return;
+				 }
+				
+			}while(true);
+	}
+	
+	//Plot the WayPoint coordinates received from RPI
+	private void checkandPlotWP() throws Exception {
+		String rmsg ="";
+		// WP|[1,1]  [row ,col]
+		mGui.displayMsgToUI("Waiting for WayPoint coordinate...");
+		do {
+			
+			 rmsg = readMsg();	
+			 if(rmsg.substring(0,3).equals("WP|")) {
+				 String[] arr = rmsg.substring(4,7).split(",");
+				 this.exploreMap.setWayPoint(Integer.parseInt(arr[0]), Integer.parseInt(arr[1]));
+			
+				return;
+			 }
+			
+		}while(true);
+		
+	}
+	
+	//==================== Communication to android =======================
+	
+	// Method for sending obstacles location
+	private void sendObstacleInfo(String rmsg) {
 		
 		if(rmsg.length()!=0) {
 			rmsg = "OB|" + rmsg;
 			sendMsg(rmsg);
 		}
 		
+		
+	}
+	//Method for sending MDF1 & MDF2 
+	private void sendMDFInfo(String mdf1, String mdf2) {
+		sendMsg("MDF|"+mdf1+"|"+mdf2);
 		
 	}
 	

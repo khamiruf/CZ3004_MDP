@@ -62,7 +62,7 @@ public class Map {
 		return false;
 	}
 	//-------------
-	
+	/*
 	public boolean checkIfRobotHere(Robot robot, int cellRow, int cellCol){
         if(cellRow == robot.getPosRow() || cellRow == robot.getPosRow() + 1 || cellRow == robot.getPosRow() - 1){
             if(cellCol == robot.getPosCol() || cellCol == robot.getPosCol() + 1 || cellCol == robot.getPosCol() - 1){
@@ -97,13 +97,13 @@ public class Map {
         
         return (robotFrontRow == cellRow && robotFrontCol == cellCol);
     }
-    
+    */
     //Set what the robot can see(from its direction & sensor)from its current position against the real map
     public void setExploredCells(Robot robot, Map realMap){
         ArrayList<Cell> explorableCells =new ArrayList<Cell>();
 
         //add cells occupied by robot as explorable cells (9)
-        // Original code, commented off becos need to set start as unexplored to achieve loop for exploration
+       
         for(int r : Constants.WITHIN_3BY3){
             for(int c : Constants.WITHIN_3BY3){
            
@@ -476,7 +476,7 @@ public class Map {
     
     
     
-    //----------------------------------------------------------------------------------------------------------
+    //=========================== Real Run Exploration ==================================
     public String setExploredCells(Robot robot, String sensorDataInString){
         //sensorData refers to the data received from the sensor
         //sensorData[0] refers to right back sensor
@@ -486,11 +486,10 @@ public class Map {
         //sensorData[4] refers to front left sensor
         //sensorData[5] refers to front middle sensor
     	
+    	//Setting robot's location as explored
     	for(int r : Constants.WITHIN_3BY3){
-            for(int c : Constants.WITHIN_3BY3){
-           
-            	this.mapArena[robot.getPosRow() + r][robot.getPosCol() + c].setExploredState(true);
-            	
+            for(int c : Constants.WITHIN_3BY3){          
+            	this.mapArena[robot.getPosRow() + r][robot.getPosCol() + c].setExploredState(true);          	
             }
         }
     	
@@ -530,6 +529,7 @@ public class Map {
             int tempCol = obstacleCells.get(i).getColPos();
 
             if(isCellValid(tempRow, tempCol) && !this.getMapGrid()[tempRow][tempCol].getExploredState()){
+           // if(isCellValid(tempRow, tempCol)){
                 this.getMapGrid()[tempRow][tempCol].setExploredState(true);
                 this.getMapGrid()[tempRow][tempCol].setObstacle(true);
                 setVirtualWall(this.getMapGrid()[tempRow][tempCol]);
@@ -543,6 +543,7 @@ public class Map {
             int tempCol = emptyCells.get(i).getColPos();
 
             if(isCellValid(tempRow, tempCol) && !this.getMapGrid()[tempRow][tempCol].getExploredState()){
+           // if(isCellValid(tempRow, tempCol)){
                 this.getMapGrid()[tempRow][tempCol].setExploredState(true);
                 this.getMapGrid()[tempRow][tempCol].setObstacle(false);
             }
@@ -1268,5 +1269,101 @@ public class Map {
                 }
             }
         }
+    }
+    
+
+    public String rpiImageString(Robot robot){
+
+        switch(robot.getCurrDir()){
+            case EAST:
+                return eastImageString(robot);
+            case NORTH:
+                return northImageString(robot);
+            case SOUTH:
+                return southImageString(robot);
+            case WEST:
+                return westImageString(robot);
+            default:
+                return "";
+
+        }
+    	
+    	//return "";
+    }
+
+    public String northImageString(Robot robot){
+
+        String imageString;
+
+        int row = robot.getPosRow();
+        int col = robot.getPosCol();
+
+        String x1 = Integer.toString(col+2);
+        String y1 = Integer.toString(row);
+
+        String x2 = Integer.toString(col+2);
+        String y2 = Integer.toString(row-1);
+
+        imageString = "|(" + x1 + "),(" + y1 + ")|(" + x2 + "),(" + y2 + ")";
+
+        return imageString;
+
+    }
+
+    public String southImageString(Robot robot){
+
+        String imageString;
+
+        int row = robot.getPosRow();
+        int col = robot.getPosCol();
+
+        String x1 = Integer.toString(col-2);
+        String y1 = Integer.toString(row);
+
+        String x2 = Integer.toString(col-2);
+        String y2 = Integer.toString(row+1);
+
+        imageString = "|(" + x1 + "),(" + y1 + ")|(" + x2 + "),(" + y2 + ")";
+
+        return imageString;
+
+    }
+
+    public String eastImageString(Robot robot){
+
+        String imageString;
+
+        int row = robot.getPosRow();
+        int col = robot.getPosCol();
+
+        String x1 = Integer.toString(col);
+        String y1 = Integer.toString(row-2);
+
+        String x2 = Integer.toString(col-1);
+        String y2 = Integer.toString(row-2);
+
+        imageString = "|(" + x1 + "),(" + y1 + ")|(" + x2 + "),(" + y2 + ")";
+
+        return imageString;
+
+    }
+
+    public String westImageString(Robot robot){
+
+        String imageString;
+
+        int row = robot.getPosRow();
+        int col = robot.getPosCol();
+
+        String x1 = Integer.toString(col);
+        String y1 = Integer.toString(row+2);
+
+        String x2 = Integer.toString(col+1);
+        String y2 = Integer.toString(row+2);
+
+        imageString = "|(" + x1 + "),(" + y1 + ")|(" + x2 + "),(" + y2 + ")";
+
+        return imageString;
+
     }
 }

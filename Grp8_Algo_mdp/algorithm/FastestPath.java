@@ -1,7 +1,6 @@
 package algorithm;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 
@@ -176,6 +175,8 @@ public class FastestPath {
 	                    
 	                    cellsInPath.add(targetCell);
 	                    targetCell = parents.get(targetCell);
+	                   // if(targetCell!=null)
+	                   // System.out.println("PARENTGET: " + targetCell.getRowPos()+","+ targetCell.getColPos());
 
 	                }while(targetCell != null);
 	                
@@ -344,10 +345,13 @@ public class FastestPath {
 */	    
 	//--------------------------------------------------ZW-----------------------------------------
 	    
-	    public ArrayList<Cell> testone(Map exploredMap){
+	    // This method returns the entire path from Start point to Waypoint to Goal point
+	    public ArrayList<Cell> findAllWPEndPaths(Map exploredMap){
 	    		
 	    	boolean foundWayPoint = false;
 	    	 ArrayList<Cell> cellsInPath = new ArrayList<>();
+	    	 ArrayList<Cell> tempHolder;
+	    	 //System.out.println("PO:" + current.getRowPos() + "_"+current.getColPos());
 	        do{
 	            if(!foundWayPoint) {
 	            	  current = minCostCell(exploredMap.getWayPoint().getRowPos(), exploredMap.getWayPoint().getColPos()); 
@@ -363,32 +367,40 @@ public class FastestPath {
 
 	            mockRobot.setPosRow(current.getRowPos());
 	            mockRobot.setPosCol(current.getColPos());
-	            System.out.println("MOCKLOC: " + mockRobot.getPosRow() + ":" + mockRobot.getPosCol());
+	           // System.out.println("MOCKLOC: " + mockRobot.getPosRow() + ":" + mockRobot.getPosCol());
 	            visited.add(current);       // add current to visited
 	            toVisit.remove(current);    // remove current from toVisit        
 
 	            if (!foundWayPoint && visited.contains(exploredMap.getMapGrid()[exploredMap.getWayPoint().getRowPos()][exploredMap.getWayPoint().getColPos()])) {
-	            	 ArrayList<Cell> tempHolder = new ArrayList<>();
-	                Cell targetCell = exploredMap.getWayPoint();
-	                
+	            	 tempHolder = new ArrayList<>();
+	               // Cell targetCell = exploredMap.getWayPoint();
+	            	 Cell targetCell = exploredMap.getMapGrid()[exploredMap.getWayPoint().getRowPos()][exploredMap.getWayPoint().getColPos()];
+	               // System.out.println("Size:" + parents.size() + ":" + targetCell.getRowPos() +"-"+targetCell.getColPos());
+	               // parents.forEach((key,value) -> System.out.println(key.getRowPos()+","+key.getColPos() + " = " + value.getRowPos()+","+value.getColPos()));
 	                do{
-	                    
 	                	tempHolder.add(targetCell);
-	                    targetCell = parents.get(targetCell);
+	                	targetCell = parents.get(targetCell);
+	                		  
+	                  //  if(targetCell!=null)
+	                  //  System.out.println("PARENTGET: " + targetCell.getRowPos()+","+ targetCell.getColPos());
 
 	                }while(targetCell != null);
 	                
 	                Collections.reverse(tempHolder);
-	                printCellArray(tempHolder);
+	                //printCellArray(tempHolder);
 	                cellsInPath.addAll(tempHolder);
 	                printCellArray(cellsInPath);
 	                //return cellsInPath;
 	                foundWayPoint = true;
-	                System.out.println("END " + tempHolder.size() + "-" + cellsInPath.size());
+	                this.toVisit = new ArrayList<Cell>();
+	    	        this.visited = new ArrayList<Cell>();
+	    	        this.parents = new HashMap<>();
+	    	        this.toVisit.add(exploredMap.getMapGrid()[exploredMap.getWayPoint().getRowPos()][exploredMap.getWayPoint().getColPos()]);
+	               // System.out.println("END " + tempHolder.size() + "-" + cellsInPath.size());
 	            }
-	            else if(foundWayPoint && visited.contains(exploredMap.getMapGrid()[18][13])) {
-	            	 ArrayList<Cell> tempHolder = new ArrayList<>();
-		                Cell targetCell = exploredMap.getEndGoalPosition();
+	            else if(foundWayPoint && visited.contains(exploredMap.getMapGrid()[exploredMap.getEndGoalPosition().getRowPos()][exploredMap.getEndGoalPosition().getColPos()])) {
+	            	 tempHolder = new ArrayList<>();
+		                Cell targetCell = exploredMap.getMapGrid()[exploredMap.getEndGoalPosition().getRowPos()][exploredMap.getEndGoalPosition().getColPos()];
 		                
 		                do{
 		                    
@@ -400,7 +412,7 @@ public class FastestPath {
 		                Collections.reverse(tempHolder);
 		                cellsInPath.addAll(tempHolder);
 		                printCellArray(cellsInPath);
-		            System.out.println("END2 " + tempHolder.size() + "-" + cellsInPath.size());
+		            //System.out.println("END2 " + tempHolder.size() + "-" + cellsInPath.size());
 	            	return cellsInPath;
 	            }
 
@@ -459,18 +471,7 @@ public class FastestPath {
 	    
 	    	
 	    }
-	    
-	    public ArrayList<Cell> calculateAllFastestPath(Map mapObj){
-	    	ArrayList<Cell> cellsInPath = new ArrayList<>();
-	    	System.out.println(mapObj.getWayPoint().getRowPos()+"_"+mapObj.getWayPoint().getColPos());
-	    	System.out.println(mapObj.getEndGoalPosition().getRowPos()+"_"+mapObj.getEndGoalPosition().getColPos());
-	    	cellsInPath.addAll(calculateFastestPath(mapObj,mapObj.getWayPoint().getRowPos(),mapObj.getWayPoint().getColPos()));
-	    	cellsInPath.addAll(calculateFastestPath(mapObj,mapObj.getEndGoalPosition().getRowPos(),mapObj.getEndGoalPosition().getColPos()));
-	    	
-	    	return cellsInPath;
-	    	
-	    }
-	    
+	
 	    public ArrayList<Cell> calculateFastestPath2(Map exploredMap, int destRow, int destCol){
 
 	    	ArrayList<Cell> surroundCellList = can_reach(destRow, destCol);
@@ -494,8 +495,8 @@ public class FastestPath {
 	            toVisit.remove(current);    // remove current from toVisit        
 	            
 	          
-	            // checkV(surroundCellList,current);
-	            if (checkV(surroundCellList,current)) {
+	            
+	            if (checkSurroundCells(surroundCellList,current)) {
 
 	            	
 	                ArrayList<Cell> cellsInPath = new ArrayList<>();
@@ -607,16 +608,8 @@ public class FastestPath {
 	        return surroundCellList;
 	    }
 	    
-	    private void printV(ArrayList<Cell> clist) {
-	    	
-	    	for(int i=0;i<clist.size();i++) {
-	    		System.out.println(clist.get(i).getRowPos() + "_" + clist.get(i).getColPos() +"_"+clist.get(i).getExploredState()
-	    				);
-	  	      	
-	    	}
-	    	   
-	    }
-       private boolean checkV(ArrayList<Cell> clist, Cell ac) {
+	
+       private boolean checkSurroundCells(ArrayList<Cell> clist, Cell ac) {
     		
     	   for(int i=0;i<clist.size();i++) {
 	    		if(clist.get(i).getRowPos()==ac.getRowPos() && clist.get(i).getColPos()==ac.getColPos()) {
