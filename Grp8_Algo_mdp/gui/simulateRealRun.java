@@ -38,6 +38,7 @@ public class simulateRealRun implements Runnable {
 				mGui.displayMsgToUI("Exploration Started, Waiting for sensor data...");
 			
 				String recMsg = readMsg();
+				int forwardCount = 0;
 				sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
 								
 				displayToUI();
@@ -55,13 +56,15 @@ public class simulateRealRun implements Runnable {
 						sendMsg("EX|F01"+ exploreMap.rpiImageString(robot));
 						recMsg = readMsg();
 						sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+						forwardCount = centerRepos(forwardCount, recMsg);
 
 					} else if (robot.isMovementValid(exploreMap, MOVEMENT.FORWARD)) {
+						forwardCount++;
 						robot.move(MOVEMENT.FORWARD);
-						
 						sendMsg("EX|F01"+ exploreMap.rpiImageString(robot));
 						recMsg = readMsg();
 						sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+						forwardCount = centerRepos(forwardCount, recMsg);
 
 					} else if (robot.isMovementValid(exploreMap, MOVEMENT.LEFT)) {
 						robot.turn(MOVEMENT.LEFT);
@@ -69,6 +72,7 @@ public class simulateRealRun implements Runnable {
 						sendMsg("EX|L0"+ exploreMap.rpiImageString(robot));
 						recMsg = readMsg();
 						sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+						forwardCount = centerRepos(forwardCount, recMsg);
 						
 					} else if (robot.isMovementValid(exploreMap, MOVEMENT.BACKWARD)) {
 						robot.turn(MOVEMENT.RIGHT);
@@ -90,7 +94,7 @@ public class simulateRealRun implements Runnable {
 						sendMsg("EX|F01"+ exploreMap.rpiImageString(robot));
 						recMsg = readMsg();
 						sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
-
+						forwardCount = centerRepos(forwardCount, recMsg);
 					}
 					else {
 						//No Valid movement, therefore throw an exception to display error msg & close connection		
@@ -189,6 +193,7 @@ public class simulateRealRun implements Runnable {
 			int currRow = robot.getPosRow();
 			int currCol = robot.getPosCol();
 			String recMsg="";
+			int forwardCount = 0;
 			for (int i = 0; i < cellStep.size(); i++) {
 				int destRow = cellStep.get(i).getRowPos();
 				int destCol = cellStep.get(i).getColPos();
@@ -196,8 +201,11 @@ public class simulateRealRun implements Runnable {
 				case NORTH:
 					if (currCol == destCol) {
 						if (currRow < destRow) {
+							forwardCount++;
 							robot.move(MOVEMENT.FORWARD);
 							sendMsg("EX|F01"+ exploreMap.rpiImageString(robot));
+							recMsg = readMsg();
+							forwardCount = centerRepos(forwardCount, recMsg);
 							
 						} else if (currRow > destRow) {
 							robot.turn(MOVEMENT.RIGHT);
@@ -214,6 +222,8 @@ public class simulateRealRun implements Runnable {
 							
 							robot.move(MOVEMENT.FORWARD);
 							sendMsg("EX|F01"+ exploreMap.rpiImageString(robot));
+							recMsg = readMsg();
+							forwardCount = centerRepos(forwardCount, recMsg);
 						}
 					} else if (currRow == destRow) {
 						if (currCol < destCol) {
@@ -225,6 +235,9 @@ public class simulateRealRun implements Runnable {
 							
 							robot.move(MOVEMENT.FORWARD);
 							sendMsg("EX|F01"+ exploreMap.rpiImageString(robot));
+							recMsg = readMsg();
+							forwardCount = centerRepos(forwardCount, recMsg);
+
 						} else if (currCol > destCol) {
 							robot.turn(MOVEMENT.LEFT);
 							sendMsg("EX|L0"+ exploreMap.rpiImageString(robot));
@@ -234,6 +247,8 @@ public class simulateRealRun implements Runnable {
 							
 							robot.move(MOVEMENT.FORWARD);
 							sendMsg("EX|F01"+ exploreMap.rpiImageString(robot));
+							recMsg = readMsg();
+							forwardCount = centerRepos(forwardCount, recMsg);
 						}
 					}
 					break;
@@ -254,10 +269,15 @@ public class simulateRealRun implements Runnable {
 							
 							robot.move(MOVEMENT.FORWARD);
 							sendMsg("EX|F01"+ exploreMap.rpiImageString(robot));
+							recMsg = readMsg();
+							forwardCount = centerRepos(forwardCount, recMsg);
 							
 						} else if (currRow > destRow) {
+							forwardCount++;
 							robot.move(MOVEMENT.FORWARD);
 							sendMsg("EX|F01"+ exploreMap.rpiImageString(robot));
+							recMsg = readMsg();
+							forwardCount = centerRepos(forwardCount, recMsg);
 						}
 					} else if (currRow == destRow) {
 						if (currCol < destCol) {
@@ -269,6 +289,8 @@ public class simulateRealRun implements Runnable {
 							
 							robot.move(MOVEMENT.FORWARD);
 							sendMsg("EX|F01"+ exploreMap.rpiImageString(robot));
+							recMsg = readMsg();
+							forwardCount = centerRepos(forwardCount, recMsg);
 						} else if (currCol > destCol) {
 							robot.turn(MOVEMENT.RIGHT);
 							sendMsg("EX|R0"+ exploreMap.rpiImageString(robot));
@@ -278,6 +300,8 @@ public class simulateRealRun implements Runnable {
 							
 							robot.move(MOVEMENT.FORWARD);
 							sendMsg("EX|F01"+ exploreMap.rpiImageString(robot));
+							recMsg = readMsg();
+							forwardCount = centerRepos(forwardCount, recMsg);
 						}
 					}
 					break;
@@ -292,6 +316,8 @@ public class simulateRealRun implements Runnable {
 							
 							robot.move(MOVEMENT.FORWARD);
 							sendMsg("EX|F01"+ exploreMap.rpiImageString(robot));
+							recMsg = readMsg();
+							forwardCount = centerRepos(forwardCount, recMsg);
 						} else if (currRow > destRow) {
 							robot.turn(MOVEMENT.RIGHT);
 							sendMsg("EX|R0"+ exploreMap.rpiImageString(robot));
@@ -301,11 +327,16 @@ public class simulateRealRun implements Runnable {
 							
 							robot.move(MOVEMENT.FORWARD);
 							sendMsg("EX|F01"+ exploreMap.rpiImageString(robot));
+							recMsg = readMsg();
+							forwardCount = centerRepos(forwardCount, recMsg);
 						}
 					} else if (currRow == destRow) {
 						if (currCol < destCol) {
+							forwardCount++;
 							robot.move(MOVEMENT.FORWARD);
 							sendMsg("EX|F01"+ exploreMap.rpiImageString(robot));
+							recMsg = readMsg();
+							forwardCount = centerRepos(forwardCount, recMsg);
 						} else if (currCol > destCol) {
 							robot.turn(MOVEMENT.RIGHT);
 							sendMsg("EX|R0"+ exploreMap.rpiImageString(robot));
@@ -323,6 +354,8 @@ public class simulateRealRun implements Runnable {
 							
 							robot.move(MOVEMENT.FORWARD);
 							sendMsg("EX|F01"+ exploreMap.rpiImageString(robot));
+							recMsg = readMsg();
+							forwardCount = centerRepos(forwardCount, recMsg);
 						}
 					}
 					break;
@@ -337,6 +370,8 @@ public class simulateRealRun implements Runnable {
 							
 							robot.move(MOVEMENT.FORWARD);
 							sendMsg("EX|F01"+ exploreMap.rpiImageString(robot));
+							recMsg = readMsg();
+							forwardCount = centerRepos(forwardCount, recMsg);
 						} else if (currRow > destRow) {
 							robot.turn(MOVEMENT.LEFT);
 							sendMsg("EX|L0"+ exploreMap.rpiImageString(robot));
@@ -346,6 +381,8 @@ public class simulateRealRun implements Runnable {
 							
 							robot.move(MOVEMENT.FORWARD);
 							sendMsg("EX|F01"+ exploreMap.rpiImageString(robot));
+							recMsg = readMsg();
+							forwardCount = centerRepos(forwardCount, recMsg);
 						}
 					} else if (currRow == destRow) {
 						if (currCol < destCol) {
@@ -363,10 +400,15 @@ public class simulateRealRun implements Runnable {
 							
 							robot.move(MOVEMENT.FORWARD);
 							sendMsg("EX|F01"+ exploreMap.rpiImageString(robot));
+							recMsg = readMsg();
+							forwardCount = centerRepos(forwardCount, recMsg);
 							
 						} else if (currCol > destCol) {
+							forwardCount++;
 							robot.move(MOVEMENT.FORWARD);
 							sendMsg("EX|F01"+ exploreMap.rpiImageString(robot));
+							recMsg = readMsg();
+							forwardCount = centerRepos(forwardCount, recMsg);
 						}
 					}
 					break;
@@ -786,6 +828,20 @@ public class simulateRealRun implements Runnable {
 		}while(true);
 		
 	}
+
+	//function to check conditions for reposition robot into middle of 3x3
+	private int centerRepos(int forwardCount, String sensorDataInString){
+		int rightFront = Character.getNumericValue(sensorDataInString.charAt(1));
+		int rightBack = Character.getNumericValue(sensorDataInString.charAt(0));
+		
+		if(forwardCount >= 3 && rightFront == 1 && rightBack == 1){
+			sendMsg("EX|P00");
+			return 0;
+		}
+
+		return forwardCount;
+	}
+
 	
 	//==================== Communication to android =======================
 	
