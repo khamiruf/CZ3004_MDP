@@ -333,7 +333,7 @@ public class GridMap extends View {
         startCoord[1] = row;
         String direction = getRobotDirection();
         if(direction.equals("None")) {
-            direction = "up";
+            direction = "right";
         }
         if (this.getStartCoordStatus())
             this.setCurCoord(col, row, direction);

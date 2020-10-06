@@ -222,7 +222,7 @@ public class MainActivity extends AppCompatActivity {
                 jsonObject.put(name, name);
                 jsonObject.put("x", x);
                 jsonObject.put("y", y);
-                message = name + " [" + x + "," + y + "]";
+                message = "WP| [" + x + "," + y + "]";
                 break;
             default:
                 message = "Unexpected default for printMessage: " + name;
@@ -322,6 +322,122 @@ public class MainActivity extends AppCompatActivity {
                             case "F01":
                                 gridMap.moveRobot("forward");
                                 break;
+                            case "F02":
+                                //for(int w=0;w<2;w++)
+                                //{
+                                    //gridMap.moveRobot("forward");
+                                //}
+                                gridMap.moveRobot("forward");
+                                gridMap.moveRobot("forward");
+                                break;
+                            case "F03":
+                                for(int w=0;w<3;w++)
+                                {
+                                    gridMap.moveRobot("forward");
+                                }
+                                break;
+                            case "F04":
+                                for(int w=0;w<4;w++)
+                                {
+                                    gridMap.moveRobot("forward");
+                                }
+                                break;
+                            case "F05":
+                                for(int w=0;w<5;w++)
+                                {
+                                    gridMap.moveRobot("forward");
+                                }
+                                break;
+                            case "F06":
+                                for(int w=0;w<6;w++)
+                                {
+                                    gridMap.moveRobot("forward");
+                                }
+                                break;
+                            case "F07":
+                                for(int w=0;w<7;w++)
+                                {
+                                    gridMap.moveRobot("forward");
+                                }
+                                break;
+                            case "F08":
+                                for(int w=0;w<8;w++)
+                                {
+                                    gridMap.moveRobot("forward");
+                                }
+                                break;
+                            case "F09":
+                                for(int w=0;w<9;w++)
+                                {
+                                    gridMap.moveRobot("forward");
+                                }
+                                break;
+                            case "F10":
+                                for(int w=0;w<10;w++)
+                                {
+                                    gridMap.moveRobot("forward");
+                                }
+                                break;
+                            case "F11":
+                                for(int w=0;w<11;w++)
+                                {
+                                    gridMap.moveRobot("forward");
+                                }
+                                break;
+                            case "F12":
+                                for(int w=0;w<12;w++)
+                                {
+                                    gridMap.moveRobot("forward");
+                                }
+                                break;
+                            case "F13":
+                                for(int w=0;w<13;w++)
+                                {
+                                    gridMap.moveRobot("forward");
+                                }
+                                break;
+                            case "F14":
+                                for(int w=0;w<14;w++)
+                                {
+                                    gridMap.moveRobot("forward");
+                                }
+                                break;
+                            case "F15":
+                                for(int w=0;w<15;w++)
+                                {
+                                    gridMap.moveRobot("forward");
+                                }
+                                break;
+                            case "F16":
+                                for(int w=0;w<16;w++)
+                                {
+                                    gridMap.moveRobot("forward");
+                                }
+                                break;
+                            case "F17":
+                                for(int w=0;w<17;w++)
+                                {
+                                    gridMap.moveRobot("forward");
+                                }
+                                break;
+                            case "F18":
+                                for(int w=0;w<18;w++)
+                                {
+                                    gridMap.moveRobot("forward");
+                                }
+                                break;
+                            case "F19":
+                                for(int w=0;w<19;w++)
+                                {
+                                    gridMap.moveRobot("forward");
+                                }
+                                break;
+                            case "F20":
+                                for(int w=0;w<20;w++)
+                                {
+                                    gridMap.moveRobot("forward");
+                                }
+                                break;
                             case "R0":
                                 gridMap.moveRobot("right");
                                 break;
@@ -339,7 +455,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 try {
-                    if (message.length() > 7 && message.substring(2, 6).equals("grid")) {
+                    if (message.length() > 15 && message.substring(2, 6).equals("grid")) {
                         String resultString = "";
                         String amdString = message.substring(11, message.length() - 2);
                         showLog("amdString: " + amdString);
@@ -396,11 +512,6 @@ public class MainActivity extends AppCompatActivity {
                             String[] seperatedtext2 = seperatedtext1[k].split(",");
                             int x = Integer.parseInt(seperatedtext2[0]) + 1;
                             int y = Integer.parseInt(seperatedtext2[1]) + 1;
-                            sharedPreferences();
-                            String receivedText = sharedPreferences.getString("message", "") + "\n" + "hi: " + x + " " + y;
-                            editor.putString("message", receivedText);
-                            editor.commit();
-                            refreshMessageReceived();
                             gridMap.setObstacleCoord(x, y);
                         }
 

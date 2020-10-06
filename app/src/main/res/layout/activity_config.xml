@@ -151,21 +151,21 @@
             android:orientation="vertical">
 
             <ToggleButton
-                android:id="@+id/setWaypointToggleBtn"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:textOff="SET WAYPOINT"
-                android:textOn="CANCEL"
-                android:textSize="@dimen/button_text_size"
-                android:textStyle="bold" />
-
-            <ToggleButton
                 android:id="@+id/setStartPointToggleBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
                 android:textOff="SET STARTPOINT"
+                android:textOn="CANCEL"
+                android:textSize="@dimen/button_text_size"
+                android:textStyle="bold" />
+
+            <ToggleButton
+                android:id="@+id/setWaypointToggleBtn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:textOff="SET WAYPOINT"
                 android:textOn="CANCEL"
                 android:textSize="@dimen/button_text_size"
                 android:textStyle="bold" />
