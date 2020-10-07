@@ -196,6 +196,8 @@ public class simulateExploration1 implements Runnable{
 		 for(int i=0; i < cellStep.size(); i++){
 	            int destRow = cellStep.get(i).getRowPos();
 	            int destCol = cellStep.get(i).getColPos();
+	            System.out.println("printmoveRobot:"+cellStep.get(i).getRowPos() +"_"+cellStep.get(i).getColPos()+"-"+ currRow+"_"+currCol +":"+robot.getCurrDir());
+				
 	            switch(robot.getCurrDir()){
 	                case NORTH:
 	                    if(currCol == destCol){

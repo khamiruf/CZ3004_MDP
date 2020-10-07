@@ -584,22 +584,22 @@ public class FastestPath {
 	                               {x+1, y+3}, {x, y+3}, {x-1, y+3}, {x-3, y+1}, {x-3, y}, {x-3, y-1}};
 	        }
 	        */
-	        surroundCellList.add(new Cell(goalRow,goalCol)); 		//add end goal into list
-	        surroundCellList.add(new Cell(goalRow-2,goalCol-1));    //
+	        //surroundCellList.add(new Cell(goalRow,goalCol)); 		//add end goal into list
+	        //surroundCellList.add(new Cell(goalRow-2,goalCol-1));    //
 	        surroundCellList.add(new Cell(goalRow-2,goalCol));
-	        surroundCellList.add(new Cell(goalRow-2,goalCol+1));    //
+	        //surroundCellList.add(new Cell(goalRow-2,goalCol+1));    //
 	        
-	        surroundCellList.add(new Cell(goalRow-1,goalCol+2));    //
+	        //surroundCellList.add(new Cell(goalRow-1,goalCol+2));    //
 	        surroundCellList.add(new Cell(goalRow,goalCol+2));
-	        surroundCellList.add(new Cell(goalRow+1,goalCol+2));    //
+	        //surroundCellList.add(new Cell(goalRow+1,goalCol+2));    //
 	        
-	        surroundCellList.add(new Cell(goalRow+2,goalCol-1));    //
+	        //surroundCellList.add(new Cell(goalRow+2,goalCol-1));    //
 	        surroundCellList.add(new Cell(goalRow+2,goalCol));
-	        surroundCellList.add(new Cell(goalRow+2,goalCol+1));    //
+	        //surroundCellList.add(new Cell(goalRow+2,goalCol+1));    //
 	        
-	        surroundCellList.add(new Cell(goalRow-1,goalCol-2));    //
+	        //surroundCellList.add(new Cell(goalRow-1,goalCol-2));    //
 	        surroundCellList.add(new Cell(goalRow,goalCol-2));
-	        surroundCellList.add(new Cell(goalRow+1,goalCol-2));    //
+	        //surroundCellList.add(new Cell(goalRow+1,goalCol-2));    //
 	        
 	      //  for(int i=0;i<surroundCellList.size();i++) {
 	      //  	System.out.println(surroundCellList.get(i).getRowPos() + "_" + surroundCellList.get(i).getColPos() +"_"+"_"+surroundCellList.get(i).getExploredState());

@@ -11,8 +11,6 @@ import gui.MainGUI;
 public class TCPComm {
 
 	private static final String IPaddr = "192.168.8.1";
-	//private static final int portNum = 5182;
-    //private static final String IPaddr = "localhost";
 	private static final int portNum = 5182;
 	private static TCPComm tcpObj = null;
 	private Socket clientSocket;
@@ -20,9 +18,8 @@ public class TCPComm {
 	private BufferedReader inputStream;
 
 	
-	private TCPComm() {
-	}
-	//*
+	private TCPComm() {}
+	
 	public static TCPComm getInstance() {
 		if (tcpObj == null) {
 			tcpObj = new TCPComm();
@@ -30,7 +27,7 @@ public class TCPComm {
 
 		return tcpObj;
 	}
-	 //*/
+	
 	public String establishConnection() {
 		String msg ="";
 		try {
@@ -55,13 +52,13 @@ public class TCPComm {
 			System.out.println("Socket status before close: socket is null");
 		}
 		if(clientSocket!=null) { 
-		try { 
+			try { 
 			 clientSocket.close();
 			 outputStream.close();
-			  inputStream.close();
-			  clientSocket=null; 
-			  outputStream=null; 
-			  inputStream=null;
+			 inputStream.close();
+			 clientSocket=null; 
+			 outputStream=null; 
+			 inputStream=null;
 		  System.out.println("Successfully closed connection.");
 		  
 		  } catch (IOException ex) {
@@ -77,36 +74,16 @@ public class TCPComm {
 		try {
 			this.outputStream.writeBytes(msg+"!");
 			//this.outputStream.flush();
-			System.out.println("Sending msg: " + msg);
+			//System.out.println("Sending msg: " + msg);
 			rmsg = msg;
 		} catch (Exception ex) {
-			System.out.println("Error sending msg: " + ex.getMessage());
+			System.out.println("TCPComm sendmsg() Exception: " + ex.getMessage());
 			rmsg = ex.getMessage();
 		}
 		
 		return rmsg;
 	}
-	/*
-	public String readMessage() {
-		String receivedMsg = null;
-
-		try {
-			do{
-				receivedMsg = this.inputStream.readLine();
-				//System.out.println("TCP Received: " + receivedMsg);
-				//receivedMsg = this.inputStream.readLine();
-				//System.out.println("TCP Received: " + receivedMsg);
-			}while (receivedMsg== null || receivedMsg.length()==0);
-		}
-		catch (Exception ex) {
-			System.out.println("Error receiving msg: " + ex.getMessage());
-			receivedMsg = "Error receiving msg:"  + ex.getMessage();	
-			
-		}
-		//System.out.println("ReturnBackThread--");
-		return receivedMsg;
-	}
-	*/
+	
 	/*
 	public String readMessage() throws InterruptedException{
 		String receivedMsg = null;
@@ -131,10 +108,10 @@ public class TCPComm {
 		String receivedMsg="";
 		try {
 			receivedMsg = this.inputStream.readLine();
-		} catch (IOException e) {
-		
+		} catch (IOException ex) {
 			//e.printStackTrace();
-			throw new InterruptedException("TCP ReadMsg() exception");
+			System.out.println("TCP ReadMsg() Exception: " + ex.getMessage());
+			throw new InterruptedException("TCP ReadMsg() Exception");
 		}
 		return receivedMsg;
 		

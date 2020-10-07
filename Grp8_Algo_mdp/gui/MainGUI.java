@@ -40,20 +40,20 @@ public class MainGUI extends JFrame{
      * Creates the MainGUI.
      */
     private MainGUI() {
-    	//ZW added
-    	initialMap = new Map();
-    	rBot =new Robot(1,1,DIRECTION.NORTH);
-    	//------------------------------
+    	
+    	 setMapRobotObj();
     	 initLayout();
     	 paintResult();
     }
     
+    private void setMapRobotObj() {
+    	initialMap = new Map();
+    	rBot = new Robot(1,1,DIRECTION.SOUTH);
+    }
     public static MainGUI getInstance() {
     	if(mGui==null) {
     		mGui= new MainGUI();
- 
     	}
-    	
     	return mGui;
     }
     
@@ -149,7 +149,6 @@ public class MainGUI extends JFrame{
 				if(simRealRun != null) {
 					System.out.println("RealRunGUIinterrupt");
 					
-				
 					TCPComm.getInstance().closeConnection();
 					simRealRun.interrupt();
 					simRealRun = null;
@@ -161,12 +160,10 @@ public class MainGUI extends JFrame{
 					simb4 = null;
 				}
 				
-				displayMsgToUI("Map and robot has been reset!");
-				//main.resetMap();
-				initialMap = new Map(); 				//define a map that is unexplored
-		    	rBot = new Robot(1,1,DIRECTION.NORTH);	//setting robot back to location 1,1
-		        paintResult();		//repaint the map UI
-		        
+				
+				setMapRobotObj();
+		        paintResult();							//repaint the map UI
+		       
 		        
 		        //reseting UI control		        
 		        acontrolPanel.waypointRow_cb.setSelectedIndex(0);
@@ -176,6 +173,7 @@ public class MainGUI extends JFrame{
 		        exploreBtn.setEnabled(true);
 		        fastestBtn.setEnabled(true);
 		        realrunBtn.setEnabled(true);
+		        displayMsgToUI("Map and robot has been reset!");
 			}
     		
     	});
@@ -199,11 +197,9 @@ public class MainGUI extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				
-			
 				simb4 = new Thread(new testingone());
 			    simb4.start();
-				
-			    	
+					
 				}
 			});
     	
