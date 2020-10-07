@@ -32,6 +32,8 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.content.ContentValues.TAG;
+
 public class GridMap extends View {
 
     public GridMap(Context c) {
@@ -667,6 +669,47 @@ public class GridMap extends View {
         if (!buttonName.equals("clearImageBtn"))
             if (clearImageBtn.isEnabled())
                 this.setUnSetCellStatus(false);
+    }
+
+
+    public void mapDescriptorExplored (String hexMap) {
+
+        // Convert hex MDF String to BigInteger
+        BigInteger hexBigInteger = new BigInteger(hexMap, 16);
+
+        String binMap = hexBigInteger.toString(2);
+
+        // Discard padding bits in the back
+        String binMapExtracted = binMap.substring(2,302);
+
+        char cur;
+        Integer[] binMapArray = new Integer[binMapExtracted.length()];
+
+        // Separate each bit with an integer array
+        for (int i = 0; i < binMapExtracted.length(); i++){
+            cur = binMapExtracted.charAt(i);
+            binMapArray[i] = Integer.parseInt(String.valueOf(cur));
+        }
+
+        int binMapArrayIndex = 0;
+
+        // Set each cell as explored/unexplored accordingly
+        for(int j = 0; j < this.ROW; j++){
+            for(int i = 0; i < this.COL; i++) {
+                if(binMapArray[binMapArrayIndex] == 1 && (!cells[i][j].equals("obstacle") && !cells[i][j].equals("image") && !cells[i][j].equals("robot")) ){
+                    //this.setCellExplored(i, j, true);
+                    cells[i][j].setType("explored");
+                }
+//                else {
+//                    //this.setCellExplored(i, j, false);
+//                    cells[j][i].setType("unexplored");
+//                }
+                binMapArrayIndex++;
+            }
+        }
+        // Update map
+        //this.refreshMap(this.getAutoUpdate());
+        this.invalidate();
     }
 
 

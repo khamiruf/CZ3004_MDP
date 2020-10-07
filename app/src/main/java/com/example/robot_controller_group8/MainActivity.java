@@ -315,7 +315,6 @@ public class MainActivity extends AppCompatActivity {
 
             String[] septext = message.split("!");
             for(int u=0; u <septext.length; u++) {
-
                 try {
                     if (septext[u].length() < 4) {
                         switch (septext[u]) {
@@ -323,12 +322,10 @@ public class MainActivity extends AppCompatActivity {
                                 gridMap.moveRobot("forward");
                                 break;
                             case "F02":
-                                //for(int w=0;w<2;w++)
-                                //{
-                                    //gridMap.moveRobot("forward");
-                                //}
-                                gridMap.moveRobot("forward");
-                                gridMap.moveRobot("forward");
+                                for(int w=0;w<2;w++)
+                                {
+                                    gridMap.moveRobot("forward");
+                                }
                                 break;
                             case "F03":
                                 for(int w=0;w<3;w++)
@@ -452,6 +449,18 @@ public class MainActivity extends AppCompatActivity {
 
                 } catch (Exception e) {
                     e.printStackTrace();
+                }
+
+                try {
+                    if (septext[u].substring(0, 3).equalsIgnoreCase("MDF")) {
+
+                        String[] seperatedtextMDF = septext[u].split("\\|");
+                        String hextext = seperatedtextMDF[1];
+
+                        gridMap.mapDescriptorExplored(hextext);
+                    }
+                } catch (Exception e) {
+                    showLog("Fail to update Map");
                 }
 
                 try {
