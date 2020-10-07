@@ -335,7 +335,7 @@ public class GridMap extends View {
         startCoord[1] = row;
         String direction = getRobotDirection();
         if(direction.equals("None")) {
-            direction = "right";
+            direction = "down";
         }
         if (this.getStartCoordStatus())
             this.setCurCoord(col, row, direction);
@@ -685,6 +685,9 @@ public class GridMap extends View {
         char cur;
         Integer[] binMapArray = new Integer[binMapExtracted.length()];
 
+
+        //MainActivity.receiveMessage("test" + String.valueOf(binMapExtracted.charAt(0)));
+
         // Separate each bit with an integer array
         for (int i = 0; i < binMapExtracted.length(); i++){
             cur = binMapExtracted.charAt(i);
@@ -694,11 +697,12 @@ public class GridMap extends View {
         int binMapArrayIndex = 0;
 
         // Set each cell as explored/unexplored accordingly
-        for(int j = 0; j < this.ROW; j++){
+        for(int j = (ROW -1) ; j >= 0 ; j--){
             for(int i = 0; i < this.COL; i++) {
-                if(binMapArray[binMapArrayIndex] == 1 && (!cells[i][j].equals("obstacle") && !cells[i][j].equals("image") && !cells[i][j].equals("robot")) ){
+                if(binMapArray[binMapArrayIndex] == 1 && !cells[i+1][j].equals("obstacle") && !cells[i+1][j].equals("image") && !cells[i+1][j].equals("robot") ){
                     //this.setCellExplored(i, j, true);
-                    cells[i][j].setType("explored");
+                    cells[i+1][j].setType("explored");
+                    //MainActivity.receiveMessage("plant me at row " + j + ", Col: " + i);
                 }
 //                else {
 //                    //this.setCellExplored(i, j, false);
@@ -707,6 +711,7 @@ public class GridMap extends View {
                 binMapArrayIndex++;
             }
         }
+        setEndCoord(14, 19);
         // Update map
         //this.refreshMap(this.getAutoUpdate());
         this.invalidate();

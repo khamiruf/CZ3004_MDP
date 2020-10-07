@@ -457,6 +457,11 @@ public class MainActivity extends AppCompatActivity {
                         String[] seperatedtextMDF = septext[u].split("\\|");
                         String hextext = seperatedtextMDF[1];
 
+                        sharedPreferences();
+                        String receivedText = sharedPreferences.getString("message", "") + "\n" + "Hi, mdf string is: " + hextext ;
+                        editor.putString("message", receivedText);
+                        editor.commit();
+                        refreshMessageReceived();
                         gridMap.mapDescriptorExplored(hextext);
                     }
                 } catch (Exception e) {
