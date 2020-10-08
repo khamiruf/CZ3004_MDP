@@ -312,8 +312,9 @@ public class MainActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             String message = intent.getStringExtra("receivedMessage");
             showLog("receivedMessage: message --- " + message);
-
             String[] septext = message.split("!");
+            String hextext = "";
+            String hextext2 = "";
             for(int u=0; u <septext.length; u++) {
                 try {
                     if (septext[u].length() < 4) {
@@ -340,14 +341,14 @@ public class MainActivity extends AppCompatActivity {
                                 for(int w=0;w<4;w++)
                                 {
                                     gridMap.moveRobot("forward");
-                                    Thread.sleep(200);
+                                    Thread.sleep(400);
                                 }
                                 break;
                             case "F05":
                                 for(int w=0;w<5;w++)
                                 {
                                     gridMap.moveRobot("forward");
-                                    Thread.sleep(200);
+                                    Thread.sleep(400);
                                 }
                                 break;
                             case "F06":
@@ -361,14 +362,14 @@ public class MainActivity extends AppCompatActivity {
                                 for(int w=0;w<7;w++)
                                 {
                                     gridMap.moveRobot("forward");
-                                    Thread.sleep(200);
+                                    Thread.sleep(400);
                                 }
                                 break;
                             case "F08":
                                 for(int w=0;w<8;w++)
                                 {
                                     gridMap.moveRobot("forward");
-                                    Thread.sleep(200);
+                                    Thread.sleep(400);
                                 }
                                 break;
                             case "F09":
@@ -475,12 +476,13 @@ public class MainActivity extends AppCompatActivity {
                     if (septext[u].substring(0, 3).equalsIgnoreCase("MDF")) {
 
                         String[] seperatedtextMDF = septext[u].split("\\|");
-                        String hextext = seperatedtextMDF[1];
-                        gridMap.setPublicMDFExploration(hextext);
-//                        if(seperatedtextMDF[2] != "")
-//                        {
-//                            gridMap.setPublicMDFObstacle(seperatedtextMDF[2]);
-//                        }
+                        hextext = seperatedtextMDF[1];
+                        //gridMap.setPublicMDFExploration(hextext);
+                        if(seperatedtextMDF.length == 3 )
+                        {
+                            hextext2 = seperatedtextMDF[2];
+
+                        }
 
                         gridMap.mapDescriptorExplored(hextext);
                     }
@@ -533,6 +535,14 @@ public class MainActivity extends AppCompatActivity {
                 editor.putString("message", receivedText);
                 editor.commit();
                 refreshMessageReceived();
+
+                if(hextext2 != "") {
+                    sharedPreferences();
+                    String receivedText2 = sharedPreferences.getString("message", "") + "\n\n --------------------------------------------------------------------------------\n" + "ExploredMDF: " + hextext + "\n" + "Obstacle: \n" + hextext2;
+                    editor.putString("message", receivedText2);
+                    editor.commit();
+                    refreshMessageReceived();
+                }
             }
         }
     };
