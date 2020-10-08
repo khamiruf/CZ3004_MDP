@@ -110,7 +110,7 @@ public class TCPComm {
 			receivedMsg = this.inputStream.readLine();
 		} catch (IOException ex) {
 			//e.printStackTrace();
-			System.out.println("TCP ReadMsg() Exception: " + ex.getMessage());
+			System.out.println("TCP ReadMsg() Exception: "+receivedMsg+":" + ex.getMessage());
 			throw new InterruptedException("TCP ReadMsg() Exception");
 		}
 		return receivedMsg;
