@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
 //                editor.commit();
 //                refreshMessageReceived();
 //            }
- //       });
+//        });
 
         // Toolbar
         Button bluetoothButton = (Button) findViewById(R.id.bluetoothButton);
@@ -222,7 +222,7 @@ public class MainActivity extends AppCompatActivity {
                 jsonObject.put(name, name);
                 jsonObject.put("x", x);
                 jsonObject.put("y", y);
-                message = "WP| [" + x + "," + y + "]";
+                message = "WP|[" + x + "," + y + "]";
                 break;
             default:
                 message = "Unexpected default for printMessage: " + name;
@@ -318,6 +318,7 @@ public class MainActivity extends AppCompatActivity {
                 try {
                     if (septext[u].length() < 4) {
                         switch (septext[u]) {
+                            case "G0":
                             case "F01":
                                 gridMap.moveRobot("forward");
                                 break;
@@ -325,114 +326,133 @@ public class MainActivity extends AppCompatActivity {
                                 for(int w=0;w<2;w++)
                                 {
                                     gridMap.moveRobot("forward");
+                                    Thread.sleep(400);
                                 }
                                 break;
                             case "F03":
                                 for(int w=0;w<3;w++)
                                 {
                                     gridMap.moveRobot("forward");
+                                    Thread.sleep(400);
                                 }
                                 break;
                             case "F04":
                                 for(int w=0;w<4;w++)
                                 {
                                     gridMap.moveRobot("forward");
+                                    Thread.sleep(200);
                                 }
                                 break;
                             case "F05":
                                 for(int w=0;w<5;w++)
                                 {
                                     gridMap.moveRobot("forward");
+                                    Thread.sleep(200);
                                 }
                                 break;
                             case "F06":
                                 for(int w=0;w<6;w++)
                                 {
                                     gridMap.moveRobot("forward");
+                                    Thread.sleep(200);
                                 }
                                 break;
                             case "F07":
                                 for(int w=0;w<7;w++)
                                 {
                                     gridMap.moveRobot("forward");
+                                    Thread.sleep(200);
                                 }
                                 break;
                             case "F08":
                                 for(int w=0;w<8;w++)
                                 {
                                     gridMap.moveRobot("forward");
+                                    Thread.sleep(200);
                                 }
                                 break;
                             case "F09":
                                 for(int w=0;w<9;w++)
                                 {
                                     gridMap.moveRobot("forward");
+                                    Thread.sleep(400);
                                 }
                                 break;
                             case "F10":
                                 for(int w=0;w<10;w++)
                                 {
                                     gridMap.moveRobot("forward");
+                                    Thread.sleep(400);
                                 }
                                 break;
                             case "F11":
                                 for(int w=0;w<11;w++)
                                 {
                                     gridMap.moveRobot("forward");
+                                    Thread.sleep(400);
                                 }
                                 break;
                             case "F12":
                                 for(int w=0;w<12;w++)
                                 {
                                     gridMap.moveRobot("forward");
+                                    Thread.sleep(400);
                                 }
                                 break;
                             case "F13":
                                 for(int w=0;w<13;w++)
                                 {
                                     gridMap.moveRobot("forward");
+                                    Thread.sleep(400);
                                 }
                                 break;
                             case "F14":
                                 for(int w=0;w<14;w++)
                                 {
                                     gridMap.moveRobot("forward");
+                                    Thread.sleep(400);
                                 }
                                 break;
                             case "F15":
                                 for(int w=0;w<15;w++)
                                 {
                                     gridMap.moveRobot("forward");
+                                    Thread.sleep(400);
                                 }
                                 break;
                             case "F16":
                                 for(int w=0;w<16;w++)
                                 {
                                     gridMap.moveRobot("forward");
+                                    Thread.sleep(400);
                                 }
                                 break;
                             case "F17":
                                 for(int w=0;w<17;w++)
                                 {
                                     gridMap.moveRobot("forward");
+                                    Thread.sleep(400);
                                 }
                                 break;
                             case "F18":
                                 for(int w=0;w<18;w++)
                                 {
                                     gridMap.moveRobot("forward");
+                                    Thread.sleep(400);
                                 }
                                 break;
                             case "F19":
                                 for(int w=0;w<19;w++)
                                 {
                                     gridMap.moveRobot("forward");
+                                    Thread.sleep(400);
                                 }
                                 break;
                             case "F20":
                                 for(int w=0;w<20;w++)
                                 {
                                     gridMap.moveRobot("forward");
+                                    Thread.sleep(400);
                                 }
                                 break;
                             case "R0":
@@ -456,54 +476,16 @@ public class MainActivity extends AppCompatActivity {
 
                         String[] seperatedtextMDF = septext[u].split("\\|");
                         String hextext = seperatedtextMDF[1];
+                        gridMap.setPublicMDFExploration(hextext);
+//                        if(seperatedtextMDF[2] != "")
+//                        {
+//                            gridMap.setPublicMDFObstacle(seperatedtextMDF[2]);
+//                        }
 
-                        sharedPreferences();
-                        String receivedText = sharedPreferences.getString("message", "") + "\n" + "Hi, mdf string is: " + hextext ;
-                        editor.putString("message", receivedText);
-                        editor.commit();
-                        refreshMessageReceived();
                         gridMap.mapDescriptorExplored(hextext);
                     }
                 } catch (Exception e) {
                     showLog("Fail to update Map");
-                }
-
-                try {
-                    if (message.length() > 15 && message.substring(2, 6).equals("grid")) {
-                        String resultString = "";
-                        String amdString = message.substring(11, message.length() - 2);
-                        showLog("amdString: " + amdString);
-                        BigInteger hexBigIntegerExplored = new BigInteger(amdString, 16);
-                        String exploredString = hexBigIntegerExplored.toString(2);
-
-                        while (exploredString.length() < 300)
-                            exploredString = "0" + exploredString;
-
-                        for (int i = 0; i < exploredString.length(); i = i + 15) {
-                            int j = 0;
-                            String subString = "";
-                            while (j < 15) {
-                                subString = subString + exploredString.charAt(j + i);
-                                j++;
-                            }
-                            resultString = subString + resultString;
-                        }
-                        hexBigIntegerExplored = new BigInteger(resultString, 2);
-                        resultString = hexBigIntegerExplored.toString(16);
-
-                        JSONObject amdObject = new JSONObject();
-                        amdObject.put("explored", "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
-                        amdObject.put("length", amdString.length() * 4);
-                        amdObject.put("obstacle", resultString);
-                        JSONArray amdArray = new JSONArray();
-                        amdArray.put(amdObject);
-                        JSONObject amdMessage = new JSONObject();
-                        amdMessage.put("map", amdArray);
-                        message = String.valueOf(amdMessage);
-                        showLog("Executed for AMD message, message: " + message);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
 
                 try {

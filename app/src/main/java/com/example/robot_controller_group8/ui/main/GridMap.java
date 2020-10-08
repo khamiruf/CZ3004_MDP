@@ -449,12 +449,12 @@ public class GridMap extends View {
         showLog("Entering setObstacleCoord");
         int[] obstacleCoord = new int[]{col, row};
         GridMap.obstacleCoord.add(obstacleCoord);
-        row = this.convertRow(row);
-        cells[col][row].setType("obstacle");
+        //row = this.convertRow(row);
+        //cells[col][row].setType("obstacle");
         showLog("Exiting setObstacleCoord");
     }
 
-    private ArrayList<int[]> getObstacleCoord() {
+    public ArrayList<int[]> getObstacleCoord() {
         return obstacleCoord;
     }
 
@@ -679,14 +679,11 @@ public class GridMap extends View {
 
         String binMap = hexBigInteger.toString(2);
 
-        // Discard padding bits in the back
+        // Discard padding bits on the front and back
         String binMapExtracted = binMap.substring(2,302);
 
         char cur;
         Integer[] binMapArray = new Integer[binMapExtracted.length()];
-
-
-        //MainActivity.receiveMessage("test" + String.valueOf(binMapExtracted.charAt(0)));
 
         // Separate each bit with an integer array
         for (int i = 0; i < binMapExtracted.length(); i++){
@@ -700,20 +697,19 @@ public class GridMap extends View {
         for(int j = (ROW -1) ; j >= 0 ; j--){
             for(int i = 0; i < this.COL; i++) {
                 if(binMapArray[binMapArrayIndex] == 1 && !cells[i+1][j].equals("obstacle") && !cells[i+1][j].equals("image") && !cells[i+1][j].equals("robot") ){
-                    //this.setCellExplored(i, j, true);
                     cells[i+1][j].setType("explored");
-                    //MainActivity.receiveMessage("plant me at row " + j + ", Col: " + i);
                 }
-//                else {
-//                    //this.setCellExplored(i, j, false);
-//                    cells[j][i].setType("unexplored");
-//                }
+
                 binMapArrayIndex++;
             }
         }
-        setEndCoord(14, 19);
-        // Update map
-        //this.refreshMap(this.getAutoUpdate());
+        //setEndCoord(14, 19);
+        ArrayList<int[]> obstacleCoord = this.getObstacleCoord();
+        for(int k=0; k<obstacleCoord.size();k++)
+        {
+            cells[obstacleCoord.get(k)[0]][convertRow(obstacleCoord.get(k)[1])].setType("obstacle");
+        }
+
         this.invalidate();
     }
 
@@ -959,6 +955,7 @@ public class GridMap extends View {
                 switch (direction) {
                     case "forward":
                         if (curCoord[1] != 2) {
+
                             curCoord[1] -= 1;
                             validPosition = true;
                         }
@@ -1007,12 +1004,14 @@ public class GridMap extends View {
                 robotDirection = "error moveCurCoord";
                 break;
         }
+
         if (getValidPosition())
             for (int x = curCoord[0] - 1; x <= curCoord[0] + 1; x++) {
                 for (int y = curCoord[1] - 1; y <= curCoord[1] + 1; y++) {
                     for (int i = 0; i < obstacleCoord.size(); i++) {
-                        if (obstacleCoord.get(i)[0] != x || obstacleCoord.get(i)[1] != y)
+                        if (obstacleCoord.get(i)[0]!= x || obstacleCoord.get(i)[1] != y) {
                             setValidPosition(true);
+                        }
                         else {
                             setValidPosition(false);
                             break;
@@ -1031,6 +1030,7 @@ public class GridMap extends View {
                 robotDirection = backupDirection;
             this.setCurCoord(oldCoord[0], oldCoord[1], robotDirection);
         }
+        setEndCoord(14, 19);
         this.invalidate();
         showLog("Exiting moveRobot");
     }
