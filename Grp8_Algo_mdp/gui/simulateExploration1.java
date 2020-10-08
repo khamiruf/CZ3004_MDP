@@ -277,6 +277,7 @@ public class simulateExploration1 implements Runnable{
 	                    }
 	                    break;
 	                case WEST:
+	                	
 	                if(currCol == destCol){
 	                    if(currRow < destRow){
 	                    	robot.turn(MOVEMENT.RIGHT); 

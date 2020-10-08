@@ -37,13 +37,14 @@ public class simulateRealRun implements Runnable {
 		try {
 			establishCommsToRPI();
 			checkandPlotSC(); // waiting for start coord from RPI
-			//checkandPlotWP();
+			checkandPlotWP();
 			displayToUI();
 			mGui.displayMsgToUI("Exploration Started, Waiting for sensor data...");
 
 			sendMsg("EX|V0|(0),(0)|(0),(0)");
-
+			//sendMsg("EX|L0|(0),(0)|(0),(0)");
 			String recMsg = readMsg();
+			//recMsg = readMsg();
 			initialiseTimer();
 			int forwardCount = 0;
 			sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
@@ -143,11 +144,13 @@ public class simulateRealRun implements Runnable {
 				ArrayList<Cell> cellStep = fastobj.calculateFastestPath(exploreMap,
 						exploreMap.getStartGoalPosition().getRowPos(), exploreMap.getStartGoalPosition().getColPos());
 				if (cellStep != null) {
-					printMovement(cellStep, null, false);
+					printMovement(cellStep, null, true);
 				}
 
 			}
-
+			// ============= Cancel timer ==============================
+			this.mTimer.cancel();
+			this.mTimer.purge();
 			// ============== Calibrating Robot to face North ============
 			faceNorthDirection();
 			sendMsg("N|"); // Send to Arduino to signify end of exploration
@@ -445,6 +448,7 @@ public class simulateRealRun implements Runnable {
 			case WEST:
 				if (currCol == destCol) {
 					if (currRow < destRow) {
+						System.out.println("westD");
 						robot.turn(MOVEMENT.RIGHT);
 						sendMsg("EX|R0" + exploreMap.rpiImageString(robot));
 						recMsg = readMsg();
@@ -461,6 +465,7 @@ public class simulateRealRun implements Runnable {
 							sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
 						}
 					} else if (currRow > destRow) {
+						System.out.println("westC");
 						robot.turn(MOVEMENT.LEFT);
 						sendMsg("EX|L0" + exploreMap.rpiImageString(robot));
 						recMsg = readMsg();
@@ -479,6 +484,7 @@ public class simulateRealRun implements Runnable {
 					}
 				} else if (currRow == destRow) {
 					if (currCol < destCol) {
+						System.out.println("westB");
 						robot.turn(MOVEMENT.RIGHT);
 						sendMsg("EX|R0" + exploreMap.rpiImageString(robot));
 						recMsg = readMsg();
@@ -504,6 +510,7 @@ public class simulateRealRun implements Runnable {
 						}
 
 					} else if (currCol > destCol) {
+						System.out.println("westA");
 						forwardCount++;
 						robot.move(MOVEMENT.FORWARD);
 						sendMsg("EX|F01" + exploreMap.rpiImageString(robot));
@@ -521,10 +528,10 @@ public class simulateRealRun implements Runnable {
 			displayToUI();
 
 			if (i == cellStep.size() - 1) {
-				destRow = unexpl.getRowPos();
-				destCol = unexpl.getColPos();
 				if (unexpl != null && !unexpl.getExploredState()) {
-
+					destRow = unexpl.getRowPos();
+					destCol = unexpl.getColPos();
+					
 					switch (robot.getCurrDir()) {
 					case NORTH:
 						if (currCol == destCol) {
@@ -696,10 +703,11 @@ public class simulateRealRun implements Runnable {
 					}
 				}
 
-				currRow = robot.getPosRow();
-				currCol = robot.getPosCol();
+			
 
 			}
+			currRow = robot.getPosRow();
+			currCol = robot.getPosCol();
 		}
 	}
 
@@ -1117,10 +1125,10 @@ public class simulateRealRun implements Runnable {
 		// WP|[1,1] [row ,col]
 		mGui.displayMsgToUI("Waiting for WayPoint coordinate...");
 		do {
-			rmsg = readMsg();
+			rmsg = readMsg();		
 			if (rmsg.substring(0, 3).equals("WP|")) {
 				String[] arr = rmsg.substring(4, rmsg.length() - 1).split(",");
-				this.exploreMap.setWayPoint(Integer.parseInt(arr[0]), Integer.parseInt(arr[1]));
+				this.exploreMap.setWayPoint(Integer.parseInt(arr[1]), Integer.parseInt(arr[0]));
 				return;
 			}
 		} while (true);
@@ -1128,7 +1136,6 @@ public class simulateRealRun implements Runnable {
 
 	// Method for sending obstacles location
 	private void sendObstacleInfo(String rmsg) {
-
 		if (rmsg.length() != 0) {
 			rmsg = "OB|" + rmsg + "!MDF|" + exploreMap.getMDF1();
 			sendMsg(rmsg);
@@ -1156,7 +1163,7 @@ public class simulateRealRun implements Runnable {
 
 				timeElapsed = (System.currentTimeMillis() - startTime) / 1000;
 				mGui.displayTimerToUI((int) timeElapsed);
-				if (timeElapsed == 340) {
+				if (timeElapsed == 540) {
 
 					sendMDFInfo(exploreMap.getMDF1(), exploreMap.getMDF2());
 					tcpObj.closeConnection();
