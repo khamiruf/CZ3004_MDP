@@ -187,9 +187,15 @@ public class GameFragment extends Fragment implements SensorEventListener {
                 exploreTimeTextView.setText("00:00");
                 robotStatusTextView.setText("Not Available");
                 if(exploreButton.isChecked())
+                {
                     exploreButton.toggle();
+                    MainActivity.printMessage("N|!");
+                }
+
                 timerHandler.removeCallbacks(timerRunnableExplore);
-                showLog("Exiting exploreResetImageBtn");            }
+                showLog("Exiting exploreResetImageBtn");
+
+            }
         });
 
         fastestResetButton.setOnClickListener(new View.OnClickListener() {
