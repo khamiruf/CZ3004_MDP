@@ -46,7 +46,9 @@ public class simulateRealRun implements Runnable {
 			String recMsg = readMsg();
 			//recMsg = readMsg();
 			int forwardCount = 0;
-			sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+			exploreMap.setExploredCells(robot, recMsg);
+			sendMDFInfo();
+			
 
 			displayToUI();
 
@@ -56,24 +58,29 @@ public class simulateRealRun implements Runnable {
 					robot.turn(MOVEMENT.RIGHT);
 					sendMsg("EX|R0" + exploreMap.rpiImageString(robot));
 					recMsg = readMsg();
-					sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+					exploreMap.setExploredCells(robot, recMsg);
+					sendMDFInfo();
 					displayToUI();
 
 					forwardCount++;
 					robot.move(MOVEMENT.FORWARD);
 					// sendMsg("EX|F01"+ exploreMap.rpiImageString(robot));
-					chooseForward(recMsg, exploreMap.rpiImageString(robot));
+					//chooseForward(recMsg, exploreMap.rpiImageString(robot));
+					sendMsg("EX|F01" + exploreMap.rpiImageString(robot));
 					recMsg = readMsg();
-					sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+					exploreMap.setExploredCells(robot, recMsg);
+					sendMDFInfo();
 					forwardCount = centerRepos(forwardCount, recMsg);
 
 				} else if (robot.isMovementValid(exploreMap, MOVEMENT.FORWARD)) {
 					forwardCount++;
 					robot.move(MOVEMENT.FORWARD);
 					// sendMsg("EX|F01"+ exploreMap.rpiImageString(robot));
-					chooseForward(recMsg, exploreMap.rpiImageString(robot));
+					//chooseForward(recMsg, exploreMap.rpiImageString(robot));
+					sendMsg("EX|F01" + exploreMap.rpiImageString(robot));
 					recMsg = readMsg();
-					sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+					exploreMap.setExploredCells(robot, recMsg);
+					sendMDFInfo();
 					forwardCount = centerRepos(forwardCount, recMsg);
 
 				} else if (robot.isMovementValid(exploreMap, MOVEMENT.LEFT)) {
@@ -81,7 +88,8 @@ public class simulateRealRun implements Runnable {
 
 					sendMsg("EX|L0" + exploreMap.rpiImageString(robot));
 					recMsg = readMsg();
-					sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+					exploreMap.setExploredCells(robot, recMsg);
+					sendMDFInfo();
 					forwardCount = centerRepos(forwardCount, recMsg);
 
 				} else if (robot.isMovementValid(exploreMap, MOVEMENT.BACKWARD)) {
@@ -89,23 +97,27 @@ public class simulateRealRun implements Runnable {
 
 					sendMsg("EX|R0" + exploreMap.rpiImageString(robot));
 					recMsg = readMsg();
-					sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+					exploreMap.setExploredCells(robot, recMsg);
+					sendMDFInfo();
 					displayToUI();
 
 					robot.turn(MOVEMENT.RIGHT);
 
 					sendMsg("EX|R0" + exploreMap.rpiImageString(robot));
 					recMsg = readMsg();
-					sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+					exploreMap.setExploredCells(robot, recMsg);
+					sendMDFInfo();
 					displayToUI();
 
 					forwardCount++;
 					robot.move(MOVEMENT.FORWARD);
 
 					// sendMsg("EX|F01"+ exploreMap.rpiImageString(robot));
-					chooseForward(recMsg, exploreMap.rpiImageString(robot));
+					//chooseForward(recMsg, exploreMap.rpiImageString(robot));
+					sendMsg("EX|F01" + exploreMap.rpiImageString(robot));
 					recMsg = readMsg();
-					sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+					exploreMap.setExploredCells(robot, recMsg);
+					sendMDFInfo();
 					forwardCount = centerRepos(forwardCount, recMsg);
 				} else {
 					// No Valid movement, therefore throw an exception to display error msg & close
@@ -117,7 +129,7 @@ public class simulateRealRun implements Runnable {
 			} while (!exploreMap.getStartGoalPosition().getExploredState()
 					|| !exploreMap.getEndGoalPosition().getExploredState()
 					|| !exploreMap.checkIfRobotAtStartPos(robot));
-			
+			/*
 			ArrayList<Cell> unexploredList = getUnexploredList(exploreMap);
 			while (unexploredList.size() > 0) {
 
@@ -136,7 +148,7 @@ public class simulateRealRun implements Runnable {
 					//System.out.println("ysize:" + unexploredList.size());
 				}
 			}
-			 	
+			 */	
 			if (!exploreMap.checkIfRobotAtStartPos(robot)) {
 				FastestPath fastobj = new FastestPath(robot, exploreMap);
 
@@ -233,7 +245,8 @@ public class simulateRealRun implements Runnable {
 						recMsg = readMsg();
 						forwardCount = centerRepos(forwardCount, recMsg);
 						if (setSensorData) {
-							sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+							exploreMap.setExploredCells(robot, recMsg);
+							sendMDFInfo();
 						}
 
 					} else if (currRow > destRow) {
@@ -241,7 +254,8 @@ public class simulateRealRun implements Runnable {
 						sendMsg("EX|R0" + exploreMap.rpiImageString(robot));
 						recMsg = readMsg();
 						if (setSensorData) {
-							sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+							exploreMap.setExploredCells(robot, recMsg);
+							sendMDFInfo();
 						}
 						displayToUI();
 
@@ -249,7 +263,8 @@ public class simulateRealRun implements Runnable {
 						sendMsg("EX|R0" + exploreMap.rpiImageString(robot));
 						recMsg = readMsg();
 						if (setSensorData) {
-							sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+							exploreMap.setExploredCells(robot, recMsg);
+							sendMDFInfo();
 						}
 						displayToUI();
 						forwardCount++;
@@ -258,7 +273,8 @@ public class simulateRealRun implements Runnable {
 						recMsg = readMsg();
 						forwardCount = centerRepos(forwardCount, recMsg);
 						if (setSensorData) {
-							sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+							exploreMap.setExploredCells(robot, recMsg);
+							sendMDFInfo();
 						}
 					}
 				} else if (currRow == destRow) {
@@ -267,7 +283,8 @@ public class simulateRealRun implements Runnable {
 						sendMsg("EX|R0" + exploreMap.rpiImageString(robot));
 						recMsg = readMsg();
 						if (setSensorData) {
-							sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+							exploreMap.setExploredCells(robot, recMsg);
+							sendMDFInfo();
 						}
 						displayToUI();
 						forwardCount++;
@@ -276,7 +293,8 @@ public class simulateRealRun implements Runnable {
 						recMsg = readMsg();
 						forwardCount = centerRepos(forwardCount, recMsg);
 						if (setSensorData) {
-							sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+							exploreMap.setExploredCells(robot, recMsg);
+							sendMDFInfo();
 						}
 
 					} else if (currCol > destCol) {
@@ -284,7 +302,8 @@ public class simulateRealRun implements Runnable {
 						sendMsg("EX|L0" + exploreMap.rpiImageString(robot));
 						recMsg = readMsg();
 						if (setSensorData) {
-							sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+							exploreMap.setExploredCells(robot, recMsg);
+							sendMDFInfo();
 						}
 						displayToUI();
 						forwardCount++;
@@ -293,7 +312,8 @@ public class simulateRealRun implements Runnable {
 						recMsg = readMsg();
 						forwardCount = centerRepos(forwardCount, recMsg);
 						if (setSensorData) {
-							sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+							exploreMap.setExploredCells(robot, recMsg);
+							sendMDFInfo();
 						}
 					}
 				}
@@ -305,7 +325,8 @@ public class simulateRealRun implements Runnable {
 						sendMsg("EX|R0" + exploreMap.rpiImageString(robot));
 						recMsg = readMsg();
 						if (setSensorData) {
-							sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+							exploreMap.setExploredCells(robot, recMsg); 
+							sendMDFInfo();
 						}
 						displayToUI();
 
@@ -313,7 +334,8 @@ public class simulateRealRun implements Runnable {
 						sendMsg("EX|R0" + exploreMap.rpiImageString(robot));
 						recMsg = readMsg();
 						if (setSensorData) {
-							sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+							exploreMap.setExploredCells(robot, recMsg); 
+							sendMDFInfo();
 						}
 						displayToUI();
 						forwardCount++;
@@ -322,7 +344,8 @@ public class simulateRealRun implements Runnable {
 						recMsg = readMsg();
 						forwardCount = centerRepos(forwardCount, recMsg);
 						if (setSensorData) {
-							sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+							exploreMap.setExploredCells(robot, recMsg); 
+							sendMDFInfo();
 						}
 
 					} else if (currRow > destRow) {
@@ -332,7 +355,8 @@ public class simulateRealRun implements Runnable {
 						recMsg = readMsg();
 						forwardCount = centerRepos(forwardCount, recMsg);
 						if (setSensorData) {
-							sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+							exploreMap.setExploredCells(robot, recMsg); 
+							sendMDFInfo();
 						}
 					}
 				} else if (currRow == destRow) {
@@ -341,7 +365,8 @@ public class simulateRealRun implements Runnable {
 						sendMsg("EX|L0" + exploreMap.rpiImageString(robot));
 						recMsg = readMsg();
 						if (setSensorData) {
-							sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+							exploreMap.setExploredCells(robot, recMsg); 
+							sendMDFInfo();
 						}
 						displayToUI();
 						forwardCount++;
@@ -350,14 +375,16 @@ public class simulateRealRun implements Runnable {
 						recMsg = readMsg();
 						forwardCount = centerRepos(forwardCount, recMsg);
 						if (setSensorData) {
-							sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+							exploreMap.setExploredCells(robot, recMsg); 
+							sendMDFInfo();
 						}
 					} else if (currCol > destCol) {
 						robot.turn(MOVEMENT.RIGHT);
 						sendMsg("EX|R0" + exploreMap.rpiImageString(robot));
 						recMsg = readMsg();
 						if (setSensorData) {
-							sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+							exploreMap.setExploredCells(robot, recMsg); 
+							sendMDFInfo();
 						}
 						displayToUI();
 						forwardCount++;
@@ -366,7 +393,8 @@ public class simulateRealRun implements Runnable {
 						recMsg = readMsg();
 						forwardCount = centerRepos(forwardCount, recMsg);
 						if (setSensorData) {
-							sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+							exploreMap.setExploredCells(robot, recMsg); 
+							sendMDFInfo();
 						}
 					}
 				}
@@ -378,7 +406,8 @@ public class simulateRealRun implements Runnable {
 						sendMsg("EX|L0" + exploreMap.rpiImageString(robot));
 						recMsg = readMsg();
 						if (setSensorData) {
-							sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+							exploreMap.setExploredCells(robot, recMsg); 
+							sendMDFInfo();
 						}
 						displayToUI();
 						forwardCount++;
@@ -387,14 +416,16 @@ public class simulateRealRun implements Runnable {
 						recMsg = readMsg();
 						forwardCount = centerRepos(forwardCount, recMsg);
 						if (setSensorData) {
-							sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+							exploreMap.setExploredCells(robot, recMsg); 
+							sendMDFInfo();
 						}
 					} else if (currRow > destRow) {
 						robot.turn(MOVEMENT.RIGHT);
 						sendMsg("EX|R0" + exploreMap.rpiImageString(robot));
 						recMsg = readMsg();
 						if (setSensorData) {
-							sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+							exploreMap.setExploredCells(robot, recMsg); 
+							sendMDFInfo();
 						}
 						displayToUI();
 						forwardCount++;
@@ -403,7 +434,8 @@ public class simulateRealRun implements Runnable {
 						recMsg = readMsg();
 						forwardCount = centerRepos(forwardCount, recMsg);
 						if (setSensorData) {
-							sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+							exploreMap.setExploredCells(robot, recMsg); 
+							sendMDFInfo();
 						}
 					}
 				} else if (currRow == destRow) {
@@ -414,14 +446,16 @@ public class simulateRealRun implements Runnable {
 						recMsg = readMsg();
 						forwardCount = centerRepos(forwardCount, recMsg);
 						if (setSensorData) {
-							sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+							exploreMap.setExploredCells(robot, recMsg); 
+							sendMDFInfo();
 						}
 					} else if (currCol > destCol) {
 						robot.turn(MOVEMENT.RIGHT);
 						sendMsg("EX|R0" + exploreMap.rpiImageString(robot));
 						recMsg = readMsg();
 						if (setSensorData) {
-							sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+							exploreMap.setExploredCells(robot, recMsg); 
+							sendMDFInfo();
 						}
 						displayToUI();
 
@@ -429,7 +463,8 @@ public class simulateRealRun implements Runnable {
 						sendMsg("EX|R0" + exploreMap.rpiImageString(robot));
 						recMsg = readMsg();
 						if (setSensorData) {
-							sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+							exploreMap.setExploredCells(robot, recMsg); 
+							sendMDFInfo();
 						}
 						displayToUI();
 						forwardCount++;
@@ -438,7 +473,8 @@ public class simulateRealRun implements Runnable {
 						recMsg = readMsg();
 						forwardCount = centerRepos(forwardCount, recMsg);
 						if (setSensorData) {
-							sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+							exploreMap.setExploredCells(robot, recMsg); 
+							sendMDFInfo();
 						}
 					}
 				}
@@ -451,7 +487,8 @@ public class simulateRealRun implements Runnable {
 						sendMsg("EX|R0" + exploreMap.rpiImageString(robot));
 						recMsg = readMsg();
 						if (setSensorData) {
-							sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+							exploreMap.setExploredCells(robot, recMsg); 
+							sendMDFInfo();
 						}
 						displayToUI();
 						forwardCount++;
@@ -460,7 +497,8 @@ public class simulateRealRun implements Runnable {
 						recMsg = readMsg();
 						forwardCount = centerRepos(forwardCount, recMsg);
 						if (setSensorData) {
-							sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+							exploreMap.setExploredCells(robot, recMsg); 
+							sendMDFInfo();
 						}
 					} else if (currRow > destRow) {
 						System.out.println("westC");
@@ -468,7 +506,8 @@ public class simulateRealRun implements Runnable {
 						sendMsg("EX|L0" + exploreMap.rpiImageString(robot));
 						recMsg = readMsg();
 						if (setSensorData) {
-							sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+							exploreMap.setExploredCells(robot, recMsg); 
+							sendMDFInfo();
 						}
 						displayToUI();
 						forwardCount++;
@@ -477,7 +516,8 @@ public class simulateRealRun implements Runnable {
 						recMsg = readMsg();
 						forwardCount = centerRepos(forwardCount, recMsg);
 						if (setSensorData) {
-							sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+							exploreMap.setExploredCells(robot, recMsg); 
+							sendMDFInfo();
 						}
 					}
 				} else if (currRow == destRow) {
@@ -487,7 +527,8 @@ public class simulateRealRun implements Runnable {
 						sendMsg("EX|R0" + exploreMap.rpiImageString(robot));
 						recMsg = readMsg();
 						if (setSensorData) {
-							sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+							exploreMap.setExploredCells(robot, recMsg); 
+							sendMDFInfo();
 						}
 						displayToUI();
 
@@ -495,7 +536,8 @@ public class simulateRealRun implements Runnable {
 						sendMsg("EX|R0" + exploreMap.rpiImageString(robot));
 						recMsg = readMsg();
 						if (setSensorData) {
-							sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+							exploreMap.setExploredCells(robot, recMsg); 
+							sendMDFInfo();
 						}
 						displayToUI();
 						forwardCount++;
@@ -504,7 +546,8 @@ public class simulateRealRun implements Runnable {
 						recMsg = readMsg();
 						forwardCount = centerRepos(forwardCount, recMsg);
 						if (setSensorData) {
-							sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+							exploreMap.setExploredCells(robot, recMsg); 
+							sendMDFInfo();
 						}
 
 					} else if (currCol > destCol) {
@@ -516,7 +559,8 @@ public class simulateRealRun implements Runnable {
 						recMsg = readMsg();
 						forwardCount = centerRepos(forwardCount, recMsg);
 						if (setSensorData) {
-							sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+							exploreMap.setExploredCells(robot, recMsg); 
+							sendMDFInfo();
 						}
 					}
 				}
@@ -540,7 +584,8 @@ public class simulateRealRun implements Runnable {
 								sendMsg("EX|R0" + exploreMap.rpiImageString(robot));
 								recMsg = readMsg();
 								if (setSensorData) {
-									sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+									exploreMap.setExploredCells(robot, recMsg); 
+									sendMDFInfo();
 								}
 								displayToUI();
 
@@ -548,7 +593,8 @@ public class simulateRealRun implements Runnable {
 								sendMsg("EX|R0" + exploreMap.rpiImageString(robot));
 								recMsg = readMsg();
 								if (setSensorData) {
-									sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+									exploreMap.setExploredCells(robot, recMsg); 
+									sendMDFInfo();
 								}
 								displayToUI();
 							}
@@ -558,7 +604,8 @@ public class simulateRealRun implements Runnable {
 								sendMsg("EX|R0" + exploreMap.rpiImageString(robot));
 								recMsg = readMsg();
 								if (setSensorData) {
-									sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+									exploreMap.setExploredCells(robot, recMsg); 
+									sendMDFInfo();
 								}
 								displayToUI();
 
@@ -567,7 +614,8 @@ public class simulateRealRun implements Runnable {
 								sendMsg("EX|L0" + exploreMap.rpiImageString(robot));
 								recMsg = readMsg();
 								if (setSensorData) {
-									sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+									exploreMap.setExploredCells(robot, recMsg); 
+									sendMDFInfo();
 								}
 								displayToUI();
 							}
@@ -580,7 +628,8 @@ public class simulateRealRun implements Runnable {
 								sendMsg("EX|R0" + exploreMap.rpiImageString(robot));
 								recMsg = readMsg();
 								if (setSensorData) {
-									sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+									exploreMap.setExploredCells(robot, recMsg); 
+									sendMDFInfo();
 								}
 								displayToUI();
 
@@ -588,7 +637,8 @@ public class simulateRealRun implements Runnable {
 								sendMsg("EX|R0" + exploreMap.rpiImageString(robot));
 								recMsg = readMsg();
 								if (setSensorData) {
-									sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+									exploreMap.setExploredCells(robot, recMsg); 
+									sendMDFInfo();
 								}
 								displayToUI();
 
@@ -601,7 +651,8 @@ public class simulateRealRun implements Runnable {
 								sendMsg("EX|L0" + exploreMap.rpiImageString(robot));
 								recMsg = readMsg();
 								if (setSensorData) {
-									sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+									exploreMap.setExploredCells(robot, recMsg); 
+									sendMDFInfo();
 								}
 								displayToUI();
 							} else if (currCol > destCol) {
@@ -609,7 +660,8 @@ public class simulateRealRun implements Runnable {
 								sendMsg("EX|R0" + exploreMap.rpiImageString(robot));
 								recMsg = readMsg();
 								if (setSensorData) {
-									sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+									exploreMap.setExploredCells(robot, recMsg); 
+									sendMDFInfo();
 								}
 								displayToUI();
 							}
@@ -622,7 +674,8 @@ public class simulateRealRun implements Runnable {
 								sendMsg("EX|L0" + exploreMap.rpiImageString(robot));
 								recMsg = readMsg();
 								if (setSensorData) {
-									sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+									exploreMap.setExploredCells(robot, recMsg); 
+									sendMDFInfo();
 								}
 								displayToUI();
 							} else if (currRow > destRow) {
@@ -630,7 +683,8 @@ public class simulateRealRun implements Runnable {
 								sendMsg("EX|R0" + exploreMap.rpiImageString(robot));
 								recMsg = readMsg();
 								if (setSensorData) {
-									sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+									exploreMap.setExploredCells(robot, recMsg); 
+									sendMDFInfo();
 								}
 								displayToUI();
 							}
@@ -642,7 +696,8 @@ public class simulateRealRun implements Runnable {
 								sendMsg("EX|R0" + exploreMap.rpiImageString(robot));
 								recMsg = readMsg();
 								if (setSensorData) {
-									sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+									exploreMap.setExploredCells(robot, recMsg); 
+									sendMDFInfo();
 								}
 								displayToUI();
 
@@ -650,7 +705,8 @@ public class simulateRealRun implements Runnable {
 								sendMsg("EX|R0" + exploreMap.rpiImageString(robot));
 								recMsg = readMsg();
 								if (setSensorData) {
-									sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+									exploreMap.setExploredCells(robot, recMsg); 
+									sendMDFInfo();
 								}
 								displayToUI();
 							}
@@ -663,7 +719,8 @@ public class simulateRealRun implements Runnable {
 								sendMsg("EX|R0" + exploreMap.rpiImageString(robot));
 								recMsg = readMsg();
 								if (setSensorData) {
-									sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+									exploreMap.setExploredCells(robot, recMsg); 
+									sendMDFInfo();
 								}
 								displayToUI();
 							} else if (currRow > destRow) {
@@ -671,7 +728,8 @@ public class simulateRealRun implements Runnable {
 								sendMsg("EX|L0" + exploreMap.rpiImageString(robot));
 								recMsg = readMsg();
 								if (setSensorData) {
-									sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+									exploreMap.setExploredCells(robot, recMsg); 
+									sendMDFInfo();
 								}
 								displayToUI();
 							}
@@ -681,7 +739,8 @@ public class simulateRealRun implements Runnable {
 								sendMsg("EX|R0" + exploreMap.rpiImageString(robot));
 								recMsg = readMsg();
 								if (setSensorData) {
-									sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+									exploreMap.setExploredCells(robot, recMsg); 
+									sendMDFInfo();
 								}
 								displayToUI();
 
@@ -689,7 +748,8 @@ public class simulateRealRun implements Runnable {
 								sendMsg("EX|R0" + exploreMap.rpiImageString(robot));
 								recMsg = readMsg();
 								if (setSensorData) {
-									sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
+									exploreMap.setExploredCells(robot, recMsg); 
+									sendMDFInfo();
 								}
 								displayToUI();
 
@@ -1029,7 +1089,7 @@ public class simulateRealRun implements Runnable {
 		return forwardCount;
 	}
 
-	
+	/*
 	private void chooseForward(String sensorDataInString, String rpiImageString) {
 		int frontRight = Character.getNumericValue(sensorDataInString.charAt(3));
 		int frontCenter = Character.getNumericValue(sensorDataInString.charAt(4));
@@ -1042,7 +1102,7 @@ public class simulateRealRun implements Runnable {
 			sendMsg("EX|F01" + rpiImageString);
 		}
 	}
-	
+	*/
 	// ======================= GUI PAINTING ===================================
 
 	// Painting the current map result to GUI with delay
@@ -1079,7 +1139,7 @@ public class simulateRealRun implements Runnable {
 		do {
 			msg = tcpObj.readMessage();
 		} while (msg == null || msg.length() == 0);
-		
+		//System.out.println("O:" + msg+"_"+msg.length());
 		if(msg.substring(0,2).equals("N|")) {
 			sendMDFInfo();
 			throw new InterruptedException();
@@ -1124,6 +1184,7 @@ public class simulateRealRun implements Runnable {
 		mGui.displayMsgToUI("Waiting for command to start FastestPath...");
 		do {
 			rmsg = readMsg();
+			
 			if (rmsg.substring(0, 3).equals("FP|")) {
 				return;
 			}
@@ -1146,17 +1207,17 @@ public class simulateRealRun implements Runnable {
 	}
 
 	// Method for sending obstacles location
-	private void sendObstacleInfo(String rmsg) {
-		if (rmsg.length() != 0) {
-			//rmsg = "OB|" + rmsg + "!MDF|" + exploreMap.getMDF1(); //original
-			//sendMsg(rmsg);										//original
-			sendMsg("OB|"+rmsg);
-			sendMsg("MDF|"+exploreMap.getMDF1());
-		} else {
-			rmsg = "MDF|" + exploreMap.getMDF1();
-			sendMsg(rmsg);
-		}
-	}
+//	private void sendObstacleInfo(String rmsg) {
+//		if (rmsg.length() != 0) {
+//			//rmsg = "OB|" + rmsg + "!MDF|" + exploreMap.getMDF1(); //original
+//			//sendMsg(rmsg);										//original
+//			sendMsg("OB|"+rmsg);
+//			sendMsg("MDF|"+exploreMap.getMDF1());
+//		} else {
+//			rmsg = "MDF|" + exploreMap.getMDF1();
+//			sendMsg(rmsg);
+//		}
+//	}
 
 	// Method for sending MDF1 & MDF2
 	private void sendMDFInfo() {

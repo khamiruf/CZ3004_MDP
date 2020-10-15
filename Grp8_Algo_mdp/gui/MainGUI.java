@@ -187,7 +187,7 @@ public class MainGUI extends JFrame{
 				Thread simTest;
 				//rBot.setPosRow(7);
 				//rBot.setPosCol(7);
-				simTest = new Thread(new testMain(mGui,initialMap,rBot));
+				simTest = new Thread(new testFastest(mGui,rBot));
 			    simTest.start();
 				
 			    	

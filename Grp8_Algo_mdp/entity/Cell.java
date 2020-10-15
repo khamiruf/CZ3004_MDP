@@ -12,16 +12,33 @@ public class Cell {
 	private boolean exploredState;			// true for explored, false for unexplored
 	private boolean isObstacle;				//true for wall/obstacle,false for path
 	private boolean isVirtualWall;
+	private String sensor;
 	
 	public Cell(int rowValue, int colValue) {
 		this.rowPos = rowValue;
 		this.colPos = colValue;
+		this.sensor = "none";
 	}
 
 	public Cell(int rowValue, int colValue, boolean explState) {
 		this.rowPos = rowValue;
 		this.colPos = colValue;
 		this.exploredState = explState;
+		this.sensor = "none";
+	}
+	
+	public Cell(int rowValue, int colValue, String sensorValue) {
+		this.rowPos = rowValue;
+		this.colPos = colValue;
+		this.sensor = sensorValue;
+	}
+	
+	public void setSensor(String sensorValue) {
+		this.sensor = sensorValue;
+	}
+	
+	public String getSensor() {
+		return this.sensor;
 	}
 	
 	public void setRowPos(int rowValue) {
