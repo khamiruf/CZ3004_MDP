@@ -8,6 +8,7 @@ import util.FileManager;
 import javax.swing.*;
 
 import Communication.TCPComm;
+import Communication.TCPComm2;
 import constant.Constants;
 import constant.Constants.DIRECTION;
 
@@ -87,7 +88,7 @@ public class MainGUI extends JFrame{
         JButton fastestBtn = new JButton("Fastest Path");
         JButton resetBtn = new JButton("Reset");
         JButton realrunBtn = new JButton("Real Run");
-        JButton b3 = new JButton("button 3");
+        JButton realFastBtn = new JButton("Vroom Vroom");
         
         JButton b4 = new JButton("button 4");
         exploreBtn.setPreferredSize(new Dimension(70, 70));
@@ -149,7 +150,7 @@ public class MainGUI extends JFrame{
 				if(simRealRun != null) {
 					System.out.println("RealRunGUIinterrupt");
 					
-					TCPComm.getInstance().closeConnection();
+					TCPComm2.getInstance().closeConnection();
 					simRealRun.interrupt();
 					simRealRun = null;
 				}
@@ -177,7 +178,7 @@ public class MainGUI extends JFrame{
 			}
     		
     	});
-    	b3.addActionListener(new ActionListener() {
+    	realFastBtn.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -213,6 +214,7 @@ public class MainGUI extends JFrame{
         controlPanel.add(fastestBtn);
         controlPanel.add(resetBtn);
         controlPanel.add(realrunBtn);
+        controlPanel.add(realFastBtn);
         controlPanel.add(b4);
       
         

@@ -542,12 +542,19 @@ public class Map {
             int tempRow = emptyCells.get(i).getRowPos();
             int tempCol = emptyCells.get(i).getColPos();
 
-            if(isCellValid(tempRow, tempCol) && !this.getMapGrid()[tempRow][tempCol].getExploredState()){
-           // if(isCellValid(tempRow, tempCol)){
+           if(isCellValid(tempRow, tempCol) && !this.getMapGrid()[tempRow][tempCol].getExploredState()){
+           //if(isCellValid(tempRow, tempCol)){
                 this.getMapGrid()[tempRow][tempCol].setExploredState(true);
                 this.getMapGrid()[tempRow][tempCol].setObstacle(false);
             }
         }
+        
+        for(int r : Constants.WITHIN_3BY3){
+            for(int c : Constants.WITHIN_3BY3){          
+            	this.mapArena[endGoal.getRowPos() + r][endGoal.getColPos() + c].setObstacle(false);          	
+            }
+        }
+        
         System.out.println(result);
         return result;
     }
@@ -1299,12 +1306,15 @@ public class Map {
         int col = robot.getPosCol();
 
         String x1 = Integer.toString(col+2);
-        String y1 = Integer.toString(row);
+        String y1 = Integer.toString(row+1);
 
         String x2 = Integer.toString(col+2);
-        String y2 = Integer.toString(row-1);
+        String y2 = Integer.toString(row);
+        
+        String x3 = Integer.toString(col+2);
+        String y3 = Integer.toString(row-1);
 
-        imageString = "|(" + x1 + "),(" + y1 + ")|(" + x2 + "),(" + y2 + ")";
+        imageString = "|(" + x1 + "),(" + y1 + ")|(" + x2 + "),(" + y2 + ")|(" + x3 + "),(" + y3 + ")";
 
         return imageString;
 
@@ -1318,13 +1328,16 @@ public class Map {
         int col = robot.getPosCol();
 
         String x1 = Integer.toString(col-2);
-        String y1 = Integer.toString(row);
+        String y1 = Integer.toString(row-1);
 
         String x2 = Integer.toString(col-2);
-        String y2 = Integer.toString(row+1);
+        String y2 = Integer.toString(row);
+        
+        String x3 = Integer.toString(col-2);
+        String y3 = Integer.toString(row+1);
 
-        imageString = "|(" + x1 + "),(" + y1 + ")|(" + x2 + "),(" + y2 + ")";
-
+        imageString = "|(" + x1 + "),(" + y1 + ")|(" + x2 + "),(" + y2 + ")|(" + x3 + "),(" + y3 + ")";
+        
         return imageString;
 
     }
@@ -1336,13 +1349,16 @@ public class Map {
         int row = robot.getPosRow();
         int col = robot.getPosCol();
 
-        String x1 = Integer.toString(col);
+        String x1 = Integer.toString(col+1);
         String y1 = Integer.toString(row-2);
 
-        String x2 = Integer.toString(col-1);
+        String x2 = Integer.toString(col);
         String y2 = Integer.toString(row-2);
+        
+        String x3 = Integer.toString(col-1);
+        String y3 = Integer.toString(row-2);
 
-        imageString = "|(" + x1 + "),(" + y1 + ")|(" + x2 + "),(" + y2 + ")";
+        imageString = "|(" + x1 + "),(" + y1 + ")|(" + x2 + "),(" + y2 + ")|(" + x3 + "),(" + y3 + ")";
 
         return imageString;
 
@@ -1355,13 +1371,16 @@ public class Map {
         int row = robot.getPosRow();
         int col = robot.getPosCol();
 
-        String x1 = Integer.toString(col);
+        String x1 = Integer.toString(col-1);
         String y1 = Integer.toString(row+2);
 
-        String x2 = Integer.toString(col+1);
+        String x2 = Integer.toString(col);
         String y2 = Integer.toString(row+2);
+        
+        String x3 = Integer.toString(col+1);
+        String y3 = Integer.toString(row+2);
 
-        imageString = "|(" + x1 + "),(" + y1 + ")|(" + x2 + "),(" + y2 + ")";
+        imageString = "|(" + x1 + "),(" + y1 + ")|(" + x2 + "),(" + y2 + ")|(" + x3 + "),(" + y3 + ")";
 
         return imageString;
 

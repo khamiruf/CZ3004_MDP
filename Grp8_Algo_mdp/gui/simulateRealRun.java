@@ -5,6 +5,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import Communication.TCPComm;
+import Communication.TCPComm2;
 import algorithm.FastestPath;
 import constant.Constants;
 import constant.Constants.MOVEMENT;
@@ -17,15 +18,14 @@ public class simulateRealRun implements Runnable {
 	private MainGUI mGui;
 	private Map exploreMap;
 	private Robot robot;
-	private TCPComm tcpObj;
+	private TCPComm2 tcpObj;
 
-	Timer mTimer;
 
 	public simulateRealRun(MainGUI mGUI, Robot rBot, Map eMap) {
 		this.mGui = mGUI;
 		this.exploreMap = eMap;
 		this.robot = rBot;
-		this.tcpObj = TCPComm.getInstance();
+		this.tcpObj = TCPComm2.getInstance();
 
 	}
 
@@ -45,7 +45,6 @@ public class simulateRealRun implements Runnable {
 			//sendMsg("EX|L0|(0),(0)|(0),(0)");
 			String recMsg = readMsg();
 			//recMsg = readMsg();
-			initialiseTimer();
 			int forwardCount = 0;
 			sendObstacleInfo(exploreMap.setExploredCells(robot, recMsg));
 
@@ -118,26 +117,26 @@ public class simulateRealRun implements Runnable {
 			} while (!exploreMap.getStartGoalPosition().getExploredState()
 					|| !exploreMap.getEndGoalPosition().getExploredState()
 					|| !exploreMap.checkIfRobotAtStartPos(robot));
-
+			
 			ArrayList<Cell> unexploredList = getUnexploredList(exploreMap);
 			while (unexploredList.size() > 0) {
 
 				FastestPath fastobj = new FastestPath(robot, exploreMap);
 				ArrayList<Cell> cellStep = fastobj.calculateFastestPath2(exploreMap, unexploredList.get(0).getRowPos(),
 						unexploredList.get(0).getColPos());
-				System.out.println("Xsize:" + cellStep.size());
+				//System.out.println("Xsize:" + cellStep.size());
 				if (cellStep == null) {
-					System.out.println("cellstepnull");
+					//System.out.println("cellstepnull");
 					unexploredList.remove(0);
 				} else {
-					System.out.println("cellstepISNOTnull");
+					//System.out.println("cellstepISNOTnull");
 					printMovement(cellStep, unexploredList.get(0), true);
 
 					unexploredList = updateUnexploreList(unexploredList);
-					System.out.println("ysize:" + unexploredList.size());
+					//System.out.println("ysize:" + unexploredList.size());
 				}
 			}
-
+			 	
 			if (!exploreMap.checkIfRobotAtStartPos(robot)) {
 				FastestPath fastobj = new FastestPath(robot, exploreMap);
 
@@ -149,19 +148,19 @@ public class simulateRealRun implements Runnable {
 
 			}
 			// ============= Cancel timer ==============================
-			this.mTimer.cancel();
-			this.mTimer.purge();
+			//this.mTimer.cancel();
+			//this.mTimer.purge();
 			// ============== Calibrating Robot to face North ============
 			faceNorthDirection();
 			sendMsg("N|"); // Send to Arduino to signify end of exploration
 
 			// ============== Sending MDF to Android ===========================
-			String mdfvalue1 = exploreMap.getMDF1();
-			String mdfvalue2 = exploreMap.getMDF2();
-			sendMDFInfo(mdfvalue1, mdfvalue2); // Sending MDF1&2 to RPI
+			//String mdfvalue1 = exploreMap.getMDF1();
+			//String mdfvalue2 = exploreMap.getMDF2();
+			sendMDFInfo(); // Sending MDF1&2 to RPI
 			mGui.printFinal(); // Print the final map that robot knows on system console
-			mGui.displayMsgToUI("MDF1: " + exploreMap.getMDF1());
-			mGui.displayMsgToUI("MDF2: " + exploreMap.getMDF2());
+			//mGui.displayMsgToUI("MDF1: " + exploreMap.getMDF1());
+			//mGui.displayMsgToUI("MDF2: " + exploreMap.getMDF2());
 			System.out.println("MDF1: " + exploreMap.getMDF1());
 			System.out.println("MDF2: " + exploreMap.getMDF2());
 
@@ -201,8 +200,7 @@ public class simulateRealRun implements Runnable {
 		}
 
 		mGui.displayMsgToUI("****** RealRun Thread Ended Successfully! ******** ");
-		this.mTimer.cancel();
-		this.mTimer.purge();
+		
 	}
 
 	/**
@@ -219,12 +217,12 @@ public class simulateRealRun implements Runnable {
 		int currCol = robot.getPosCol();
 		String recMsg = "";
 		int forwardCount = 0;
-		System.out.println("printmovesize:" + cellStep.size());
+		//System.out.println("printmovesize:" + cellStep.size());
 		for (int i = 0; i < cellStep.size(); i++) {
 			int destRow = cellStep.get(i).getRowPos();
 			int destCol = cellStep.get(i).getColPos();
-			System.out.println("printmoveRobot:" + cellStep.get(i).getRowPos() + "_" + cellStep.get(i).getColPos() + "-"
-					+ currRow + "_" + currCol + ":" + robot.getCurrDir());
+			//System.out.println("printmoveRobot:" + cellStep.get(i).getRowPos() + "_" + cellStep.get(i).getColPos() + "-"
+			//		+ currRow + "_" + currCol + ":" + robot.getCurrDir());
 			switch (robot.getCurrDir()) {
 			case NORTH:
 				if (currCol == destCol) {
@@ -1008,12 +1006,18 @@ public class simulateRealRun implements Runnable {
 			sendMsg("EX|V0|(0),(0)|(0),(0)");
 			return 0;
 		}
-
+		
 		else if (frontRight == 1 && frontCenter == 1 && frontLeft == 1) {
 			sendMsg("EX|Q0|(0),(0)|(0),(0)");
 		}
-
-		else if (forwardCount >= 3 && rightFront == 1 && rightBack == 1) {
+		
+		//yaowen testing
+		/*
+		else if (frontRight == 1 || frontCenter == 1 || frontLeft == 1) {
+			sendMsg("EX|Q0|(0),(0)|(0),(0)");
+		}
+		*/
+		else if (forwardCount >= 4 && rightFront == 1 && rightBack == 1) {
 			sendMsg("EX|P0|(0),(0)|(0),(0)");
 			return 0;
 		}
@@ -1025,17 +1029,20 @@ public class simulateRealRun implements Runnable {
 		return forwardCount;
 	}
 
+	
 	private void chooseForward(String sensorDataInString, String rpiImageString) {
 		int frontRight = Character.getNumericValue(sensorDataInString.charAt(3));
 		int frontCenter = Character.getNumericValue(sensorDataInString.charAt(4));
 		int frontLeft = Character.getNumericValue(sensorDataInString.charAt(5));
 
 		if (frontRight == 2 || frontCenter == 2 || frontLeft == 2) {
-			sendMsg("EX|G0" + rpiImageString);
+			//sendMsg("EX|G0" + rpiImageString); actual code
+			sendMsg("EX|F01" + rpiImageString); // This is testing purpose
 		} else {
 			sendMsg("EX|F01" + rpiImageString);
 		}
 	}
+	
 	// ======================= GUI PAINTING ===================================
 
 	// Painting the current map result to GUI with delay
@@ -1044,8 +1051,7 @@ public class simulateRealRun implements Runnable {
 		// Thread.sleep((long) (0.1 * 1000));
 	}
 
-	// ==================== Communication Methods with RPI
-	// ==========================
+	// ================= Communication Methods with RPI =======================
 
 	// Establish connection with RPI
 	private void establishCommsToRPI() throws InterruptedException {
@@ -1073,31 +1079,36 @@ public class simulateRealRun implements Runnable {
 		do {
 			msg = tcpObj.readMessage();
 		} while (msg == null || msg.length() == 0);
-
+		
+		if(msg.substring(0,2).equals("N|")) {
+			sendMDFInfo();
+			throw new InterruptedException();
+		}
 		mGui.displayMsgToUI("Received: " + msg);
 		return msg;
 	}
 
 	// Send String message to RPI
 	private void sendMsg(String msg) {
-		String rmsg = tcpObj.sendMessage(msg);
-		mGui.displayMsgToUI("Sent: " + rmsg);
+		//String rmsg = tcpObj.sendMessage(msg);
+		tcpObj.sendMessage(msg+"!");
+		mGui.displayMsgToUI("Sent: " + msg);
 
 	}
 
-	// ==================== Communication Methods with Android
-	// =======================
+	// ==================== Communication Methods with Android =======================
 
 	// plot robot according to start coordinates received from RPI
 	private void checkandPlotSC() throws Exception {
 		String rmsg = "";
-		// SC|[1,1] = 8, [10,10] = 10
+		// SC|[1,1] = 8, SC|[10,10] = 10
 		mGui.displayMsgToUI("Waiting for start coordinate...");
 		do {
 
 			rmsg = readMsg();
+			
 			if (rmsg.substring(0, 3).equals("SC|")) {
-				String[] arr = rmsg.substring(4, rmsg.length() - 1).split(",");
+				String[] arr = rmsg.substring(4, rmsg.length() - 2).split(",");
 				this.robot.setPosRow(Integer.parseInt(arr[0]));
 				this.robot.setPosCol(Integer.parseInt(arr[1]));
 				return;
@@ -1127,7 +1138,7 @@ public class simulateRealRun implements Runnable {
 		do {
 			rmsg = readMsg();		
 			if (rmsg.substring(0, 3).equals("WP|")) {
-				String[] arr = rmsg.substring(4, rmsg.length() - 1).split(",");
+				String[] arr = rmsg.substring(4, rmsg.length() - 2).split(",");
 				this.exploreMap.setWayPoint(Integer.parseInt(arr[1]), Integer.parseInt(arr[0]));
 				return;
 			}
@@ -1137,8 +1148,10 @@ public class simulateRealRun implements Runnable {
 	// Method for sending obstacles location
 	private void sendObstacleInfo(String rmsg) {
 		if (rmsg.length() != 0) {
-			rmsg = "OB|" + rmsg + "!MDF|" + exploreMap.getMDF1();
-			sendMsg(rmsg);
+			//rmsg = "OB|" + rmsg + "!MDF|" + exploreMap.getMDF1(); //original
+			//sendMsg(rmsg);										//original
+			sendMsg("OB|"+rmsg);
+			sendMsg("MDF|"+exploreMap.getMDF1());
 		} else {
 			rmsg = "MDF|" + exploreMap.getMDF1();
 			sendMsg(rmsg);
@@ -1146,32 +1159,11 @@ public class simulateRealRun implements Runnable {
 	}
 
 	// Method for sending MDF1 & MDF2
-	private void sendMDFInfo(String mdf1, String mdf2) {
+	private void sendMDFInfo() {
+		String mdf1 = exploreMap.getMDF1();
+		String mdf2 = exploreMap.getMDF2();
 		sendMsg("MDF|" + mdf1 + "|" + mdf2);
 	}
 
-	private void initialiseTimer() {
-		/* Count up */
-		this.mTimer = new Timer();
-		this.mTimer.scheduleAtFixedRate(new TimerTask() {
-			private long startTime = System.currentTimeMillis();
-			private long timeElapsed;
-
-			/* Update timer every second */
-			@Override
-			public void run() {
-
-				timeElapsed = (System.currentTimeMillis() - startTime) / 1000;
-				mGui.displayTimerToUI((int) timeElapsed);
-				if (timeElapsed == 540) {
-
-					sendMDFInfo(exploreMap.getMDF1(), exploreMap.getMDF2());
-					tcpObj.closeConnection();
-					mTimer.cancel();
-					mTimer.purge();
-				}
-
-			}
-		}, 0, 1000);
-	}
+	
 }
