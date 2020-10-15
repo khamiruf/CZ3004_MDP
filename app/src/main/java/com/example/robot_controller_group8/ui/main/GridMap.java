@@ -47,6 +47,7 @@ public class GridMap extends View {
     private Paint whitePaint = new Paint();
     private Paint obstacleColor = new Paint();
     private Paint robotColor = new Paint();
+    private  Paint greyPaint = new Paint();
     private Paint endColor = new Paint();
     private Paint startColor = new Paint();
     private Paint waypointColor = new Paint();
@@ -92,6 +93,7 @@ public class GridMap extends View {
         blackPaint.setStyle(Paint.Style.FILL_AND_STROKE);
         blackPaint.setColor(Color.BLACK);
         whitePaint.setColor(Color.WHITE);
+        greyPaint.setColor(Color.LTGRAY);
         obstacleColor.setColor(Color.BLACK);
         robotColor.setColor(Color.GREEN);
         endColor.setColor(Color.RED);
@@ -168,12 +170,12 @@ public class GridMap extends View {
 
     private void drawHorizontalLines(Canvas canvas) {
         for (int y = 0; y <= ROW; y++)
-            canvas.drawLine(cells[1][y].startX, cells[1][y].startY - (cellSize / 30), cells[15][y].endX, cells[15][y].startY - (cellSize / 30),whitePaint);
+            canvas.drawLine(cells[1][y].startX, cells[1][y].startY - (cellSize / 30), cells[15][y].endX, cells[15][y].startY - (cellSize / 30),greyPaint);
     }
 
     private void drawVerticalLines(Canvas canvas) {
         for (int x = 0; x <= COL; x++)
-            canvas.drawLine(cells[x][0].startX - (cellSize / 30) + cellSize, cells[x][0].startY - (cellSize / 30), cells[x][0].startX - (cellSize / 30) + cellSize, cells[x][19].endY + (cellSize / 30), whitePaint);
+            canvas.drawLine(cells[x][0].startX - (cellSize / 30) + cellSize, cells[x][0].startY - (cellSize / 30), cells[x][0].startX - (cellSize / 30) + cellSize, cells[x][19].endY + (cellSize / 30), greyPaint);
     }
 
     private void drawGridNumber(Canvas canvas) {
@@ -234,17 +236,17 @@ public class GridMap extends View {
         return robotDirection;
     }
 
-    public void setAutoUpdate(boolean autoUpdate) throws JSONException {
-        showLog(String.valueOf(backupMapInformation));
-        if (!autoUpdate)
-            backupMapInformation = this.getReceivedJsonObject();
-        else {
-            setReceivedJsonObject(backupMapInformation);
-            backupMapInformation = null;
-            this.updateMapInformation();
-        }
-        GridMap.autoUpdate = autoUpdate;
-    }
+//    public void setAutoUpdate(boolean autoUpdate) throws JSONException {
+//        showLog(String.valueOf(backupMapInformation));
+//        if (!autoUpdate)
+//            backupMapInformation = this.getReceivedJsonObject();
+//        else {
+//            setReceivedJsonObject(backupMapInformation);
+//            backupMapInformation = null;
+//            this.updateMapInformation();
+//        }
+//        GridMap.autoUpdate = autoUpdate;
+//    }
 
     public JSONObject getReceivedJsonObject() {
         return receivedJsonObject;
@@ -651,7 +653,7 @@ public class GridMap extends View {
                 setWaypointStatus = false;
                 try {
                     this.setWaypointCoord(column, row);
-                    MainActivity.printMessage("waypoint", row-1, column-1);
+                    MainActivity.printMessage("waypoint", column-1, row-1);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -737,7 +739,7 @@ public class GridMap extends View {
         // Set each cell as explored/unexplored accordingly
         for(int j = (ROW -1) ; j >= 0 ; j--){
             for(int i = 0; i < this.COL; i++) {
-                if(binMapArray[binMapArrayIndex] == 1 && !cells[i+1][j].equals("obstacle") && !cells[i+1][j].equals("image") && !cells[i+1][j].equals("robot") ){
+                if(binMapArray[binMapArrayIndex] == 1 && !cells[i+1][j].equals("robot") ){
                     cells[i+1][j].setType("explored");
                 }
 
@@ -780,6 +782,9 @@ public class GridMap extends View {
                 if (cells[i+1][j].type.equalsIgnoreCase("explored")) {
                     if (binMapArray[binMapArrayIndex] == 1) {
                         cells[i+1][j].setType("obstacle");
+                    } else
+                    {
+                        cells[i+1][j].setType("explored");
                     }
                     binMapArrayIndex++;
                 }
@@ -789,24 +794,182 @@ public class GridMap extends View {
         this.invalidate();
     }
 
-    public void Fastestroute(String movementpath) {
-        String movement = movementpath;
-        char cur;
-        String comm= "";
-        for(int i=0; i <movement.length(); i++)
+    public void Fastestroute(String movementpath) throws InterruptedException {
+        String[] seperatedtextMDF = movementpath.split("\\|");
+        for(int k=1;k<seperatedtextMDF.length; k++)
         {
-            cur = movementpath.charAt(i);
-            if(String.valueOf(cur).equalsIgnoreCase("F"))
-            {
+            MainActivity.printMessage("I came here: " + seperatedtextMDF[k]);
+            switch (seperatedtextMDF[k]) {
+                case "G0":
+                case "F01":
+                    moveRobot("forward");
+                    Thread.sleep(400);
+                    break;
+                case "F02":
+                    for(int w=0;w<2;w++)
+                    {
+                        moveRobot("forward");
+                        Thread.sleep(400);
 
-                comm = cur + String.valueOf(movementpath.charAt(i+1)) + String.valueOf(movementpath.charAt(i+2));
-                MainActivity.receiveMessage(comm);
-                i=i+2;
-            }
-            else{
-                comm = cur + String.valueOf(movementpath.charAt(i+1));
-                MainActivity.receiveMessage(comm);
-                i=i+1;
+                    }
+                    break;
+                case "F03":
+                    for(int w=0;w<3;w++)
+                    {
+                        moveRobot("forward");
+                        Thread.sleep(400);
+
+                    }
+                    break;
+                case "F04":
+                    for(int w=0;w<4;w++)
+                    {
+                        moveRobot("forward");
+                        Thread.sleep(400);
+
+                    }
+                    break;
+                case "F05":
+                    for(int w=0;w<5;w++)
+                    {
+                        moveRobot("forward");
+                        Thread.sleep(400);
+
+                    }
+                    break;
+                case "F06":
+                    for(int w=0;w<6;w++)
+                    {
+                        moveRobot("forward");
+                        Thread.sleep(400);
+                    }
+                    break;
+                case "F07":
+                    for(int w=0;w<7;w++)
+                    {
+                        moveRobot("forward");
+                        Thread.sleep(400);
+
+                    }
+                    break;
+                case "F08":
+                    for(int w=0;w<8;w++)
+                    {
+                        moveRobot("forward");
+                        Thread.sleep(400);
+
+                    }
+                    break;
+                case "F09":
+                    for(int w=0;w<9;w++)
+                    {
+                        moveRobot("forward");
+                        Thread.sleep(400);
+
+                    }
+                    break;
+                case "F10":
+                    for(int w=0;w<10;w++)
+                    {
+                       moveRobot("forward");
+                        Thread.sleep(400);
+                    }
+                    break;
+                case "F11":
+                    for(int w=0;w<11;w++)
+                    {
+                        moveRobot("forward");
+                        Thread.sleep(400);
+                    }
+                    break;
+                case "F12":
+                    for(int w=0;w<12;w++)
+                    {
+                        moveRobot("forward");
+                        Thread.sleep(400);
+                    }
+                    break;
+                case "F13":
+                    for(int w=0;w<13;w++)
+                    {
+                        moveRobot("forward");
+                        Thread.sleep(400);
+                    }
+                    break;
+                case "F14":
+                    for(int w=0;w<14;w++)
+                    {
+                        moveRobot("forward");
+                        Thread.sleep(400);
+                    }
+                    break;
+                case "F15":
+                    for(int w=0;w<15;w++)
+                    {
+                        moveRobot("forward");
+                        Thread.sleep(400);
+                    }
+                    break;
+                case "F16":
+                    for(int w=0;w<16;w++)
+                    {
+                        moveRobot("forward");
+                        Thread.sleep(400);
+                    }
+                    break;
+                case "F17":
+                    for(int w=0;w<17;w++)
+                    {
+                        moveRobot("forward");
+                        Thread.sleep(400);
+                    }
+                    break;
+                case "F18":
+                    for(int w=0;w<18;w++)
+                    {
+                        moveRobot("forward");
+                        Thread.sleep(400);
+                    }
+                    break;
+                case "F19":
+                    for(int w=0;w<19;w++)
+                    {
+                        moveRobot("forward");
+                        Thread.sleep(400);
+                    }
+                    break;
+                case "F20":
+                    for(int w=0;w<20;w++)
+                    {
+                        moveRobot("forward");
+                        Thread.sleep(400);
+                    }
+                    break;
+                case "R0":
+                    moveRobot("right");
+                    Thread.sleep(400);
+                    break;
+                case "R1":
+                    moveRobot("right");
+                    Thread.sleep(400);
+                    moveRobot("forward");
+                    Thread.sleep(400);
+                    break;
+
+                case "L0":
+                    moveRobot("left");
+                    Thread.sleep(400);
+                    break;
+                case "L1":
+                    moveRobot("left");
+                    Thread.sleep(400);
+                    moveRobot("forward");
+                    Thread.sleep(400);
+                    break;
+                case "B0":
+                    moveRobot("back");
+                    Thread.sleep(400);
+                    break;
             }
         }
     }
@@ -851,148 +1014,148 @@ public class GridMap extends View {
         this.invalidate();
     }
 
-    public void updateMapInformation() throws JSONException {
-        showLog("Entering updateMapInformation");
-        JSONObject mapInformation = this.getReceivedJsonObject();
-        showLog("updateMapInformation --- mapInformation: " + mapInformation);
-        JSONArray infoJsonArray;
-        JSONObject infoJsonObject;
-        String hexStringExplored, hexStringObstacle, exploredString, obstacleString;
-        BigInteger hexBigIntegerExplored, hexBigIntegerObstacle;
-        String message;
-
-        if (mapInformation == null)
-            return;
-
-        for(int i=0; i<mapInformation.names().length(); i++) {
-            message = "updateMapInformation Default message";
-            switch (mapInformation.names().getString(i)) {
-                case "map":
-                    infoJsonArray = mapInformation.getJSONArray("map");
-                    infoJsonObject = infoJsonArray.getJSONObject(0);
-
-                    hexStringExplored = infoJsonObject.getString("explored");
-                    hexBigIntegerExplored = new BigInteger(hexStringExplored, 16);
-                    exploredString = hexBigIntegerExplored.toString(2);
-                    showLog("updateMapInformation.exploredString: " + exploredString);
-
-                    int x, y;
-                    for (int j = 0; j < exploredString.length() - 4; j++) {
-                        y = 19 - (j / 15);
-                        x = 1 + j - ((19 - y) * 15);
-                        if ((String.valueOf(exploredString.charAt(j + 2))).equals("1") && !cells[x][y].type.equals("robot"))
-                            cells[x][y].setType("explored");
-                        else if ((String.valueOf(exploredString.charAt(j + 2))).equals("0") && !cells[x][y].type.equals("robot"))
-                            cells[x][y].setType("unexplored");
-                    }
-
-                    int length = infoJsonObject.getInt("length");
-
-                    hexStringObstacle = infoJsonObject.getString("obstacle");
-                    showLog("updateMapInformation hexStringObstacle: " + hexStringObstacle);
-                    hexBigIntegerObstacle = new BigInteger(hexStringObstacle, 16);
-                    showLog("updateMapInformation hexBigIntegerObstacle: " + hexBigIntegerObstacle);
-                    obstacleString = hexBigIntegerObstacle.toString(2);
-                    while (obstacleString.length() < length) {
-                        obstacleString = "0" + obstacleString;
-                    }
-                    showLog("updateMapInformation obstacleString: " + obstacleString);
-                    setPublicMDFExploration(hexStringExplored);
-                    setPublicMDFObstacle(hexStringObstacle);
-
-                    int k = 0;
-                    for (int row = ROW - 1; row >= 0; row--)
-                        for (int col = 1; col <= COL; col++)
-                            if ((cells[col][row].type.equals("explored") || (cells[col][row].type.equals("robot"))) && k < obstacleString.length()) {
-                                if ((String.valueOf(obstacleString.charAt(k))).equals("1"))
-                                    this.setObstacleCoord(col, 20 - row);
-                                k++;
-                            }
-
-                    int[] waypointCoord = this.getWaypointCoord();
-                    if (waypointCoord[0] >= 1 && waypointCoord[1] >= 1)
-                        cells[waypointCoord[0]][20 - waypointCoord[1]].setType("waypoint");
-                    break;
-                case "robotPosition":
-                    if (canDrawRobot)
-                        this.setOldRobotCoord(curCoord[0], curCoord[1]);
-                    infoJsonArray = mapInformation.getJSONArray("robotPosition");
+//    public void updateMapInformation() throws JSONException {
+//        showLog("Entering updateMapInformation");
+//        JSONObject mapInformation = this.getReceivedJsonObject();
+//        showLog("updateMapInformation --- mapInformation: " + mapInformation);
+//        JSONArray infoJsonArray;
+//        JSONObject infoJsonObject;
+//        String hexStringExplored, hexStringObstacle, exploredString, obstacleString;
+//        BigInteger hexBigIntegerExplored, hexBigIntegerObstacle;
+//        String message;
+//
+//        if (mapInformation == null)
+//            return;
+//
+//        for(int i=0; i<mapInformation.names().length(); i++) {
+//            message = "updateMapInformation Default message";
+//            switch (mapInformation.names().getString(i)) {
+//                case "map":
+//                    infoJsonArray = mapInformation.getJSONArray("map");
 //                    infoJsonObject = infoJsonArray.getJSONObject(0);
-
-                    for (int row = ROW - 1; row >= 0; row--)
-                        for (int col = 1; col <= COL; col++)
-                            cells[col][row].setType("unexplored");
-
-                    String direction;
-                    if (infoJsonArray.getInt(2) == 90) {
-                        direction = "right";
-                    } else if (infoJsonArray.getInt(2) == 180) {
-                        direction = "down";
-                    } else if (infoJsonArray.getInt(2) == 270) {
-                        direction = "left";
-                    } else {
-                        direction = "up";
-                    }
-                    this.setStartCoord(infoJsonArray.getInt(0), infoJsonArray.getInt(1));
-                    this.setCurCoord(infoJsonArray.getInt(0)+2, convertRow(infoJsonArray.getInt(1))-1, direction);
-                    canDrawRobot = true;
-                    break;
-                case "waypoint":
-                    infoJsonArray = mapInformation.getJSONArray("waypoint");
-                    infoJsonObject = infoJsonArray.getJSONObject(0);
-                    this.setWaypointCoord(infoJsonObject.getInt("x"), infoJsonObject.getInt("y"));
-                    setWaypointStatus = true;
-                    break;
-                case "obstacle":
-                    infoJsonArray = mapInformation.getJSONArray("obstacle");
-                    for (int j = 0; j < infoJsonArray.length(); j++) {
-                        infoJsonObject = infoJsonArray.getJSONObject(j);
-                        this.setObstacleCoord(infoJsonObject.getInt("x"), infoJsonObject.getInt("y"));
-                    }
-                    message = "No. of Obstacle: " + String.valueOf(infoJsonArray.length());
-                    break;
-                case "arrow":
-                    infoJsonArray = mapInformation.getJSONArray("arrow");
-                    for (int j = 0; j < infoJsonArray.length(); j++) {
-                        infoJsonObject = infoJsonArray.getJSONObject(j);
-                        if (!infoJsonObject.getString("face").equals("dummy")) {
-                            this.setArrowCoordinate(infoJsonObject.getInt("x"), infoJsonObject.getInt("y"), infoJsonObject.getString("face"));
-                            message = "Arrow:  (" + String.valueOf(infoJsonObject.getInt("x")) + "," + String.valueOf(infoJsonObject.getInt("y")) + "), face: " + infoJsonObject.getString("face");
-                        }
-                    }
-                    break;
-                case "move":
-                    infoJsonArray = mapInformation.getJSONArray("move");
-                    infoJsonObject = infoJsonArray.getJSONObject(0);
-                    if (canDrawRobot)
-                        moveRobot(infoJsonObject.getString("direction"));
-                    message = "moveDirection: " + infoJsonObject.getString("direction");
-                    break;
-                case "status":
-//                    infoJsonArray = mapInformation.getJSONArray("status");
+//
+//                    hexStringExplored = infoJsonObject.getString("explored");
+//                    hexBigIntegerExplored = new BigInteger(hexStringExplored, 16);
+//                    exploredString = hexBigIntegerExplored.toString(2);
+//                    showLog("updateMapInformation.exploredString: " + exploredString);
+//
+//                    int x, y;
+//                    for (int j = 0; j < exploredString.length() - 4; j++) {
+//                        y = 19 - (j / 15);
+//                        x = 1 + j - ((19 - y) * 15);
+//                        if ((String.valueOf(exploredString.charAt(j + 2))).equals("1") && !cells[x][y].type.equals("robot"))
+//                            cells[x][y].setType("explored");
+//                        else if ((String.valueOf(exploredString.charAt(j + 2))).equals("0") && !cells[x][y].type.equals("robot"))
+//                            cells[x][y].setType("unexplored");
+//                    }
+//
+//                    int length = infoJsonObject.getInt("length");
+//
+//                    hexStringObstacle = infoJsonObject.getString("obstacle");
+//                    showLog("updateMapInformation hexStringObstacle: " + hexStringObstacle);
+//                    hexBigIntegerObstacle = new BigInteger(hexStringObstacle, 16);
+//                    showLog("updateMapInformation hexBigIntegerObstacle: " + hexBigIntegerObstacle);
+//                    obstacleString = hexBigIntegerObstacle.toString(2);
+//                    while (obstacleString.length() < length) {
+//                        obstacleString = "0" + obstacleString;
+//                    }
+//                    showLog("updateMapInformation obstacleString: " + obstacleString);
+//                    setPublicMDFExploration(hexStringExplored);
+//                    setPublicMDFObstacle(hexStringObstacle);
+//
+//                    int k = 0;
+//                    for (int row = ROW - 1; row >= 0; row--)
+//                        for (int col = 1; col <= COL; col++)
+//                            if ((cells[col][row].type.equals("explored") || (cells[col][row].type.equals("robot"))) && k < obstacleString.length()) {
+//                                if ((String.valueOf(obstacleString.charAt(k))).equals("1"))
+//                                    this.setObstacleCoord(col, 20 - row);
+//                                k++;
+//                            }
+//
+//                    int[] waypointCoord = this.getWaypointCoord();
+//                    if (waypointCoord[0] >= 1 && waypointCoord[1] >= 1)
+//                        cells[waypointCoord[0]][20 - waypointCoord[1]].setType("waypoint");
+//                    break;
+//                case "robotPosition":
+//                    if (canDrawRobot)
+//                        this.setOldRobotCoord(curCoord[0], curCoord[1]);
+//                    infoJsonArray = mapInformation.getJSONArray("robotPosition");
+////                    infoJsonObject = infoJsonArray.getJSONObject(0);
+//
+//                    for (int row = ROW - 1; row >= 0; row--)
+//                        for (int col = 1; col <= COL; col++)
+//                            cells[col][row].setType("unexplored");
+//
+//                    String direction;
+//                    if (infoJsonArray.getInt(2) == 90) {
+//                        direction = "right";
+//                    } else if (infoJsonArray.getInt(2) == 180) {
+//                        direction = "down";
+//                    } else if (infoJsonArray.getInt(2) == 270) {
+//                        direction = "left";
+//                    } else {
+//                        direction = "up";
+//                    }
+//                    this.setStartCoord(infoJsonArray.getInt(0), infoJsonArray.getInt(1));
+//                    this.setCurCoord(infoJsonArray.getInt(0)+2, convertRow(infoJsonArray.getInt(1))-1, direction);
+//                    canDrawRobot = true;
+//                    break;
+//                case "waypoint":
+//                    infoJsonArray = mapInformation.getJSONArray("waypoint");
 //                    infoJsonObject = infoJsonArray.getJSONObject(0);
-//                    printRobotStatus(infoJsonObject.getString("status"));
-//                    message = "status: " + infoJsonObject.getString("status");
-                    String msg = mapInformation.getString("status");
-                    printRobotStatus(msg);
-                    message = "status: " + msg;
-                    break;
-                default:
-                    message = "Unintended default for JSONObject";
-                    break;
-            }
-            if (!message.equals("updateMapInformation Default message"))
-                MainActivity.receiveMessage(message);
-        }
-        showLog("Exiting updateMapInformation");
-        this.invalidate();
-    }
+//                    this.setWaypointCoord(infoJsonObject.getInt("x"), infoJsonObject.getInt("y"));
+//                    setWaypointStatus = true;
+//                    break;
+//                case "obstacle":
+//                    infoJsonArray = mapInformation.getJSONArray("obstacle");
+//                    for (int j = 0; j < infoJsonArray.length(); j++) {
+//                        infoJsonObject = infoJsonArray.getJSONObject(j);
+//                        this.setObstacleCoord(infoJsonObject.getInt("x"), infoJsonObject.getInt("y"));
+//                    }
+//                    message = "No. of Obstacle: " + String.valueOf(infoJsonArray.length());
+//                    break;
+//                case "arrow":
+//                    infoJsonArray = mapInformation.getJSONArray("arrow");
+//                    for (int j = 0; j < infoJsonArray.length(); j++) {
+//                        infoJsonObject = infoJsonArray.getJSONObject(j);
+//                        if (!infoJsonObject.getString("face").equals("dummy")) {
+//                            this.setArrowCoordinate(infoJsonObject.getInt("x"), infoJsonObject.getInt("y"), infoJsonObject.getString("face"));
+//                            message = "Arrow:  (" + String.valueOf(infoJsonObject.getInt("x")) + "," + String.valueOf(infoJsonObject.getInt("y")) + "), face: " + infoJsonObject.getString("face");
+//                        }
+//                    }
+//                    break;
+//                case "move":
+//                    infoJsonArray = mapInformation.getJSONArray("move");
+//                    infoJsonObject = infoJsonArray.getJSONObject(0);
+//                    if (canDrawRobot)
+//                        moveRobot(infoJsonObject.getString("direction"));
+//                    message = "moveDirection: " + infoJsonObject.getString("direction");
+//                    break;
+//                case "status":
+////                    infoJsonArray = mapInformation.getJSONArray("status");
+////                    infoJsonObject = infoJsonArray.getJSONObject(0);
+////                    printRobotStatus(infoJsonObject.getString("status"));
+////                    message = "status: " + infoJsonObject.getString("status");
+//                    String msg = mapInformation.getString("status");
+//                    printRobotStatus(msg);
+//                    message = "status: " + msg;
+//                    break;
+//                default:
+//                    message = "Unintended default for JSONObject";
+//                    break;
+//            }
+//            if (!message.equals("updateMapInformation Default message"))
+//                MainActivity.receiveMessage(message);
+//        }
+//        showLog("Exiting updateMapInformation");
+//        this.invalidate();
+//    }
 
     public void moveRobot(String direction) {
         showLog("Entering moveRobot");
         setValidPosition(false);
         int[] curCoord = this.getCurCoord();
-        ArrayList<int[]> obstacleCoord = this.getObstacleCoord();
+        //ArrayList<int[]> obstacleCoord = this.getObstacleCoord();
         this.setOldRobotCoord(curCoord[0], curCoord[1]);
         int[] oldCoord = this.getOldRobotCoord();
         String robotDirection = getRobotDirection();

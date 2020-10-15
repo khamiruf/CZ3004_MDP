@@ -473,34 +473,27 @@ public class MainActivity extends AppCompatActivity {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
-
                 try {
                     if (septext[u].substring(0, 2).equalsIgnoreCase("FP")) {
 
-                        String[] seperatedtextMDF = septext[u].split("\\|");
-                        String comm = seperatedtextMDF[1];
-//                        String[] comms = new String[comm.length()];
-                        gridMap.Fastestroute(comm);
+
+
+                        gridMap.Fastestroute(septext[u]);
 
                     }
                 } catch (Exception e) {
                     showLog("Fail to update Map");
                 }
-
                 try {
                     if (septext[u].substring(0, 3).equalsIgnoreCase("MDF")) {
 
                         String[] seperatedtextMDF = septext[u].split("\\|");
                         hextext = seperatedtextMDF[1];
                         //gridMap.setPublicMDFExploration(hextext);
-                        if(seperatedtextMDF.length == 3 )
-                        {
-                            hextext2 = seperatedtextMDF[2];
-
-                        }
+                        hextext2 = seperatedtextMDF[2];
 
                         gridMap.mapDescriptorExplored(hextext);
+                        gridMap.mapDescriptorObstacle(hextext2);
                     }
                 } catch (Exception e) {
                     showLog("Fail to update Map");
@@ -552,8 +545,7 @@ public class MainActivity extends AppCompatActivity {
                 editor.commit();
                 refreshMessageReceived();
 
-                if(hextext2 != "") {
-                    gridMap.mapDescriptorObstacle(hextext2);
+                if(hextext2 != ""){
                     sharedPreferences();
                     String receivedText2 = sharedPreferences.getString("message", "") + "\n\n --------------------------------------------------------------------------------\n" + "ExploredMDF: " + hextext + "\n" + "Obstacle: \n" + hextext2;
                     editor.putString("message", receivedText2);
