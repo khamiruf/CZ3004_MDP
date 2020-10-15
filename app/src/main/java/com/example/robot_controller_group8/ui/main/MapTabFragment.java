@@ -37,7 +37,7 @@ public class MapTabFragment extends Fragment {
     GridMap gridMap;
     private static boolean autoUpdate = false;
     public static boolean manualUpdateRequest = false;
-    Button manualStartBtn, manualWayBtn;
+//    Button manualStartBtn, manualWayBtn;
 
 //    static Button f1, f2;
 //    Button reconfigure, updateButton;
@@ -77,8 +77,8 @@ public class MapTabFragment extends Fragment {
         resetMapBtn = root.findViewById(R.id.resetMapBtn);
         setStartPointToggleBtn = root.findViewById(R.id.setStartPointToggleBtn);
         setWaypointToggleBtn = root.findViewById(R.id.setWaypointToggleBtn);
-        manualStartBtn = root.findViewById(R.id.manualStartBtn);
-        manualWayBtn = root.findViewById(R.id.manualWayBtn);
+//        manualStartBtn = root.findViewById(R.id.manualStartBtn);
+//        manualWayBtn = root.findViewById(R.id.manualWayBtn);
 
 
         resetMapBtn.setOnClickListener(new View.OnClickListener() {
@@ -123,22 +123,22 @@ public class MapTabFragment extends Fragment {
             }
         });
 
-        manualStartBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showLog("Clicked setManualBtn");
-                gridMap.manualSetupStartPoint();
-            }
-        });
-
-        manualWayBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showLog("Clicked setManualBtn");
-                gridMap.manualSetupWayPoint();
-                gridMap.setWaypointStatus(true);
-            }
-        });
+//        manualStartBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                showLog("Clicked setManualBtn");
+//                gridMap.manualSetupStartPoint();
+//            }
+//        });
+//
+//        manualWayBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                showLog("Clicked setManualBtn");
+//                gridMap.manualSetupWayPoint();
+//                gridMap.setWaypointStatus(true);
+//            }
+//        });
 
         //Optional
 //
