@@ -560,38 +560,38 @@ public class GridMap extends View {
 
 
     /////Optional
-    public boolean manualSetupWayPoint() {
-        int columnW = 10;
-        int rowW = 10;
-        try {
-            this.setWaypointCoord(columnW, rowW);
-            MainActivity.printMessage("waypoint", rowW-1, columnW-1);
-        }catch (JSONException e) {
-            e.printStackTrace();
-        }
-        this.invalidate();
-        return true;
-    }
+//    public boolean manualSetupWayPoint() {
+//        int columnW = 10;
+//        int rowW = 10;
+//        try {
+//            this.setWaypointCoord(columnW, rowW);
+//            MainActivity.printMessage("waypoint", rowW-1, columnW-1);
+//        }catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//        this.invalidate();
+//        return true;
+//    }
 
-    public boolean manualSetupStartPoint() {
-        int column = 2;
-        int row = 2;
-        startCoordStatus = true;
-        this.setStartCoord(column, row);
-
-        startCoordStatus = false;
-        String direction = "down";
-        showLog("Update Robot Axis");
-        try{
-            MainActivity.printMessage("SC|" + "[" + String.valueOf(row-1) + "," + String.valueOf(column-1) + /*+ "," + String.valueOf(directionInt) + */"]");}
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        canDrawRobot = true;
-        updateRobotAxis(column, row, direction);
-        this.invalidate();
-        return true;
-    }
+//    public boolean manualSetupStartPoint() {
+//        int column = 2;
+//        int row = 2;
+//        startCoordStatus = true;
+//        this.setStartCoord(column, row);
+//
+//        startCoordStatus = false;
+//        String direction = "down";
+//        showLog("Update Robot Axis");
+//        try{
+//            MainActivity.printMessage("SC|" + "[" + String.valueOf(row-1) + "," + String.valueOf(column-1) + /*+ "," + String.valueOf(directionInt) + */"]");}
+//        catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        canDrawRobot = true;
+//        updateRobotAxis(column, row, direction);
+//        this.invalidate();
+//        return true;
+//    }
     /////
 
     @Override
@@ -649,8 +649,6 @@ public class GridMap extends View {
                 if (waypointCoord[0] >= 1 && waypointCoord[1] >= 1)
                     cells[waypointCoord[0]][this.convertRow(waypointCoord[1])].setType("unexplored");
                 setWaypointStatus = false;
-                column = 10;
-                row = 10;
                 try {
                     this.setWaypointCoord(column, row);
                     MainActivity.printMessage("waypoint", row-1, column-1);

@@ -60,7 +60,7 @@ public class BluetoothPopUp extends AppCompatActivity {
     public static BluetoothDevice mBTDevice;
 
     FloatingActionButton send;
-    private static TextView messageReceivedTextView;
+    public static TextView messageReceivedTextView;
     private EditText typeBoxEditText;
 
     boolean retryConnection = false;

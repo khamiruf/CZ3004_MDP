@@ -1376,8 +1376,6 @@ id line3
 id listMode
 id list_item
 id manualAutoToggleBtn
-id manualStartBtn
-id manualWayBtn
 id mapInformationView
 id mapTitleTextView
 id mapView
