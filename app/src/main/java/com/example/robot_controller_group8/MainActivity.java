@@ -474,6 +474,20 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
 
+
+                try {
+                    if (septext[u].substring(0, 2).equalsIgnoreCase("FP")) {
+
+                        String[] seperatedtextMDF = septext[u].split("\\|");
+                        String comm = seperatedtextMDF[1];
+//                        String[] comms = new String[comm.length()];
+                        gridMap.Fastestroute(comm);
+
+                    }
+                } catch (Exception e) {
+                    showLog("Fail to update Map");
+                }
+
                 try {
                     if (septext[u].substring(0, 3).equalsIgnoreCase("MDF")) {
 

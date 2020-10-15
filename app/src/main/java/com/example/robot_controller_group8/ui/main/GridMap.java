@@ -789,6 +789,28 @@ public class GridMap extends View {
         this.invalidate();
     }
 
+    public void Fastestroute(String movementpath) {
+        String movement = movementpath;
+        char cur;
+        String comm= "";
+        for(int i=0; i <movement.length(); i++)
+        {
+            cur = movementpath.charAt(i);
+            if(String.valueOf(cur).equalsIgnoreCase("F"))
+            {
+
+                comm = cur + String.valueOf(movementpath.charAt(i+1)) + String.valueOf(movementpath.charAt(i+2));
+                MainActivity.receiveMessage(comm);
+                i=i+2;
+            }
+            else{
+                comm = cur + String.valueOf(movementpath.charAt(i+1));
+                MainActivity.receiveMessage(comm);
+                i=i+1;
+            }
+        }
+    }
+
     public void resetMap() {
         showLog("Entering resetMap");
         TextView robotStatusTextView =  ((Activity)this.getContext()).findViewById(R.id.robotStatusTextView);
