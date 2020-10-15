@@ -10,135 +10,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
-        android:layout_marginRight="5dp"
         android:gravity="center_horizontal"
         android:orientation="horizontal">
-
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:background="@drawable/box_frame"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <Switch
-                android:id="@+id/manualAutoToggleBtn"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:paddingTop="10dp"
-                android:paddingRight="150dp"
-                android:paddingBottom="10dp"
-                android:switchPadding="-220dp"
-                android:text="MANUAL"
-                android:textAlignment="center"
-                android:textOff="@string/manual"
-                android:textOn="@string/auto"
-                android:textSize="@dimen/button_text_size"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/updateButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                android:clickable="true"
-                android:text="UPDATE"
-                android:textAlignment="center"
-                android:textSize="@dimen/button_text_size"
-                android:textStyle="bold" />
-
-            <Button
-                android:id="@+id/resetMapBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                android:text="RESET MAP"
-                android:textSize="@dimen/button_text_size"
-                android:textStyle="bold" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="71dp"
-                android:gravity="center"
-                android:layout_marginHorizontal="10dp"
-                android:orientation="horizontal">
-
-                <ImageButton
-                    android:id="@+id/exploredImageBtn"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="45dp"
-                    android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/ic_check" />
-
-                <ImageButton
-                    android:id="@+id/obstacleImageBtn"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="45dp"
-                    android:layout_marginStart="6dp"
-                    android:layout_marginLeft="6dp"
-                    android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/ic_arrow_error" />
-
-                <ImageButton
-                    android:id="@+id/directionChangeImageBtn"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="45dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginLeft="8dp"
-                    android:scaleType="fitCenter"
-                    android:tint="@color/colorBlack"
-                    app:srcCompat="@drawable/directionpic" />
-
-                <ImageButton
-                    android:id="@+id/clearImageBtn"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="45dp"
-                    android:layout_marginStart="6dp"
-                    android:layout_marginLeft="6dp"
-                    android:scaleType="centerCrop"
-                    app:srcCompat="@drawable/ic_clear" />
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:layout_marginHorizontal="10dp"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/f1ActionButton"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:contentDescription="F1"
-                    android:focusable="true"
-                    android:text="F1"
-                    android:textAlignment="center"
-                    android:textSize="@dimen/button_text_size"
-                    android:textStyle="bold" />
-
-                <Button
-                    android:id="@+id/f2ActionButton"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:clickable="true"
-                    android:contentDescription="F2"
-                    android:focusable="true"
-                    android:text="F2"
-                    android:textAlignment="center"
-                    android:textSize="@dimen/button_text_size"
-                    android:textStyle="bold" />
-            </LinearLayout>
-        </LinearLayout>
+        <!--        <LinearLayout-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="200dp">-->
+        <!--            -->
+        <!--        </LinearLayout>-->
 
         <LinearLayout
             android:layout_width="0dp"
@@ -146,60 +24,87 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             android:background="@drawable/box_frame"
-            android:layout_marginLeft="5dp"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="horizontal"
+            android:layout_gravity="center">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="80dp"
+                android:layout_gravity="center">
 
-            <ToggleButton
-                android:id="@+id/setStartPointToggleBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:textOff="SET STARTPOINT"
-                android:textOn="CANCEL"
-                android:textSize="@dimen/button_text_size"
-                android:textStyle="bold" />
+                <!--            <Button-->
+                <!--                android:id="@+id/setManualBtn"-->
+                <!--                android:layout_width="0dp"-->
+                <!--                android:layout_height="80dp"-->
+                <!--                android:layout_weight="0.2"-->
+                <!--                android:clickable="true"-->
+                <!--                android:text="Manual Setup"-->
+                <!--                android:textAlignment="center"-->
+                <!--                android:textSize="@dimen/button_text_size"-->
+                <!--                android:textStyle="bold" />-->
+                <Button
+                    android:id="@+id/manualStartBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:text="Manual Startpoint"
+                    android:textColor="@color/colorRed"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+                <Button
+                    android:id="@+id/manualWayBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:text="Manual Waypoint"
+                    android:textSize="@dimen/button_text_size"
+                    android:textColor="@color/colorRed"
+                    android:textStyle="bold" />
+                <Button
+                    android:id="@+id/resetMapBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:text="RESET MAP"
+                    android:textSize="@dimen/button_text_size"
+                    android:textStyle="bold" />
 
-            <ToggleButton
-                android:id="@+id/setWaypointToggleBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:textOff="SET WAYPOINT"
-                android:textOn="CANCEL"
-                android:textSize="@dimen/button_text_size"
-                android:textStyle="bold" />
+                <!--            <Button-->
+                <!--                android:id="@+id/updateButton"-->
+                <!--                android:layout_width="0dp"-->
+                <!--                android:layout_height="80dp"-->
+                <!--                android:layout_weight="0.2"-->
+                <!--                android:clickable="true"-->
+                <!--                android:text="UPDATE"-->
+                <!--                android:textAlignment="center"-->
+                <!--                android:textSize="@dimen/button_text_size"-->
+                <!--                android:textStyle="bold" />-->
+                <ToggleButton
+                    android:id="@+id/setStartPointToggleBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:textAlignment="center"
+                    android:textOff="SET STARTPOINT"
+                    android:textOn="CANCEL"
+                    android:textSize="@dimen/button_text_size"
+                    android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/printMDFString"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Print MDF String"
-                android:textAlignment="center"
-                android:textSize="@dimen/button_text_size"
-                android:textStyle="bold" />
+                <ToggleButton
+                    android:id="@+id/setWaypointToggleBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.2"
+                    android:textAlignment="center"
+                    android:textOff="SET WAYPOINT"
+                    android:textOn="CANCEL"
+                    android:textSize="@dimen/button_text_size"
+                    android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/configureButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/configure"
-                android:textAlignment="center"
-                android:textSize="@dimen/button_text_size"
-                android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/calibrateButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:text="CALIBRATE"
-                android:textAlignment="center"
-                android:textSize="@dimen/button_text_size"
-                android:textStyle="bold" />
-
+            </LinearLayout>
 
         </LinearLayout>
+
 
     </LinearLayout>
 

@@ -3,11 +3,14 @@
     <color name="colorPrimary">#FBE551</color>
     <color name="colorPrimaryDark">#1E88E5</color>
     <color name="colorAccent">#D81B60</color>
-
-
     <color name="border_color">#000000</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorRed">#FF0000</color>
-    <color name="colorBlack">#636363</color>
+    <color name="colorBlack">#000000</color>
+    <color name="colorGrey">#757C88</color>
+    <color name="colorGold">#FCC201</color>
+    <color name="colorDarkBlue">#001B3A</color>
     <color name="exploredColor">#FFF9FBE7</color>
+    <color name="colorTab">#1338BE</color>
+    <color name="colorTabText">#FFFFFF</color>
 </resources>

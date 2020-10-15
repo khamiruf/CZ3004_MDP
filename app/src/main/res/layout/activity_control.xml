@@ -6,8 +6,6 @@
     android:layout_height="match_parent">
 
 
-
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -15,7 +13,7 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_weight="0.7"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:orientation="vertical">
@@ -25,34 +23,41 @@
                 android:orientation="horizontal"
                 android:gravity="center_horizontal">
                 <ImageButton
-                    android:id="@+id/forwardImageBtn"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    app:srcCompat="@drawable/ic_arrow_move_forward" />
-
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_horizontal">
-
-
-                <ImageButton
                     android:id="@+id/leftImageBtn"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     app:srcCompat="@drawable/ic_arrow_move_left" />
-                <Space
+                <ImageButton
+                    android:id="@+id/forwardImageBtn"
                     android:layout_width="80dp"
-                    android:layout_height="0dp"></Space>
-
+                    android:layout_height="80dp"
+                    app:srcCompat="@drawable/ic_arrow_move_forward" />
+                <ImageButton
+                    android:id="@+id/backImageBtn"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    app:srcCompat="@drawable/ic_arrow_move_backward" />
                 <ImageButton
                     android:id="@+id/rightImageBtn"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     app:srcCompat="@drawable/ic_arrow_move_right" />
 
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal">
+
+
+
+                <Space
+                    android:layout_width="50dp"
+                    android:layout_height="0dp"></Space>
+
+
+
 
 
             </LinearLayout>
@@ -62,11 +67,7 @@
                 android:orientation="horizontal"
                 android:gravity="center_horizontal">
 
-                <ImageButton
-                    android:id="@+id/backImageBtn"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    app:srcCompat="@drawable/ic_arrow_move_backward" />
+
 
             </LinearLayout>
 
@@ -76,7 +77,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_weight="1">
+            android:layout_weight="0.3">
 
             <Switch
                 android:id="@+id/phoneTiltSwitch"

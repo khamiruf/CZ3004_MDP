@@ -101,16 +101,18 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(popup);
             }
         });
-        Button mapInformationButton = (Button) findViewById(R.id.mapInfoButton);
-        mapInformationButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                editor.putString("mapJsonObject", String.valueOf(gridMap.getCreateJsonObject()));
-                editor.commit();
-                Intent popup = new Intent(MainActivity.this, MapInformation.class);
-                startActivity(popup);
-            }
-        });
+
+
+//        Button mapInformationButton = (Button) findViewById(R.id.mapInfoButton);
+//        mapInformationButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                editor.putString("mapJsonObject", String.valueOf(gridMap.getCreateJsonObject()));
+//                editor.commit();
+//                Intent popup = new Intent(MainActivity.this, MapInformation.class);
+//                startActivity(popup);
+//            }
+//        });
 
 
         // Map
@@ -503,32 +505,32 @@ public class MainActivity extends AppCompatActivity {
                     showLog("Adding Image Failed");
                 }
 
-                try {
-                    if (septext[u].substring(0, 2).equalsIgnoreCase("OB")) {
-                        String[] seperatedtext1 = septext[u].split("\\|");
-                        for (int k = 1; k < seperatedtext1.length; k++) {
-                            String[] seperatedtext2 = seperatedtext1[k].split(",");
-                            int x = Integer.parseInt(seperatedtext2[0]) + 1;
-                            int y = Integer.parseInt(seperatedtext2[1]) + 1;
-                            gridMap.setObstacleCoord(x, y);
-                        }
+//                try {
+//                    if (septext[u].substring(0, 2).equalsIgnoreCase("OB")) {
+//                        String[] seperatedtext1 = septext[u].split("\\|");
+//                        for (int k = 1; k < seperatedtext1.length; k++) {
+//                            String[] seperatedtext2 = seperatedtext1[k].split(",");
+//                            int x = Integer.parseInt(seperatedtext2[0]) + 1;
+//                            int y = Integer.parseInt(seperatedtext2[1]) + 1;
+//                            gridMap.setObstacleCoord(x, y);
+//                        }
+//
+//
+//                    }
+//                } catch (Exception e) {
+//                    showLog("Adding Image Failed");
+//                }
 
-
-                    }
-                } catch (Exception e) {
-                    showLog("Adding Image Failed");
-                }
-
-                if (gridMap.getAutoUpdate() || MapTabFragment.manualUpdateRequest) {
-                    try {
-                        gridMap.setReceivedJsonObject(new JSONObject(message));
-                        gridMap.updateMapInformation();
-                        MapTabFragment.manualUpdateRequest = false;
-                        showLog("messageReceiver: try decode successful");
-                    } catch (JSONException e) {
-                        showLog("messageReceiver: try decode unsuccessful");
-                    }
-                }
+//                if (gridMap.getAutoUpdate() || MapTabFragment.manualUpdateRequest) {
+//                    try {
+//                        gridMap.setReceivedJsonObject(new JSONObject(message));
+//                        gridMap.updateMapInformation();
+//                        MapTabFragment.manualUpdateRequest = false;
+//                        showLog("messageReceiver: try decode successful");
+//                    } catch (JSONException e) {
+//                        showLog("messageReceiver: try decode unsuccessful");
+//                    }
+//                }
 
                 sharedPreferences();
                 String receivedText = sharedPreferences.getString("message", "") + "\n" + message ;
@@ -537,6 +539,7 @@ public class MainActivity extends AppCompatActivity {
                 refreshMessageReceived();
 
                 if(hextext2 != "") {
+                    gridMap.mapDescriptorObstacle(hextext2);
                     sharedPreferences();
                     String receivedText2 = sharedPreferences.getString("message", "") + "\n\n --------------------------------------------------------------------------------\n" + "ExploredMDF: " + hextext + "\n" + "Obstacle: \n" + hextext2;
                     editor.putString("message", receivedText2);

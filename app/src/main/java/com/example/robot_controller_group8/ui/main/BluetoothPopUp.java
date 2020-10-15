@@ -130,9 +130,12 @@ public class BluetoothPopUp extends AppCompatActivity {
 
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         Switch bluetoothSwitch = (Switch) findViewById(R.id.bluetoothSwitch);
+        try{
         if(mBluetoothAdapter.isEnabled()){
             bluetoothSwitch.setChecked(true);
             bluetoothSwitch.setText("ON");
+        }}catch(Exception e){
+            e.printStackTrace();
         }
 
         otherDevicesListView = (ListView) findViewById(R.id.otherDevicesListView);

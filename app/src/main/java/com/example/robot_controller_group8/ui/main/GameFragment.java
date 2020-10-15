@@ -139,6 +139,7 @@ public class GameFragment extends Fragment implements SensorEventListener {
                 showLog("Clicked exploreToggleBtn");
                 ToggleButton exploreToggleBtn = (ToggleButton) v;
                 if (exploreToggleBtn.getText().equals("EXPLORE")) {
+                    MainActivity.printMessage("N|");
                     showToast("Exploration timer stop!");
                     robotStatusTextView.setText("Exploration Stopped");
                     timerHandler.removeCallbacks(timerRunnableExplore);
@@ -163,6 +164,7 @@ public class GameFragment extends Fragment implements SensorEventListener {
                 showLog("Clicked fastestToggleBtn");
                 ToggleButton fastestToggleBtn = (ToggleButton) v;
                 if (fastestToggleBtn.getText().equals("FASTEST")) {
+                    MainActivity.printMessage("N|");
                     showToast("Fastest timer stop!");
                     robotStatusTextView.setText("Fastest Path Stopped");
                     timerHandler.removeCallbacks(timerRunnableFastest);

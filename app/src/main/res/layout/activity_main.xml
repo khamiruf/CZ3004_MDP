@@ -4,17 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/bgapps"
+        android:background="@color/colorBlack"
         android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="50dp"
             android:layout_marginRight="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="10dp">
@@ -22,27 +23,27 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Robot Controller by Group 8"
-                android:textSize="36sp"
+                android:text="Robot Controller"
+                android:textSize="20sp"
                 android:gravity="center"
-                android:textStyle="bold"
-                android:textColor="@color/colorBlack"></TextView>
+                android:textColor="@color/colorWhite"
+                android:textStyle="bold"></TextView>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
                 >
-                <Button
-                    android:id="@+id/mapInfoButton"
-                    android:layout_alignParentRight="true"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:padding="16dp"
-                    android:text="Map Info"
-                    android:background="@drawable/transparent_bg_bordered_button"
-                    android:drawableLeft="@drawable/ic_info"
-                    android:textSize="12sp"/>
+<!--                <Button-->
+<!--                    android:id="@+id/mapInfoButton"-->
+<!--                    android:layout_alignParentRight="true"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:padding="16dp"-->
+<!--                    android:text="Map Info"-->
+<!--                    android:background="@drawable/transparent_bg_bordered_button"-->
+<!--                    android:drawableLeft="@drawable/ic_info"-->
+<!--                    android:textSize="12sp"/>-->
 
                 <Button
                     android:id="@+id/bluetoothButton"
@@ -52,9 +53,9 @@
                     android:layout_marginLeft="5dp"
                     android:padding="16dp"
                     android:text="Bluetooth"
+                    android:textColor="@color/colorWhite"
                     android:background="@drawable/transparent_bg_bordered_button"
-                    android:drawableLeft="@drawable/ic_bluetooth"
-                    android:textSize="12sp"/>
+                    android:textSize="15sp"/>
             </LinearLayout>
 
 
@@ -76,7 +77,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
+                    android:layout_height="60dp"
                     android:gravity="center"
                     android:orientation="horizontal">
 
@@ -93,8 +94,8 @@
                             android:id="@+id/robotStatusTitleTextView"
                             android:layout_width="match_parent"
                             android:layout_height="25dp"
-                            android:background="#000000"
-                            android:textColor="@color/colorWhite"
+                            android:background="@color/colorTab"
+                            android:textColor="@color/colorTabText"
                             android:text="Robot Status"
                             android:textAlignment="center"
                             android:textSize="15sp"
@@ -103,13 +104,13 @@
                         <TextView
                             android:id="@+id/robotStatusTextView"
                             android:layout_width="match_parent"
-                            android:layout_height="50dp"
+                            android:layout_height="25dp"
                             android:background="#FFFFFF"
                             android:gravity="center"
                             android:scrollbars="vertical"
                             android:text="Not Available"
                             android:textAlignment="center"
-                            android:textColor="@color/colorRed"
+                            android:textColor="@color/colorBlack"
                             android:textSize="15sp" />
                     </LinearLayout>
 
@@ -125,8 +126,8 @@
                             android:id="@+id/directionLabelTextView"
                             android:layout_width="match_parent"
                             android:layout_height="25dp"
-                            android:background="#000000"
-                            android:textColor="@color/colorWhite"
+                            android:background="@color/colorTab"
+                            android:textColor="@color/colorTabText"
                             android:text="Direction"
                             android:textAlignment="center"
                             android:textSize="15sp"
@@ -136,13 +137,13 @@
                         <TextView
                             android:id="@+id/directionAxisTextView"
                             android:layout_width="match_parent"
-                            android:layout_height="50dp"
+                            android:layout_height="25dp"
                             android:background="#FFFFFF"
                             android:gravity="center"
                             android:scrollbars="vertical"
                             android:text="None"
                             android:textAlignment="center"
-                            android:textColor="@color/colorRed"
+                            android:textColor="@color/colorBlack"
                             android:textSize="15sp" />
                     </LinearLayout>
 
@@ -158,8 +159,8 @@
                             android:id="@+id/xLabelTextView"
                             android:layout_width="match_parent"
                             android:layout_height="25dp"
-                            android:background="#000000"
-                            android:textColor="@color/colorWhite"
+                            android:background="@color/colorTab"
+                            android:textColor="@color/colorTabText"
                             android:text="X"
                             android:textAlignment="center"
                             android:textSize="15sp"
@@ -169,13 +170,13 @@
                         <TextView
                             android:id="@+id/xAxisTextView"
                             android:layout_width="match_parent"
-                            android:layout_height="50dp"
+                            android:layout_height="25dp"
                             android:background="#FFFFFF"
                             android:gravity="center"
                             android:scrollbars="vertical"
                             android:text="0"
                             android:textAlignment="center"
-                            android:textColor="@color/colorRed"
+                            android:textColor="@color/colorBlack"
                             android:textSize="15sp" />
 
 
@@ -194,8 +195,8 @@
                             android:id="@+id/yLabelTextView"
                             android:layout_width="match_parent"
                             android:layout_height="25dp"
-                            android:background="#000000"
-                            android:textColor="@color/colorWhite"
+                            android:background="@color/colorTab"
+                            android:textColor="@color/colorTabText"
                             android:text="Y"
                             android:textAlignment="center"
                             android:textSize="15sp"
@@ -205,20 +206,171 @@
                         <TextView
                             android:id="@+id/yAxisTextView"
                             android:layout_width="match_parent"
-                            android:layout_height="50dp"
+                            android:layout_height="25dp"
                             android:background="#FFFFFF"
                             android:gravity="center"
                             android:scrollbars="vertical"
                             android:text="0"
                             android:textAlignment="center"
-                            android:textColor="@color/colorRed"
+                            android:textColor="@color/colorBlack"
                             android:textSize="15sp" />
-
-
                     </LinearLayout>
 
 
                 </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="5dp">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:orientation="vertical"
+                            android:layout_gravity="center_horizontal">
+
+                            <view
+                                android:id="@+id/mapView"
+                                class="com.example.robot_controller_group8.ui.main.GridMap"
+                                android:layout_width="420dp"
+                                android:layout_height="540dp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="130dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="5dp">
+                    <Switch
+                        android:id="@+id/manualAutoToggleBtn"
+                        android:layout_width="120dp"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="10dp"
+                        android:paddingRight="150dp"
+                        android:paddingBottom="10dp"
+                        android:switchPadding="-220dp"
+                        android:textColor="@color/colorWhite"
+                        android:text="MANUAL"
+                        android:textAlignment="center"
+                        android:textOff="@string/manual"
+                        android:textOn="@string/auto"
+                        android:textSize="@dimen/button_text_size"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/updateButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:clickable="true"
+                        android:text="UPDATE"
+                        android:textAlignment="center"
+                        android:textSize="@dimen/button_text_size"
+                        android:textStyle="bold" />
+
+                    <Button
+                        android:id="@+id/resetMapBtn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:text="RESET MAP"
+                        android:textSize="@dimen/button_text_size"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:gravity="center"
+                        android:layout_marginHorizontal="10dp"
+                        android:orientation="horizontal">
+
+                        <ImageButton
+                            android:id="@+id/exploredImageBtn"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            app:srcCompat="@drawable/ic_check" />
+
+                        <ImageButton
+                            android:id="@+id/obstacleImageBtn"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            app:srcCompat="@drawable/ic_arrow_error" />
+
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:gravity="center"
+                        android:layout_marginHorizontal="10dp"
+                        android:orientation="horizontal">
+
+
+                        <ImageButton
+                            android:id="@+id/directionChangeImageBtn"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
+                            android:scaleType="fitCenter"
+                            android:tint="@color/colorBlack"
+                            app:srcCompat="@drawable/directionpic" />
+
+                        <ImageButton
+                            android:id="@+id/clearImageBtn"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            app:srcCompat="@drawable/ic_clear" />
+
+                    </LinearLayout>
+
+
+                        <Button
+                            android:id="@+id/f2ActionButton"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="10dp"
+                            android:clickable="true"
+                            android:contentDescription="F2"
+                            android:focusable="true"
+                            android:text="F2"
+                            android:textAlignment="center"
+                            android:textSize="@dimen/button_text_size"
+                            android:textStyle="bold" />
+                    <Button
+                        android:id="@+id/f1ActionButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="10dp"
+                        android:clickable="true"
+                        android:contentDescription="F1"
+                        android:focusable="true"
+                        android:text="F1"
+                        android:textAlignment="center"
+                        android:textSize="@dimen/button_text_size"
+                        android:textStyle="bold" />
+                </LinearLayout> !--
+            </LinearLayout>
+
 
                 <androidx.viewpager.widget.ViewPager
                     android:id="@+id/view_pager"
@@ -231,25 +383,13 @@
                         android:id="@+id/tabs"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="#000000"
-                        app:tabTextColor="#FFFFFF"
+                        android:background="@color/colorTab"
+                        app:tabTextColor="@color/colorTabText"
                         app:tabGravity="fill" />
 
 
                 </androidx.viewpager.widget.ViewPager>
             </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
-
-                    <view
-                        android:id="@+id/mapView"
-                        class="com.example.robot_controller_group8.ui.main.GridMap"
-                        android:layout_width="339dp"
-                        android:layout_height="431dp" />
-                </LinearLayout>
 
 
         </LinearLayout>
@@ -257,3 +397,5 @@
     </LinearLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+

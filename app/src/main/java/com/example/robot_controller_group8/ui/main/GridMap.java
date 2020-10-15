@@ -44,6 +44,7 @@ public class GridMap extends View {
     SharedPreferences sharedPreferences;
 
     private Paint blackPaint = new Paint();
+    private Paint whitePaint = new Paint();
     private Paint obstacleColor = new Paint();
     private Paint robotColor = new Paint();
     private Paint endColor = new Paint();
@@ -89,12 +90,14 @@ public class GridMap extends View {
         super(context, attrs);
         initMap();
         blackPaint.setStyle(Paint.Style.FILL_AND_STROKE);
-        obstacleColor.setColor(Color.BLACK);
+        blackPaint.setColor(Color.BLACK);
+        whitePaint.setColor(Color.WHITE);
+        obstacleColor.setColor(Color.GRAY);
         robotColor.setColor(Color.GREEN);
         endColor.setColor(Color.RED);
         startColor.setColor(Color.CYAN);
         waypointColor.setColor(Color.YELLOW);
-        unexploredColor.setColor(Color.LTGRAY);
+        unexploredColor.setColor(Color.BLACK);
         exploredColor.setColor(Color.WHITE);
         arrowColor.setColor(Color.BLACK);
         fastestPathColor.setColor(Color.MAGENTA);
@@ -165,27 +168,27 @@ public class GridMap extends View {
 
     private void drawHorizontalLines(Canvas canvas) {
         for (int y = 0; y <= ROW; y++)
-            canvas.drawLine(cells[1][y].startX, cells[1][y].startY - (cellSize / 30), cells[15][y].endX, cells[15][y].startY - (cellSize / 30), blackPaint);
+            canvas.drawLine(cells[1][y].startX, cells[1][y].startY - (cellSize / 30), cells[15][y].endX, cells[15][y].startY - (cellSize / 30),whitePaint);
     }
 
     private void drawVerticalLines(Canvas canvas) {
         for (int x = 0; x <= COL; x++)
-            canvas.drawLine(cells[x][0].startX - (cellSize / 30) + cellSize, cells[x][0].startY - (cellSize / 30), cells[x][0].startX - (cellSize / 30) + cellSize, cells[x][19].endY + (cellSize / 30), blackPaint);
+            canvas.drawLine(cells[x][0].startX - (cellSize / 30) + cellSize, cells[x][0].startY - (cellSize / 30), cells[x][0].startX - (cellSize / 30) + cellSize, cells[x][19].endY + (cellSize / 30), whitePaint);
     }
 
     private void drawGridNumber(Canvas canvas) {
         showLog("Entering drawGridNumber");
         for (int x = 1; x <= COL; x++) {
             if (x > 9)
-                canvas.drawText(Integer.toString(x-1), cells[x][20].startX + (cellSize / 5), cells[x][20].startY + (cellSize / 3), blackPaint);
+                canvas.drawText(Integer.toString(x-1), cells[x][20].startX + (cellSize / 5), cells[x][20].startY + (cellSize / 3), whitePaint);
             else
-                canvas.drawText(Integer.toString(x-1), cells[x][20].startX + (cellSize / 3), cells[x][20].startY + (cellSize / 3), blackPaint);
+                canvas.drawText(Integer.toString(x-1), cells[x][20].startX + (cellSize / 3), cells[x][20].startY + (cellSize / 3), whitePaint);
         }
         for (int y = 0; y < ROW; y++) {
             if ((20 - y) > 9)
-                canvas.drawText(Integer.toString(19 - y), cells[0][y].startX + (cellSize / 2), cells[0][y].startY + (cellSize / 1.5f), blackPaint);
+                canvas.drawText(Integer.toString(19 - y), cells[0][y].startX + (cellSize / 2), cells[0][y].startY + (cellSize / 1.5f), whitePaint);
             else
-                canvas.drawText(Integer.toString(19 - y), cells[0][y].startX + (cellSize / 1.5f), cells[0][y].startY + (cellSize / 1.5f), blackPaint);
+                canvas.drawText(Integer.toString(19 - y), cells[0][y].startX + (cellSize / 1.5f), cells[0][y].startY + (cellSize / 1.5f), whitePaint);
         }
         showLog("Exiting drawGridNumber");
     }
@@ -221,6 +224,7 @@ public class GridMap extends View {
         }
         showLog("Exiting drawRobot");
     }
+
 
     private ArrayList<String[]> getArrowCoord() {
         return arrowCoord;
@@ -436,8 +440,6 @@ public class GridMap extends View {
 
         row = this.convertRow(row);
         cells[col][row].setType("waypoint");
-
-        MainActivity.printMessage("waypoint", waypointCoord[0]-1, waypointCoord[1]-1);
         showLog("Exiting setWaypointCoord");
     }
 
@@ -556,6 +558,42 @@ public class GridMap extends View {
         }
     }
 
+
+    /////Optional
+    public boolean manualSetupWayPoint() {
+        int columnW = 10;
+        int rowW = 10;
+        try {
+            this.setWaypointCoord(columnW, rowW);
+            MainActivity.printMessage("waypoint", rowW-1, columnW-1);
+        }catch (JSONException e) {
+            e.printStackTrace();
+        }
+        this.invalidate();
+        return true;
+    }
+
+    public boolean manualSetupStartPoint() {
+        int column = 2;
+        int row = 2;
+        startCoordStatus = true;
+        this.setStartCoord(column, row);
+
+        startCoordStatus = false;
+        String direction = "down";
+        showLog("Update Robot Axis");
+        try{
+            MainActivity.printMessage("SC|" + "[" + String.valueOf(row-1) + "," + String.valueOf(column-1) + /*+ "," + String.valueOf(directionInt) + */"]");}
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        canDrawRobot = true;
+        updateRobotAxis(column, row, direction);
+        this.invalidate();
+        return true;
+    }
+    /////
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         showLog("Entering onTouchEvent");
@@ -577,6 +615,8 @@ public class GridMap extends View {
                 }
                 else
                     canDrawRobot = true;
+                column = 2;
+                row = 2;
                 this.setStartCoord(column, row);
                 startCoordStatus = false;
                 String direction = getRobotDirection();
@@ -609,8 +649,11 @@ public class GridMap extends View {
                 if (waypointCoord[0] >= 1 && waypointCoord[1] >= 1)
                     cells[waypointCoord[0]][this.convertRow(waypointCoord[1])].setType("unexplored");
                 setWaypointStatus = false;
+                column = 10;
+                row = 10;
                 try {
                     this.setWaypointCoord(column, row);
+                    MainActivity.printMessage("waypoint", row-1, column-1);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -704,15 +747,49 @@ public class GridMap extends View {
             }
         }
         //setEndCoord(14, 19);
-        ArrayList<int[]> obstacleCoord = this.getObstacleCoord();
-        for(int k=0; k<obstacleCoord.size();k++)
-        {
-            cells[obstacleCoord.get(k)[0]][convertRow(obstacleCoord.get(k)[1])].setType("obstacle");
-        }
+//        ArrayList<int[]> obstacleCoord = this.getObstacleCoord();
+//        for(int k=0; k<obstacleCoord.size();k++)
+//        {
+//            cells[obstacleCoord.get(k)[0]][convertRow(obstacleCoord.get(k)[1])].setType("obstacle");
+//        }
 
         this.invalidate();
     }
 
+    public void mapDescriptorObstacle(String hexMap){
+
+        // Concatenate hex decimal 1 at the front of the string so the following conversion
+        // will not remove leading zeros in hex MDF String.
+        String hexMapTemp = "1".concat(hexMap);
+
+        // Convert hex MDF String to Big Integer
+        BigInteger hexBigInteger = new BigInteger(hexMapTemp, 16);
+
+        // Discard concatenated bits
+        String binMap = hexBigInteger.toString(2);
+
+        char cur;
+        Integer[] binMapArray = new Integer[binMap.length() - 1];
+
+        for (int i = 1; i < binMap.length(); i++){
+            cur = binMap.charAt(i);
+            binMapArray[i - 1] = Integer.parseInt(String.valueOf(cur));
+        }
+
+        int binMapArrayIndex = 0;
+        for(int j = (ROW - 1); j >= 0; j--){
+            for(int i = 0; i < this.COL; i++) {
+                if (cells[i+1][j].type.equalsIgnoreCase("explored")) {
+                    if (binMapArray[binMapArrayIndex] == 1) {
+                        cells[i+1][j].setType("obstacle");
+                    }
+                    binMapArrayIndex++;
+                }
+            }
+        }
+        // Update map
+        this.invalidate();
+    }
 
     public void resetMap() {
         showLog("Entering resetMap");

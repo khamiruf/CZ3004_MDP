@@ -58,7 +58,7 @@ public class GridView extends View {
         whitePaint.setColor(Color.WHITE);
         obstacleColor.setColor(Color.BLACK);
         waypointColor.setColor(Color.YELLOW);
-        unexploredColor.setColor(Color.LTGRAY);
+        unexploredColor.setColor(Color.BLACK);
         exploredColor.setColor(Color.WHITE);
         arrowColor.setColor(Color.BLACK);
         fastestPathColor.setColor(Color.MAGENTA);
@@ -218,27 +218,27 @@ public class GridView extends View {
 
     private void drawHorizontalLines(Canvas canvas) {
         for (int y = 0; y <= ROW; y++)
-            canvas.drawLine(cells[1][y].startX, cells[1][y].startY - (cellSize / 30), cells[15][y].endX, cells[15][y].startY - (cellSize / 30), blackPaint);
+            canvas.drawLine(cells[1][y].startX, cells[1][y].startY - (cellSize / 30), cells[15][y].endX, cells[15][y].startY - (cellSize / 30), whitePaint);
     }
 
     private void drawVerticalLines(Canvas canvas) {
         for (int x = 0; x <= COL; x++)
-            canvas.drawLine(cells[x][0].startX - (cellSize / 30) + cellSize, cells[x][0].startY - (cellSize / 30), cells[x][0].startX - (cellSize / 30) + cellSize, cells[x][19].endY + (cellSize / 30), blackPaint);
+            canvas.drawLine(cells[x][0].startX - (cellSize / 30) + cellSize, cells[x][0].startY - (cellSize / 30), cells[x][0].startX - (cellSize / 30) + cellSize, cells[x][19].endY + (cellSize / 30), whitePaint);
     }
 
     private void drawGridNumber(Canvas canvas) {
         showLog("Entering drawGridNumber");
         for (int x = 1; x <= COL; x++) {
             if (x > 9)
-                canvas.drawText(Integer.toString(x-1), cells[x][20].startX + (cellSize / 4.5f), cells[x][20].startY + (cellSize / 2), blackPaint);
+                canvas.drawText(Integer.toString(x-1), cells[x][20].startX + (cellSize / 4.5f), cells[x][20].startY + (cellSize / 2), whitePaint);
             else
-                canvas.drawText(Integer.toString(x-1), cells[x][20].startX + (cellSize / 3), cells[x][20].startY + (cellSize / 2), blackPaint);
+                canvas.drawText(Integer.toString(x-1), cells[x][20].startX + (cellSize / 3), cells[x][20].startY + (cellSize / 2), whitePaint);
         }
         for (int y = 0; y < ROW; y++) {
             if ((20 - y) > 9)
-                canvas.drawText(Integer.toString(19 - y), cells[0][y].startX + (cellSize / 2), cells[0][y].startY + (cellSize / 1.5f), blackPaint);
+                canvas.drawText(Integer.toString(19 - y), cells[0][y].startX + (cellSize / 2), cells[0][y].startY + (cellSize / 1.5f), whitePaint);
             else
-                canvas.drawText(Integer.toString(19 - y), cells[0][y].startX + (cellSize / 1.5f), cells[0][y].startY + (cellSize / 1.5f), blackPaint);
+                canvas.drawText(Integer.toString(19 - y), cells[0][y].startX + (cellSize / 1.5f), cells[0][y].startY + (cellSize / 1.5f), whitePaint);
         }
         showLog("Exiting drawGridNumber");
     }
