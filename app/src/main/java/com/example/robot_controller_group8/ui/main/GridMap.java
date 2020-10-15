@@ -435,7 +435,7 @@ public class GridMap extends View {
         directionAxisTextView.setText(direction);
     }
 
-    private void setWaypointCoord(int col, int row) throws JSONException {
+    public void setWaypointCoord(int col, int row) throws JSONException {
         showLog("Entering setWaypointCoord");
         waypointCoord[0] = col;
         waypointCoord[1] = row;
@@ -445,7 +445,7 @@ public class GridMap extends View {
         showLog("Exiting setWaypointCoord");
     }
 
-    private int[] getWaypointCoord() {
+    public int[] getWaypointCoord() {
         return waypointCoord;
     }
 

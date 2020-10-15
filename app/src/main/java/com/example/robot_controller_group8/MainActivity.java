@@ -552,6 +552,14 @@ public class MainActivity extends AppCompatActivity {
                     editor.commit();
                     refreshMessageReceived();
                 }
+
+                int[] wpcoord ;
+                wpcoord = gridMap.getWaypointCoord();
+                try {
+                    gridMap.setWaypointCoord(wpcoord[0], wpcoord[1]);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         }
     };
