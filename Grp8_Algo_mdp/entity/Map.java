@@ -456,7 +456,7 @@ public class Map {
 			}
 		}
 		int bytelength= msg.length() % 4;
-		System.out.println("Byte:" + msg +":"+bytelength);
+		//System.out.println("Byte:" + msg +":"+bytelength);
 		if(bytelength!=0) {
 			switch(bytelength) {
 			case 1: msg += "000"; break;
@@ -540,7 +540,9 @@ public class Map {
             
             if(isCellValid(tempRow, tempCol)) {
             	if(!this.getMapGrid()[tempRow][tempCol].getExploredState() || 
-            			(this.getMapGrid()[tempRow][tempCol].getSensor().equals("l") && !tempSensor.equals("l"))) {
+            			(this.getMapGrid()[tempRow][tempCol].getSensor().equals("l") && !tempSensor.equals("l")) ||
+            			(!this.getMapGrid()[tempRow][tempCol].getSensor().equals("r1") && !this.getMapGrid()[tempRow][tempCol].getSensor().equals("f1") && tempSensor.equals("f1")) ||
+            			(!this.getMapGrid()[tempRow][tempCol].getSensor().equals("r1") && !this.getMapGrid()[tempRow][tempCol].getSensor().equals("f1") && tempSensor.equals("r1"))) {
             		this.getMapGrid()[tempRow][tempCol].setExploredState(true);
             		this.getMapGrid()[tempRow][tempCol].setObstacle(true);
             		this.getMapGrid()[tempRow][tempCol].setSensor(tempSensor);
@@ -562,7 +564,9 @@ public class Map {
 //            }
             if(isCellValid(tempRow, tempCol)) {
             	if(!this.getMapGrid()[tempRow][tempCol].getExploredState() || 
-            			(this.getMapGrid()[tempRow][tempCol].getSensor().equals("l") && !tempSensor.equals("l"))) {
+            			(this.getMapGrid()[tempRow][tempCol].getSensor().equals("l") && !tempSensor.equals("l")) ||
+            			(!this.getMapGrid()[tempRow][tempCol].getSensor().equals("r1") && !this.getMapGrid()[tempRow][tempCol].getSensor().equals("f1") && tempSensor.equals("f1")) ||
+            			(!this.getMapGrid()[tempRow][tempCol].getSensor().equals("r1") && !this.getMapGrid()[tempRow][tempCol].getSensor().equals("f1") && tempSensor.equals("r1"))) {
             		this.getMapGrid()[tempRow][tempCol].setExploredState(true);
             		this.getMapGrid()[tempRow][tempCol].setObstacle(false);
             		this.getMapGrid()[tempRow][tempCol].setSensor(tempSensor);
@@ -597,10 +601,10 @@ public class Map {
 
         switch(frontRight){
             case Constants.OBSTACLE_IMMEDIATE:
-                obstacleCells.add(new Cell(row+2, col+1, "f"));
+                obstacleCells.add(new Cell(row+2, col+1, "f1"));
                 break;
             case Constants.OBSTACLE_ONE_BLOCK_AWAY:
-                obstacleCells.add(new Cell(row+3, col+1, "f"));
+                obstacleCells.add(new Cell(row+3, col+1, "f2"));
                 break;
             case Constants.NO_OBSTACLE:
                 break;
@@ -608,10 +612,10 @@ public class Map {
 
         switch(frontMiddle){
             case Constants.OBSTACLE_IMMEDIATE:
-                obstacleCells.add(new Cell(row+2, col, "f"));
+                obstacleCells.add(new Cell(row+2, col, "f1"));
                 break;
             case Constants.OBSTACLE_ONE_BLOCK_AWAY:
-                obstacleCells.add(new Cell(row+3, col, "f"));
+                obstacleCells.add(new Cell(row+3, col, "f2"));
                 break;
             case Constants.NO_OBSTACLE:
                 break;
@@ -619,10 +623,10 @@ public class Map {
 
         switch(frontLeft){
             case Constants.OBSTACLE_IMMEDIATE:
-                obstacleCells.add(new Cell(row+2, col-1, "f"));
+                obstacleCells.add(new Cell(row+2, col-1, "f1"));
                 break;
             case Constants.OBSTACLE_ONE_BLOCK_AWAY:
-                obstacleCells.add(new Cell(row+3, col-1, "f"));
+                obstacleCells.add(new Cell(row+3, col-1, "f2"));
                 break;
             case Constants.NO_OBSTACLE:
                 break;
@@ -630,10 +634,10 @@ public class Map {
 
         switch(rightBack){
             case Constants.OBSTACLE_IMMEDIATE:
-                obstacleCells.add(new Cell(row-1, col+2, "r"));
+                obstacleCells.add(new Cell(row-1, col+2, "r1"));
                 break;
             case Constants.OBSTACLE_ONE_BLOCK_AWAY:
-                obstacleCells.add(new Cell(row-1, col+3, "r"));
+                obstacleCells.add(new Cell(row-1, col+3, "r2"));
                 break;
             case Constants.NO_OBSTACLE:
                 break;
@@ -641,10 +645,10 @@ public class Map {
 
         switch(rightFront){
             case Constants.OBSTACLE_IMMEDIATE:
-                obstacleCells.add(new Cell(row+1, col+2, "r"));
+                obstacleCells.add(new Cell(row+1, col+2, "r1"));
                 break;
             case Constants.OBSTACLE_ONE_BLOCK_AWAY:
-                obstacleCells.add(new Cell(row+1, col+3, "r"));
+                obstacleCells.add(new Cell(row+1, col+3, "r2"));
                 break;
             case Constants.NO_OBSTACLE:
                 break;
@@ -683,11 +687,11 @@ public class Map {
             case Constants.OBSTACLE_IMMEDIATE:
                 break;
             case Constants.OBSTACLE_ONE_BLOCK_AWAY:
-                emptyCells.add(new Cell(row+2, col+1, "f"));
+                emptyCells.add(new Cell(row+2, col+1, "f1"));
                 break;
             case Constants.NO_OBSTACLE:
-                emptyCells.add(new Cell(row+2, col+1, "f"));
-                emptyCells.add(new Cell(row+3, col+1, "f"));
+                emptyCells.add(new Cell(row+2, col+1, "f1"));
+                emptyCells.add(new Cell(row+3, col+1, "f2"));
                 break;
         }
 
@@ -695,11 +699,11 @@ public class Map {
             case Constants.OBSTACLE_IMMEDIATE:
                 break;
             case Constants.OBSTACLE_ONE_BLOCK_AWAY:
-                emptyCells.add(new Cell(row+2, col, "f"));
+                emptyCells.add(new Cell(row+2, col, "f1"));
                 break;
             case Constants.NO_OBSTACLE:
-                emptyCells.add(new Cell(row+2, col, "f"));
-                emptyCells.add(new Cell(row+3, col, "f"));
+                emptyCells.add(new Cell(row+2, col, "f1"));
+                emptyCells.add(new Cell(row+3, col, "f2"));
                 break;
         }
 
@@ -707,11 +711,11 @@ public class Map {
             case Constants.OBSTACLE_IMMEDIATE:
                 break;
             case Constants.OBSTACLE_ONE_BLOCK_AWAY:
-                emptyCells.add(new Cell(row+2, col-1, "f"));
+                emptyCells.add(new Cell(row+2, col-1, "f1"));
                 break;
             case Constants.NO_OBSTACLE:
-                emptyCells.add(new Cell(row+2, col-1, "f"));
-                emptyCells.add(new Cell(row+3, col-1, "f"));
+                emptyCells.add(new Cell(row+2, col-1, "f1"));
+                emptyCells.add(new Cell(row+3, col-1, "f2"));
                 break;
         }
 
@@ -719,11 +723,11 @@ public class Map {
             case Constants.OBSTACLE_IMMEDIATE:
                 break;
             case Constants.OBSTACLE_ONE_BLOCK_AWAY:
-                emptyCells.add(new Cell(row-1, col+2, "r"));
+                emptyCells.add(new Cell(row-1, col+2, "r1"));
                 break;
             case Constants.NO_OBSTACLE:
-                emptyCells.add(new Cell(row-1, col+2, "r"));
-                emptyCells.add(new Cell(row-1, col+3, "r"));
+                emptyCells.add(new Cell(row-1, col+2, "r1"));
+                emptyCells.add(new Cell(row-1, col+3, "r2"));
                 break;
         }
 
@@ -731,11 +735,11 @@ public class Map {
             case Constants.OBSTACLE_IMMEDIATE:
                 break;
             case Constants.OBSTACLE_ONE_BLOCK_AWAY:
-                emptyCells.add(new Cell(row+1, col+2, "r"));
+                emptyCells.add(new Cell(row+1, col+2, "r1"));
                 break;
             case Constants.NO_OBSTACLE:
-                emptyCells.add(new Cell(row+1, col+2, "r"));
-                emptyCells.add(new Cell(row+1, col+3, "r"));
+                emptyCells.add(new Cell(row+1, col+2, "r1"));
+                emptyCells.add(new Cell(row+1, col+3, "r2"));
                 break;
         }
 
@@ -770,10 +774,10 @@ public class Map {
 
         switch(frontRight){
             case Constants.OBSTACLE_IMMEDIATE:
-                obstacleCells.add(new Cell(row-2, col-1, "f"));
+                obstacleCells.add(new Cell(row-2, col-1, "f1"));
                 break;
             case Constants.OBSTACLE_ONE_BLOCK_AWAY:
-                 obstacleCells.add(new Cell(row-3, col-1, "f"));
+                 obstacleCells.add(new Cell(row-3, col-1, "f2"));
                 break;
             case Constants.NO_OBSTACLE:
                 break;
@@ -781,10 +785,10 @@ public class Map {
 
         switch(frontMiddle){
             case Constants.OBSTACLE_IMMEDIATE:
-                obstacleCells.add(new Cell(row-2, col, "f"));
+                obstacleCells.add(new Cell(row-2, col, "f1"));
                 break;
             case Constants.OBSTACLE_ONE_BLOCK_AWAY:
-                obstacleCells.add(new Cell(row-3, col, "f"));
+                obstacleCells.add(new Cell(row-3, col, "f2"));
                 break;
             case Constants.NO_OBSTACLE:
                 break;
@@ -792,10 +796,10 @@ public class Map {
 
         switch(frontLeft){
             case Constants.OBSTACLE_IMMEDIATE:
-                obstacleCells.add(new Cell(row-2, col+1, "f"));
+                obstacleCells.add(new Cell(row-2, col+1, "f1"));
                 break;
             case Constants.OBSTACLE_ONE_BLOCK_AWAY:
-                obstacleCells.add(new Cell(row-3, col+1, "f"));
+                obstacleCells.add(new Cell(row-3, col+1, "f2"));
                 break;
             case Constants.NO_OBSTACLE:
                 break;
@@ -803,10 +807,10 @@ public class Map {
 
         switch(rightBack){
             case Constants.OBSTACLE_IMMEDIATE:
-                obstacleCells.add(new Cell(row+1, col-2, "r"));
+                obstacleCells.add(new Cell(row+1, col-2, "r1"));
                 break;
             case Constants.OBSTACLE_ONE_BLOCK_AWAY:
-                obstacleCells.add(new Cell(row+1, col-3, "r"));
+                obstacleCells.add(new Cell(row+1, col-3, "r2"));
                 break;
             case Constants.NO_OBSTACLE:
                 break;
@@ -814,10 +818,10 @@ public class Map {
 
         switch(rightFront){
             case Constants.OBSTACLE_IMMEDIATE:
-                obstacleCells.add(new Cell(row-1, col-2, "r"));
+                obstacleCells.add(new Cell(row-1, col-2, "r1"));
                 break;
             case Constants.OBSTACLE_ONE_BLOCK_AWAY:
-                obstacleCells.add(new Cell(row-1, col-3, "r"));
+                obstacleCells.add(new Cell(row-1, col-3, "r2"));
                 break;
             case Constants.NO_OBSTACLE:
                 break;
@@ -856,11 +860,11 @@ public class Map {
             case Constants.OBSTACLE_IMMEDIATE:
                 break;
             case Constants.OBSTACLE_ONE_BLOCK_AWAY:
-                emptyCells.add(new Cell(row-2, col-1, "f"));
+                emptyCells.add(new Cell(row-2, col-1, "f1"));
                 break;
             case Constants.NO_OBSTACLE:
-                emptyCells.add(new Cell(row-2, col-1, "f"));
-                emptyCells.add(new Cell(row-3, col-1, "f"));
+                emptyCells.add(new Cell(row-2, col-1, "f1"));
+                emptyCells.add(new Cell(row-3, col-1, "f2"));
                 break;
         }
 
@@ -868,11 +872,11 @@ public class Map {
             case Constants.OBSTACLE_IMMEDIATE:
                 break;
             case Constants.OBSTACLE_ONE_BLOCK_AWAY:
-                emptyCells.add(new Cell(row-2, col, "f"));
+                emptyCells.add(new Cell(row-2, col, "f1"));
                 break;
             case Constants.NO_OBSTACLE:
-                emptyCells.add(new Cell(row-2, col, "f"));
-                emptyCells.add(new Cell(row-3, col, "f"));
+                emptyCells.add(new Cell(row-2, col, "f1"));
+                emptyCells.add(new Cell(row-3, col, "f2"));
                 break;
         }
 
@@ -880,11 +884,11 @@ public class Map {
             case Constants.OBSTACLE_IMMEDIATE:
                 break;
             case Constants.OBSTACLE_ONE_BLOCK_AWAY:
-                emptyCells.add(new Cell(row-2, col+1, "f"));
+                emptyCells.add(new Cell(row-2, col+1, "f1"));
                 break;
             case Constants.NO_OBSTACLE:
-                emptyCells.add(new Cell(row-2, col+1, "f"));
-                emptyCells.add(new Cell(row-3, col+1, "f"));
+                emptyCells.add(new Cell(row-2, col+1, "f1"));
+                emptyCells.add(new Cell(row-3, col+1, "f2"));
                 break;
         }
 
@@ -892,11 +896,11 @@ public class Map {
             case Constants.OBSTACLE_IMMEDIATE:
                 break;
             case Constants.OBSTACLE_ONE_BLOCK_AWAY:
-                emptyCells.add(new Cell(row+1, col-2, "r"));
+                emptyCells.add(new Cell(row+1, col-2, "r1"));
                 break;
             case Constants.NO_OBSTACLE:
-                emptyCells.add(new Cell(row+1, col-2, "r"));
-                emptyCells.add(new Cell(row+1, col-3, "r"));
+                emptyCells.add(new Cell(row+1, col-2, "r1"));
+                emptyCells.add(new Cell(row+1, col-3, "r2"));
                 break;
         }
 
@@ -904,11 +908,11 @@ public class Map {
             case Constants.OBSTACLE_IMMEDIATE:
                 break;
             case Constants.OBSTACLE_ONE_BLOCK_AWAY:
-                emptyCells.add(new Cell(row-1, col-2, "r"));
+                emptyCells.add(new Cell(row-1, col-2, "r1"));
                 break;
             case Constants.NO_OBSTACLE:
-                emptyCells.add(new Cell(row-1, col-2, "r"));
-                emptyCells.add(new Cell(row-1, col-3, "r"));
+                emptyCells.add(new Cell(row-1, col-2, "r1"));
+                emptyCells.add(new Cell(row-1, col-3, "r2"));
                 break;
         }
 
@@ -943,10 +947,10 @@ public class Map {
 
         switch(frontRight){
             case Constants.OBSTACLE_IMMEDIATE:
-                obstacleCells.add(new Cell(row-1, col+2, "f"));
+                obstacleCells.add(new Cell(row-1, col+2, "f1"));
                 break;
             case Constants.OBSTACLE_ONE_BLOCK_AWAY:
-                obstacleCells.add(new Cell(row-1, col+3, "f"));
+                obstacleCells.add(new Cell(row-1, col+3, "f2"));
                 break;
             case Constants.NO_OBSTACLE:
                 break;
@@ -954,10 +958,10 @@ public class Map {
 
         switch(frontMiddle){
             case Constants.OBSTACLE_IMMEDIATE:
-                obstacleCells.add(new Cell(row, col+2, "f"));
+                obstacleCells.add(new Cell(row, col+2, "f1"));
                 break;
             case Constants.OBSTACLE_ONE_BLOCK_AWAY:
-                obstacleCells.add(new Cell(row, col+3, "f"));
+                obstacleCells.add(new Cell(row, col+3, "f2"));
                 break;
             case Constants.NO_OBSTACLE:
                 break;
@@ -965,10 +969,10 @@ public class Map {
 
         switch(frontLeft){
             case Constants.OBSTACLE_IMMEDIATE:
-                obstacleCells.add(new Cell(row+1, col+2, "f"));
+                obstacleCells.add(new Cell(row+1, col+2, "f1"));
                 break;
             case Constants.OBSTACLE_ONE_BLOCK_AWAY:
-                obstacleCells.add(new Cell(row+1, col+3, "f"));
+                obstacleCells.add(new Cell(row+1, col+3, "f2"));
                 break;
             case Constants.NO_OBSTACLE:
                 break;
@@ -976,10 +980,10 @@ public class Map {
 
         switch(rightBack){
             case Constants.OBSTACLE_IMMEDIATE:
-                obstacleCells.add(new Cell(row-2, col-1, "r"));
+                obstacleCells.add(new Cell(row-2, col-1, "r1"));
                 break;
             case Constants.OBSTACLE_ONE_BLOCK_AWAY:
-                obstacleCells.add(new Cell(row-3, col-1, "r"));
+                obstacleCells.add(new Cell(row-3, col-1, "r2"));
                 break;
             case Constants.NO_OBSTACLE:
                 break;
@@ -987,10 +991,10 @@ public class Map {
 
         switch(rightFront){
             case Constants.OBSTACLE_IMMEDIATE:
-                obstacleCells.add(new Cell(row-2, col+1, "r"));
+                obstacleCells.add(new Cell(row-2, col+1, "r1"));
                 break;
             case Constants.OBSTACLE_ONE_BLOCK_AWAY:
-                obstacleCells.add(new Cell(row-3, col+1, "r"));
+                obstacleCells.add(new Cell(row-3, col+1, "r2"));
                 break;
             case Constants.NO_OBSTACLE:
                 break;
@@ -1029,11 +1033,11 @@ public class Map {
             case Constants.OBSTACLE_IMMEDIATE:
                 break;
             case Constants.OBSTACLE_ONE_BLOCK_AWAY:
-                emptyCells.add(new Cell(row-1, col+2, "f"));
+                emptyCells.add(new Cell(row-1, col+2, "f1"));
                 break;
             case Constants.NO_OBSTACLE:
-                emptyCells.add(new Cell(row-1, col+2, "f"));
-                emptyCells.add(new Cell(row-1, col+3, "f"));
+                emptyCells.add(new Cell(row-1, col+2, "f1"));
+                emptyCells.add(new Cell(row-1, col+3, "f2"));
                 break;
         }
 
@@ -1041,11 +1045,11 @@ public class Map {
             case Constants.OBSTACLE_IMMEDIATE:
                 break;
             case Constants.OBSTACLE_ONE_BLOCK_AWAY:
-                emptyCells.add(new Cell(row, col+2, "f"));
+                emptyCells.add(new Cell(row, col+2, "f1"));
                 break;
             case Constants.NO_OBSTACLE:
-                emptyCells.add(new Cell(row, col+2, "f"));
-                emptyCells.add(new Cell(row, col+3, "f"));
+                emptyCells.add(new Cell(row, col+2, "f1"));
+                emptyCells.add(new Cell(row, col+3, "f2"));
                 break;
         }
 
@@ -1053,11 +1057,11 @@ public class Map {
             case Constants.OBSTACLE_IMMEDIATE:
                 break;
             case Constants.OBSTACLE_ONE_BLOCK_AWAY:
-                emptyCells.add(new Cell(row+1, col+2, "f"));
+                emptyCells.add(new Cell(row+1, col+2, "f1"));
                 break;
             case Constants.NO_OBSTACLE:
-                emptyCells.add(new Cell(row+1, col+2, "f"));
-                emptyCells.add(new Cell(row+1, col+3, "f"));
+                emptyCells.add(new Cell(row+1, col+2, "f1"));
+                emptyCells.add(new Cell(row+1, col+3, "f2"));
                 break;
         }
 
@@ -1065,11 +1069,11 @@ public class Map {
             case Constants.OBSTACLE_IMMEDIATE:
                 break;
             case Constants.OBSTACLE_ONE_BLOCK_AWAY:
-                emptyCells.add(new Cell(row-2, col-1, "r"));
+                emptyCells.add(new Cell(row-2, col-1, "r1"));
                 break;
             case Constants.NO_OBSTACLE:
-                emptyCells.add(new Cell(row-2, col-1, "r"));
-                emptyCells.add(new Cell(row-3, col-1, "r"));
+                emptyCells.add(new Cell(row-2, col-1, "r1"));
+                emptyCells.add(new Cell(row-3, col-1, "r2"));
                 break;
         }
 
@@ -1077,11 +1081,11 @@ public class Map {
             case Constants.OBSTACLE_IMMEDIATE:
                 break;
             case Constants.OBSTACLE_ONE_BLOCK_AWAY:
-                emptyCells.add(new Cell(row-2, col+1, "r"));
+                emptyCells.add(new Cell(row-2, col+1, "r1"));
                 break;
             case Constants.NO_OBSTACLE:
-                emptyCells.add(new Cell(row-2, col+1, "r"));
-                emptyCells.add(new Cell(row-3, col+1, "r"));
+                emptyCells.add(new Cell(row-2, col+1, "r1"));
+                emptyCells.add(new Cell(row-3, col+1, "r2"));
                 break;
         }
 
@@ -1116,10 +1120,10 @@ public class Map {
 
         switch(frontRight){
             case Constants.OBSTACLE_IMMEDIATE:
-                obstacleCells.add(new Cell(row+1, col-2, "f"));
+                obstacleCells.add(new Cell(row+1, col-2, "f1"));
                 break;
             case Constants.OBSTACLE_ONE_BLOCK_AWAY:
-                obstacleCells.add(new Cell(row+1, col-3, "f"));
+                obstacleCells.add(new Cell(row+1, col-3, "f2"));
                 break;
             case Constants.NO_OBSTACLE:
                 break;
@@ -1127,10 +1131,10 @@ public class Map {
 
         switch(frontMiddle){
             case Constants.OBSTACLE_IMMEDIATE:
-                obstacleCells.add(new Cell(row, col-2, "f"));
+                obstacleCells.add(new Cell(row, col-2, "f1"));
                 break;
             case Constants.OBSTACLE_ONE_BLOCK_AWAY:
-                obstacleCells.add(new Cell(row, col-3, "f"));
+                obstacleCells.add(new Cell(row, col-3, "f2"));
                 break;
             case Constants.NO_OBSTACLE:
                 break;
@@ -1138,10 +1142,10 @@ public class Map {
 
         switch(frontLeft){
             case Constants.OBSTACLE_IMMEDIATE:
-                obstacleCells.add(new Cell(row-1, col-2, "f"));
+                obstacleCells.add(new Cell(row-1, col-2, "f1"));
                 break;
             case Constants.OBSTACLE_ONE_BLOCK_AWAY:
-                obstacleCells.add(new Cell(row-1, col-3, "f"));
+                obstacleCells.add(new Cell(row-1, col-3, "f2"));
                 break;
             case Constants.NO_OBSTACLE:
                 break;
@@ -1149,10 +1153,10 @@ public class Map {
 
         switch(rightBack){
             case Constants.OBSTACLE_IMMEDIATE:
-                obstacleCells.add(new Cell(row+2, col+1, "r"));
+                obstacleCells.add(new Cell(row+2, col+1, "r1"));
                 break;
             case Constants.OBSTACLE_ONE_BLOCK_AWAY:
-                obstacleCells.add(new Cell(row+3, col+1, "r"));
+                obstacleCells.add(new Cell(row+3, col+1, "r2"));
                 break;
             case Constants.NO_OBSTACLE:
                 break;
@@ -1160,10 +1164,10 @@ public class Map {
 
         switch(rightFront){
             case Constants.OBSTACLE_IMMEDIATE:
-                obstacleCells.add(new Cell(row+2, col-1, "r"));
+                obstacleCells.add(new Cell(row+2, col-1, "r1"));
                 break;
             case Constants.OBSTACLE_ONE_BLOCK_AWAY:
-                obstacleCells.add(new Cell(row+3, col-1, "r"));
+                obstacleCells.add(new Cell(row+3, col-1, "r2"));
                 break;
             case Constants.NO_OBSTACLE:
                 break;
@@ -1202,11 +1206,11 @@ public class Map {
             case Constants.OBSTACLE_IMMEDIATE:
                 break;
             case Constants.OBSTACLE_ONE_BLOCK_AWAY:
-                emptyCells.add(new Cell(row+1, col-2, "f"));
+                emptyCells.add(new Cell(row+1, col-2, "f1"));
                 break;
             case Constants.NO_OBSTACLE:
-                emptyCells.add(new Cell(row+1, col-2, "f"));
-                emptyCells.add(new Cell(row+1, col-3, "f"));
+                emptyCells.add(new Cell(row+1, col-2, "f1"));
+                emptyCells.add(new Cell(row+1, col-3, "f2"));
                 break;
         }
 
@@ -1214,11 +1218,11 @@ public class Map {
             case Constants.OBSTACLE_IMMEDIATE:
                 break;
             case Constants.OBSTACLE_ONE_BLOCK_AWAY:
-                emptyCells.add(new Cell(row, col-2, "f"));
+                emptyCells.add(new Cell(row, col-2, "f1"));
                 break;
             case Constants.NO_OBSTACLE:
-                emptyCells.add(new Cell(row, col-2, "f"));
-                emptyCells.add(new Cell(row, col-3, "f"));
+                emptyCells.add(new Cell(row, col-2, "f1"));
+                emptyCells.add(new Cell(row, col-3, "f2"));
                 break;
         }
 
@@ -1226,11 +1230,11 @@ public class Map {
             case Constants.OBSTACLE_IMMEDIATE:
                 break;
             case Constants.OBSTACLE_ONE_BLOCK_AWAY:
-                emptyCells.add(new Cell(row-1, col-2, "f"));
+                emptyCells.add(new Cell(row-1, col-2, "f1"));
                 break;
             case Constants.NO_OBSTACLE:
-                emptyCells.add(new Cell(row-1, col-2, "f"));
-                emptyCells.add(new Cell(row-1, col-3, "f"));
+                emptyCells.add(new Cell(row-1, col-2, "f1"));
+                emptyCells.add(new Cell(row-1, col-3, "f2"));
                 break;
         }
 
@@ -1238,11 +1242,11 @@ public class Map {
             case Constants.OBSTACLE_IMMEDIATE:
                 break;
             case Constants.OBSTACLE_ONE_BLOCK_AWAY:
-                emptyCells.add(new Cell(row+2, col+1, "r"));
+                emptyCells.add(new Cell(row+2, col+1, "r1"));
                 break;
             case Constants.NO_OBSTACLE:
-                emptyCells.add(new Cell(row+2, col+1, "r"));
-                emptyCells.add(new Cell(row+3, col+1, "r"));
+                emptyCells.add(new Cell(row+2, col+1, "r1"));
+                emptyCells.add(new Cell(row+3, col+1, "r2"));
                 break;
         }
 
@@ -1250,11 +1254,11 @@ public class Map {
             case Constants.OBSTACLE_IMMEDIATE:
                 break;
             case Constants.OBSTACLE_ONE_BLOCK_AWAY:
-                emptyCells.add(new Cell(row+2, col-1, "r"));
+                emptyCells.add(new Cell(row+2, col-1, "r1"));
                 break;
             case Constants.NO_OBSTACLE:
-                emptyCells.add(new Cell(row+2, col-1, "r"));
-                emptyCells.add(new Cell(row+3, col-1, "r"));
+                emptyCells.add(new Cell(row+2, col-1, "r1"));
+                emptyCells.add(new Cell(row+3, col-1, "r2"));
                 break;
         }
 

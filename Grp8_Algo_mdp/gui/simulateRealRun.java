@@ -148,7 +148,7 @@ public class simulateRealRun implements Runnable {
 					//System.out.println("ysize:" + unexploredList.size());
 				}
 			}
-			 */	
+			 */
 			if (!exploreMap.checkIfRobotAtStartPos(robot)) {
 				FastestPath fastobj = new FastestPath(robot, exploreMap);
 
@@ -1071,12 +1071,6 @@ public class simulateRealRun implements Runnable {
 			sendMsg("EX|Q0|(0),(0)|(0),(0)");
 		}
 		
-		//yaowen testing
-		/*
-		else if (frontRight == 1 || frontCenter == 1 || frontLeft == 1) {
-			sendMsg("EX|Q0|(0),(0)|(0),(0)");
-		}
-		*/
 		else if (forwardCount >= 4 && rightFront == 1 && rightBack == 1) {
 			sendMsg("EX|P0|(0),(0)|(0),(0)");
 			return 0;

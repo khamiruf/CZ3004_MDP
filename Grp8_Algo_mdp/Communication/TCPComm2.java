@@ -63,6 +63,7 @@ public class TCPComm2 {
     
     public void sendMessage(String message) {
     	try {
+    		System.out.println("Size:" + message.getBytes().length+":"+message.getBytes());
     		dout.write(message.getBytes());
     		dout.flush();
     		
