@@ -798,18 +798,17 @@ public class GridMap extends View {
         String[] seperatedtextMDF = movementpath.split("\\|");
         for(int k=1;k<seperatedtextMDF.length; k++)
         {
-            MainActivity.printMessage("I came here: " + seperatedtextMDF[k]);
             switch (seperatedtextMDF[k]) {
                 case "G0":
                 case "F01":
                     moveRobot("forward");
-                    Thread.sleep(400);
+
                     break;
                 case "F02":
                     for(int w=0;w<2;w++)
                     {
                         moveRobot("forward");
-                        Thread.sleep(400);
+
 
                     }
                     break;
@@ -817,7 +816,7 @@ public class GridMap extends View {
                     for(int w=0;w<3;w++)
                     {
                         moveRobot("forward");
-                        Thread.sleep(400);
+
 
                     }
                     break;
@@ -825,7 +824,7 @@ public class GridMap extends View {
                     for(int w=0;w<4;w++)
                     {
                         moveRobot("forward");
-                        Thread.sleep(400);
+
 
                     }
                     break;
@@ -833,7 +832,7 @@ public class GridMap extends View {
                     for(int w=0;w<5;w++)
                     {
                         moveRobot("forward");
-                        Thread.sleep(400);
+
 
                     }
                     break;
@@ -841,14 +840,14 @@ public class GridMap extends View {
                     for(int w=0;w<6;w++)
                     {
                         moveRobot("forward");
-                        Thread.sleep(400);
+
                     }
                     break;
                 case "F07":
                     for(int w=0;w<7;w++)
                     {
                         moveRobot("forward");
-                        Thread.sleep(400);
+
 
                     }
                     break;
@@ -856,7 +855,7 @@ public class GridMap extends View {
                     for(int w=0;w<8;w++)
                     {
                         moveRobot("forward");
-                        Thread.sleep(400);
+
 
                     }
                     break;
@@ -864,7 +863,7 @@ public class GridMap extends View {
                     for(int w=0;w<9;w++)
                     {
                         moveRobot("forward");
-                        Thread.sleep(400);
+
 
                     }
                     break;
@@ -872,63 +871,63 @@ public class GridMap extends View {
                     for(int w=0;w<10;w++)
                     {
                        moveRobot("forward");
-                        Thread.sleep(400);
+
                     }
                     break;
                 case "F11":
                     for(int w=0;w<11;w++)
                     {
                         moveRobot("forward");
-                        Thread.sleep(400);
+
                     }
                     break;
                 case "F12":
                     for(int w=0;w<12;w++)
                     {
                         moveRobot("forward");
-                        Thread.sleep(400);
+
                     }
                     break;
                 case "F13":
                     for(int w=0;w<13;w++)
                     {
                         moveRobot("forward");
-                        Thread.sleep(400);
+
                     }
                     break;
                 case "F14":
                     for(int w=0;w<14;w++)
                     {
                         moveRobot("forward");
-                        Thread.sleep(400);
+
                     }
                     break;
                 case "F15":
                     for(int w=0;w<15;w++)
                     {
                         moveRobot("forward");
-                        Thread.sleep(400);
+
                     }
                     break;
                 case "F16":
                     for(int w=0;w<16;w++)
                     {
                         moveRobot("forward");
-                        Thread.sleep(400);
+
                     }
                     break;
                 case "F17":
                     for(int w=0;w<17;w++)
                     {
                         moveRobot("forward");
-                        Thread.sleep(400);
+
                     }
                     break;
                 case "F18":
                     for(int w=0;w<18;w++)
                     {
                         moveRobot("forward");
-                        Thread.sleep(400);
+
                     }
                     break;
                 case "F19":
@@ -942,33 +941,32 @@ public class GridMap extends View {
                     for(int w=0;w<20;w++)
                     {
                         moveRobot("forward");
-                        Thread.sleep(400);
+
                     }
                     break;
                 case "R0":
                     moveRobot("right");
-                    Thread.sleep(400);
+
                     break;
                 case "R1":
                     moveRobot("right");
-                    Thread.sleep(400);
+
                     moveRobot("forward");
-                    Thread.sleep(400);
+
                     break;
 
                 case "L0":
                     moveRobot("left");
-                    Thread.sleep(400);
+
                     break;
                 case "L1":
                     moveRobot("left");
-                    Thread.sleep(400);
+
                     moveRobot("forward");
-                    Thread.sleep(400);
+
                     break;
                 case "B0":
                     moveRobot("back");
-                    Thread.sleep(400);
                     break;
             }
         }
