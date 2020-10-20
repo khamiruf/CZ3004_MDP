@@ -248,7 +248,7 @@ public class BluetoothPopUp extends AppCompatActivity {
         });
 
 
-        ImageButton backBtn = findViewById(R.id.backBtn);
+        Button backBtn = findViewById(R.id.backBtn);
 
         connStatusTextView = (TextView) findViewById(R.id.connStatusTextView);
         connStatus ="Disconnected";

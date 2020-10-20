@@ -5,106 +5,113 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal">
-
-    <LinearLayout
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal">
-        <!--        <LinearLayout-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="200dp">-->
-        <!--            -->
-        <!--        </LinearLayout>-->
-
+        android:layout_marginRight="4dp"
+        android:layout_marginLeft="4dp"
+        android:layout_marginBottom="4dp"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="7dp">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:background="@drawable/box_frame"
-            android:orientation="horizontal"
-            android:layout_gravity="center">
+            android:layout_margin="20dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+            <!--        <LinearLayout-->
+            <!--            android:layout_width="match_parent"-->
+            <!--            android:layout_height="200dp">-->
+            <!--            -->
+            <!--        </LinearLayout>-->
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="80dp"
                 android:layout_gravity="center">
 
-                <!--            <Button-->
-                <!--                android:id="@+id/setManualBtn"-->
-                <!--                android:layout_width="0dp"-->
-                <!--                android:layout_height="80dp"-->
-                <!--                android:layout_weight="0.2"-->
-                <!--                android:clickable="true"-->
-                <!--                android:text="Manual Setup"-->
-                <!--                android:textAlignment="center"-->
-                <!--                android:textSize="@dimen/button_text_size"-->
-                <!--                android:textStyle="bold" />-->
-<!--                <Button-->
-<!--                    android:id="@+id/manualStartBtn"-->
-<!--                    android:layout_width="0dp"-->
-<!--                    android:layout_height="match_parent"-->
-<!--                    android:layout_weight="0.2"-->
-<!--                    android:text="Manual Startpoint"-->
-<!--                    android:textColor="@color/colorRed"-->
-<!--                    android:textSize="10sp"-->
-<!--                    android:textStyle="bold" />-->
-<!--                <Button-->
-<!--                    android:id="@+id/manualWayBtn"-->
-<!--                    android:layout_width="0dp"-->
-<!--                    android:layout_height="match_parent"-->
-<!--                    android:layout_weight="0.2"-->
-<!--                    android:text="Manual Waypoint"-->
-<!--                    android:textSize="@dimen/button_text_size"-->
-<!--                    android:textColor="@color/colorRed"-->
-<!--                    android:textStyle="bold" />-->
-                <Button
-                    android:id="@+id/resetMapBtn"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.2"
-                    android:text="RESET MAP"
-                    android:textSize="@dimen/button_text_size"
-                    android:textStyle="bold" />
+                    <!--            <Button-->
+                    <!--                android:id="@+id/setManualBtn"-->
+                    <!--                android:layout_width="0dp"-->
+                    <!--                android:layout_height="80dp"-->
+                    <!--                android:layout_weight="0.2"-->
+                    <!--                android:clickable="true"-->
+                    <!--                android:text="Manual Setup"-->
+                    <!--                android:textAlignment="center"-->
+                    <!--                android:textSize="@dimen/button_text_size"-->
+                    <!--                android:textStyle="bold" />-->
+                    <!--                <Button-->
+                    <!--                    android:id="@+id/manualStartBtn"-->
+                    <!--                    android:layout_width="0dp"-->
+                    <!--                    android:layout_height="match_parent"-->
+                    <!--                    android:layout_weight="0.2"-->
+                    <!--                    android:text="Manual Startpoint"-->
+                    <!--                    android:textColor="@color/colorRed"-->
+                    <!--                    android:textSize="10sp"-->
+                    <!--                    android:textStyle="bold" />-->
+                    <!--                <Button-->
+                    <!--                    android:id="@+id/manualWayBtn"-->
+                    <!--                    android:layout_width="0dp"-->
+                    <!--                    android:layout_height="match_parent"-->
+                    <!--                    android:layout_weight="0.2"-->
+                    <!--                    android:text="Manual Waypoint"-->
+                    <!--                    android:textSize="@dimen/button_text_size"-->
+                    <!--                    android:textColor="@color/colorRed"-->
+                    <!--                    android:textStyle="bold" />-->
+                    <Button
+                        android:id="@+id/resetMapBtn"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.2"
+                        android:text="RESET MAP"
+                        android:drawableTop="@drawable/refresh"
+                        android:textSize="@dimen/button_text_size"
+                        android:textStyle="bold" />
 
-                <!--            <Button-->
-                <!--                android:id="@+id/updateButton"-->
-                <!--                android:layout_width="0dp"-->
-                <!--                android:layout_height="80dp"-->
-                <!--                android:layout_weight="0.2"-->
-                <!--                android:clickable="true"-->
-                <!--                android:text="UPDATE"-->
-                <!--                android:textAlignment="center"-->
-                <!--                android:textSize="@dimen/button_text_size"-->
-                <!--                android:textStyle="bold" />-->
-                <ToggleButton
-                    android:id="@+id/setStartPointToggleBtn"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.2"
-                    android:textAlignment="center"
-                    android:textOff="SET STARTPOINT"
-                    android:textOn="CANCEL"
-                    android:textSize="@dimen/button_text_size"
-                    android:textStyle="bold" />
+                    <!--            <Button-->
+                    <!--                android:id="@+id/updateButton"-->
+                    <!--                android:layout_width="0dp"-->
+                    <!--                android:layout_height="80dp"-->
+                    <!--                android:layout_weight="0.2"-->
+                    <!--                android:clickable="true"-->
+                    <!--                android:text="UPDATE"-->
+                    <!--                android:textAlignment="center"-->
+                    <!--                android:textSize="@dimen/button_text_size"-->
+                    <!--                android:textStyle="bold" />-->
+                    <ToggleButton
+                        android:id="@+id/setStartPointToggleBtn"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.2"
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:textOff="SET STARTPOINT"
+                        android:textOn="CANCEL"
+                        android:textSize="@dimen/button_text_size"
+                       android:drawableTop="@drawable/ic_start"
+                        android:textStyle="bold" />
 
-                <ToggleButton
-                    android:id="@+id/setWaypointToggleBtn"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.2"
-                    android:textAlignment="center"
-                    android:textOff="SET WAYPOINT"
-                    android:textOn="CANCEL"
-                    android:textSize="@dimen/button_text_size"
-                    android:textStyle="bold" />
+                    <ToggleButton
+                        android:id="@+id/setWaypointToggleBtn"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.2"
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:textOff="SET WAYPOINT"
+                        android:drawableTop="@drawable/waypoint"
+                        android:textOn="CANCEL"
+                        android:textSize="@dimen/button_text_size"
+                        android:textStyle="bold" />
 
+
+                </LinearLayout>
 
             </LinearLayout>
 
-        </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
-
-    </LinearLayout>
 
 </ScrollView>

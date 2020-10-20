@@ -16,9 +16,9 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_margin="10dp"
+            android:layout_marginRight="30dp"
             android:orientation="vertical">
 
             <TextView
@@ -28,8 +28,9 @@
                 android:background="@color/colorTab"
                 android:textColor="@color/colorTabText"
                 android:gravity="center"
+                android:layout_marginTop="10dp"
                 android:text="Fastest Path"
-                android:textSize="15sp"
+                android:textSize="20dp"
                 android:textStyle="italic" />
 
             <TextView
@@ -39,39 +40,38 @@
                 android:background="#FFFFFF"
                 android:gravity="center"
                 android:text="00:00"
-                android:textSize="15sp" />
+                android:textSize="20dp" />
 
             <LinearLayout
-                android:layout_width="265dp"
-                android:layout_height="70dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal">
 
                 <ToggleButton
                     android:id="@+id/fastestToggleBtn"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
+                    android:layout_weight="0.5"
+                    android:layout_height="50dp"
                     android:text="FASTEST"
                     android:textOff="FASTEST"
                     android:textOn="STOP" />
 
                 <ImageButton
                     android:id="@+id/fastestResetImageBtn"
-                    style="@style/Widget.AppCompat.ImageButton"
                     android:layout_width="0dp"
-                    android:layout_weight="0.4"
+                    android:layout_weight="0.5"
                     android:layout_height="50dp"
-                    app:srcCompat="@drawable/ic_refresh" />
+                    android:src="@drawable/refresh"
+                     />
             </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_margin="10dp"
             android:orientation="vertical">
 
             <TextView
@@ -82,7 +82,8 @@
                 android:textColor="@color/colorTabText"
                 android:gravity="center"
                 android:text="Exploration Time"
-                android:textSize="15sp"
+                android:layout_marginTop="10dp"
+                android:textSize="20dp"
                 android:textStyle="italic"
                 tools:ignore="MissingConstraints" />
 
@@ -93,18 +94,18 @@
                 android:background="#FFFFFF"
                 android:gravity="center"
                 android:text="00:00"
-                android:textSize="15sp" />
+                android:textSize="20dp" />
 
             <LinearLayout
-                android:layout_width="265dp"
-                android:layout_height="70dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal">
 
                 <ToggleButton
                     android:id="@+id/exploreToggleBtn"
                     android:layout_width="0dp"
-                    android:layout_weight="1"
+                    android:layout_weight="0.5"
                     android:layout_height="wrap_content"
                     android:text="Exploration"
                     android:textOff="EXPLORE"
@@ -112,11 +113,11 @@
 
                 <ImageButton
                     android:id="@+id/exploreResetImageBtn"
-                    style="@style/Widget.AppCompat.ImageButton"
                     android:layout_width="0dp"
-                    android:layout_weight="0.4"
+                    android:layout_weight="0.5"
                     android:layout_height="50dp"
-                    app:srcCompat="@drawable/ic_refresh" />
+                    android:src="@drawable/refresh"
+                    />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
