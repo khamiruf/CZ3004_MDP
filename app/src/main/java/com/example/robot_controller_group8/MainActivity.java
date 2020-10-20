@@ -547,7 +547,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if(hextext2 != ""){
                     sharedPreferences();
-                    String receivedText2 = sharedPreferences.getString("message", "") + "\n\n --------------------------------------------------------------------------------\n" + "ExploredMDF: " + hextext + "\n" + "Obstacle: \n" + hextext2;
+                    String receivedText2 = sharedPreferences.getString("message", "") +  "ExploredMDF: " + hextext + "\n" + "Obstacle: \n" + hextext2 + "\n\n --------------------------------------------------------------------------------\n";
                     editor.putString("message", receivedText2);
                     editor.commit();
                     refreshMessageReceived();

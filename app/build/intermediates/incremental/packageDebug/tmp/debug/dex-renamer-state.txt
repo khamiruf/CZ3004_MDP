@@ -1,4 +1,7 @@
-#Thu Oct 15 19:18:14 SGT 2020
-base.0=/Users/delphine_lee/Documents/GitHub/CZ3004/app/build/intermediates/dex/debug/mergeDexDebug/out/classes.dex
+#Mon Oct 19 16:19:33 SGT 2020
+base.0=C\:\\Users\\delphine_lee\\Documents\\GitHub\\CZ3004\\app\\build\\intermediates\\dex\\debug\\mergeDexDebug\\out\\classes.dex
+path.1=classes.dex
+renamed.1=classes2.dex
 path.0=classes.dex
 renamed.0=classes.dex
+base.1=C\:\\Users\\TeckZ\\Desktop\\CZ3004\\app\\build\\intermediates\\dex\\debug\\mergeDexDebug\\out\\classes.dex
