@@ -537,7 +537,7 @@ public class Map {
 //                result += tempCol +"," + tempRow + "|";
 //     
 //            }
-            
+            /* overriding R2 and F2
             if(isCellValid(tempRow, tempCol)) {
             	if(!this.getMapGrid()[tempRow][tempCol].getExploredState() || 
             			(this.getMapGrid()[tempRow][tempCol].getSensor().equals("l") && !tempSensor.equals("l")) ||
@@ -548,6 +548,32 @@ public class Map {
             		this.getMapGrid()[tempRow][tempCol].setSensor(tempSensor);
             		setVirtualWall(this.getMapGrid()[tempRow][tempCol]);
             		//result += tempCol +"," + tempRow + "|";
+            	}
+            }
+            */
+            
+            if(isCellValid(tempRow, tempCol)) {
+            	if(!this.getMapGrid()[tempRow][tempCol].getExploredState() || 
+            			(this.getMapGrid()[tempRow][tempCol].getSensor().equals("l") && !tempSensor.equals("l"))) {
+            		this.getMapGrid()[tempRow][tempCol].setExploredState(true);
+            		this.getMapGrid()[tempRow][tempCol].setObstacle(true);
+            		this.getMapGrid()[tempRow][tempCol].setSensor(tempSensor);
+            		//setVirtualWall(this.getMapGrid()[tempRow][tempCol]);
+            		//result += tempCol +"," + tempRow + "|";
+            	}
+            }
+            
+            for(int r=0; r < Constants.MAX_ROW; r++) {
+            	for(int c=0; c < Constants.MAX_COL; c++) {
+            		this.getMapGrid()[r][c].setVirtualWall(false);
+            	}
+            }
+            
+            for(int r=0; r < Constants.MAX_ROW; r++) {
+            	for(int c=0; c < Constants.MAX_COL; c++) {
+            		if(this.getMapGrid()[r][c].isObstacle()) {
+            			setVirtualWall(this.getMapGrid()[r][c]);
+            		}
             	}
             }
         }
@@ -562,6 +588,8 @@ public class Map {
 //                this.getMapGrid()[tempRow][tempCol].setExploredState(true);
 //                this.getMapGrid()[tempRow][tempCol].setObstacle(false);
 //            }
+            
+            /* Overriding R2 and F2
             if(isCellValid(tempRow, tempCol)) {
             	if(!this.getMapGrid()[tempRow][tempCol].getExploredState() || 
             			(this.getMapGrid()[tempRow][tempCol].getSensor().equals("l") && !tempSensor.equals("l")) ||
@@ -572,12 +600,22 @@ public class Map {
             		this.getMapGrid()[tempRow][tempCol].setSensor(tempSensor);
             	}
             }
+            */
+            if(isCellValid(tempRow, tempCol)) {
+            	if(!this.getMapGrid()[tempRow][tempCol].getExploredState() || 
+            			(this.getMapGrid()[tempRow][tempCol].getSensor().equals("l") && !tempSensor.equals("l")) ) {
+            		this.getMapGrid()[tempRow][tempCol].setExploredState(true);
+            		this.getMapGrid()[tempRow][tempCol].setObstacle(false);
+            		this.getMapGrid()[tempRow][tempCol].setSensor(tempSensor);
+            	}
+            }
         }
         
         for(int r : Constants.WITHIN_3BY3){
             for(int c : Constants.WITHIN_3BY3){          
             	this.mapArena[endGoal.getRowPos() + r][endGoal.getColPos() + c].setObstacle(false);   
-            	this.mapArena[wayPoint.getRowPos() + r][wayPoint.getColPos() + c].setObstacle(false);  
+            	this.mapArena[wayPoint.getRowPos() + r][wayPoint.getColPos() + c].setObstacle(false);
+            	this.mapArena[startGoal.getRowPos() + r][startGoal.getColPos() + c].setObstacle(false);
             }
         }
         

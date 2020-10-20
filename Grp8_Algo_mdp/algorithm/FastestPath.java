@@ -61,6 +61,8 @@ public class FastestPath {
 	        
 	        for (int i = size - 1; i >= 0; i--) {
 	            int cost = gCosts[toVisit.get(i).getRowPos()][toVisit.get(i).getColPos()] + hCost(toVisit.get(i).getRowPos(), toVisit.get(i).getColPos(), goalRow, goalCol);
+	            System.out.println("Cost: " + cost);
+	            System.out.println("toVisit: Row-" + toVisit.get(i).getRowPos() + "Col-" + toVisit.get(i).getColPos());
 	            if (cost < minCost) {
 	                minCost = cost;
 	                result = toVisit.get(i);
@@ -475,9 +477,9 @@ public class FastestPath {
 	    public ArrayList<Cell> calculateFastestPath2(Map exploredMap, int destRow, int destCol){
 
 	    	ArrayList<Cell> surroundCellList = can_reach(destRow, destCol);
-	    	this.toVisit = new ArrayList<Cell>();
-	        this.visited = new ArrayList<Cell>();
-	        this.toVisit.add(new Cell(mockRobot.getPosRow(),mockRobot.getPosCol()));
+	    	//this.toVisit = new ArrayList<Cell>();
+	       // this.visited = new ArrayList<Cell>();
+	        //this.toVisit.add(new Cell(mockRobot.getPosRow(),mockRobot.getPosCol()));
 	    	//System.out.println()
 	        do{
 	            
@@ -487,7 +489,8 @@ public class FastestPath {
 	            if (parents.containsKey(current)) {
 	                mockRobot.setCurrDir(getCurrDir(current));
 	            }
-
+	            
+	        
 	            mockRobot.setPosRow(current.getRowPos());
 	            mockRobot.setPosCol(current.getColPos());
 
