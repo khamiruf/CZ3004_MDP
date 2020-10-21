@@ -131,6 +131,7 @@ public class simulateRealRun implements Runnable {
 			ArrayList<Cell> unexploredList = getUnexploredList(exploreMap);
 			
 			//2nd round exploration
+			/*
 			while (unexploredList.size() > 0) {
 				
 				if(unexploredList.get(0)!=null) {
@@ -152,7 +153,7 @@ public class simulateRealRun implements Runnable {
 				}
 				                                
 				
-			}
+			}*/
 			 
 			if (!exploreMap.checkIfRobotAtStartPos(robot)) {
 				FastestPath fastobj = new FastestPath(robot, exploreMap);
@@ -1041,6 +1042,7 @@ public class simulateRealRun implements Runnable {
 			counter = 1;
 		}
 		
+		result += "D0|";
 		System.out.println("parseFPMovements():" + result);
 		return result;
 	}
