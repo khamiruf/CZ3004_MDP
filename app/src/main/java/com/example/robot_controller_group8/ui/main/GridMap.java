@@ -47,7 +47,7 @@ public class GridMap extends View {
     private Paint whitePaint = new Paint();
     private Paint obstacleColor = new Paint();
     private Paint robotColor = new Paint();
-    private  Paint greyPaint = new Paint();
+    private Paint greyPaint = new Paint();
     private Paint endColor = new Paint();
     private Paint startColor = new Paint();
     private Paint waypointColor = new Paint();
