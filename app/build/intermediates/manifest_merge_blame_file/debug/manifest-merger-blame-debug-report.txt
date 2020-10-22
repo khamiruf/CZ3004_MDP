@@ -69,70 +69,69 @@
 38-->D:\GitHub Res\CZ3004\app\src\main\AndroidManifest.xml:24:9-54
 39        android:supportsRtl="true"
 39-->D:\GitHub Res\CZ3004\app\src\main\AndroidManifest.xml:25:9-35
-40        android:testOnly="true"
-41        android:theme="@style/AppTheme.NoActionBar" >
-41-->D:\GitHub Res\CZ3004\app\src\main\AndroidManifest.xml:26:9-52
-42        <activity
-42-->D:\GitHub Res\CZ3004\app\src\main\AndroidManifest.xml:27:9-37:20
-43            android:name="com.example.robot_controller_group8.MainActivity"
-43-->D:\GitHub Res\CZ3004\app\src\main\AndroidManifest.xml:28:13-76
-44            android:label="@string/app_name"
-44-->D:\GitHub Res\CZ3004\app\src\main\AndroidManifest.xml:29:13-45
-45            android:theme="@style/AppTheme.NoActionBar"
-45-->D:\GitHub Res\CZ3004\app\src\main\AndroidManifest.xml:30:13-56
-46            android:windowSoftInputMode="adjustPan" >
-46-->D:\GitHub Res\CZ3004\app\src\main\AndroidManifest.xml:31:13-52
-47            <intent-filter>
-47-->D:\GitHub Res\CZ3004\app\src\main\AndroidManifest.xml:32:13-36:29
-48                <action android:name="android.intent.action.MAIN" />
-48-->D:\GitHub Res\CZ3004\app\src\main\AndroidManifest.xml:33:17-69
-48-->D:\GitHub Res\CZ3004\app\src\main\AndroidManifest.xml:33:25-66
-49
-50                <category android:name="android.intent.category.LAUNCHER" />
-50-->D:\GitHub Res\CZ3004\app\src\main\AndroidManifest.xml:35:17-77
-50-->D:\GitHub Res\CZ3004\app\src\main\AndroidManifest.xml:35:27-74
-51            </intent-filter>
-52        </activity>
-53        <activity android:name="com.example.robot_controller_group8.ui.main.BluetoothPopUp" />
-53-->D:\GitHub Res\CZ3004\app\src\main\AndroidManifest.xml:38:9-104
-53-->D:\GitHub Res\CZ3004\app\src\main\AndroidManifest.xml:38:19-92
-54        <activity android:name="com.example.robot_controller_group8.ui.main.MapInformation" />
-54-->D:\GitHub Res\CZ3004\app\src\main\AndroidManifest.xml:39:9-95
-54-->D:\GitHub Res\CZ3004\app\src\main\AndroidManifest.xml:39:19-92
-55        <!-- Needs to be explicitly declared on P+ -->
-56        <uses-library
-56-->[com.google.android.gms:play-services-maps:17.0.0] C:\Users\Bugz\.gradle\caches\transforms-2\files-2.1\a3d702a77cbfacefb23de82416a0cb1f\play-services-maps-17.0.0\AndroidManifest.xml:33:9-35:40
-57            android:name="org.apache.http.legacy"
-57-->[com.google.android.gms:play-services-maps:17.0.0] C:\Users\Bugz\.gradle\caches\transforms-2\files-2.1\a3d702a77cbfacefb23de82416a0cb1f\play-services-maps-17.0.0\AndroidManifest.xml:34:13-50
-58            android:required="false" />
-58-->[com.google.android.gms:play-services-maps:17.0.0] C:\Users\Bugz\.gradle\caches\transforms-2\files-2.1\a3d702a77cbfacefb23de82416a0cb1f\play-services-maps-17.0.0\AndroidManifest.xml:35:13-37
-59
-60        <activity
-60-->[com.google.android.gms:play-services-base:17.0.0] C:\Users\Bugz\.gradle\caches\transforms-2\files-2.1\77c2fc448e2bd0738fd67dce062b1efd\play-services-base-17.0.0\AndroidManifest.xml:23:9-26:75
-61            android:name="com.google.android.gms.common.api.GoogleApiActivity"
-61-->[com.google.android.gms:play-services-base:17.0.0] C:\Users\Bugz\.gradle\caches\transforms-2\files-2.1\77c2fc448e2bd0738fd67dce062b1efd\play-services-base-17.0.0\AndroidManifest.xml:24:13-79
-62            android:exported="false"
-62-->[com.google.android.gms:play-services-base:17.0.0] C:\Users\Bugz\.gradle\caches\transforms-2\files-2.1\77c2fc448e2bd0738fd67dce062b1efd\play-services-base-17.0.0\AndroidManifest.xml:25:13-37
-63            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-63-->[com.google.android.gms:play-services-base:17.0.0] C:\Users\Bugz\.gradle\caches\transforms-2\files-2.1\77c2fc448e2bd0738fd67dce062b1efd\play-services-base-17.0.0\AndroidManifest.xml:26:13-72
-64
-65        <meta-data
-65-->[com.google.android.gms:play-services-basement:17.0.0] C:\Users\Bugz\.gradle\caches\transforms-2\files-2.1\478c61fdfbff8a8ab0ada1ea287f66fb\jetified-play-services-basement-17.0.0\AndroidManifest.xml:23:9-25:69
-66            android:name="com.google.android.gms.version"
-66-->[com.google.android.gms:play-services-basement:17.0.0] C:\Users\Bugz\.gradle\caches\transforms-2\files-2.1\478c61fdfbff8a8ab0ada1ea287f66fb\jetified-play-services-basement-17.0.0\AndroidManifest.xml:24:13-58
-67            android:value="@integer/google_play_services_version" />
-67-->[com.google.android.gms:play-services-basement:17.0.0] C:\Users\Bugz\.gradle\caches\transforms-2\files-2.1\478c61fdfbff8a8ab0ada1ea287f66fb\jetified-play-services-basement-17.0.0\AndroidManifest.xml:25:13-66
-68
-69        <provider
-69-->[androidx.lifecycle:lifecycle-process:2.2.0] C:\Users\Bugz\.gradle\caches\transforms-2\files-2.1\58629c19fa6c616abd60edc0d2bb07b8\lifecycle-process-2.2.0\AndroidManifest.xml:25:9-29:43
-70            android:name="androidx.lifecycle.ProcessLifecycleOwnerInitializer"
-70-->[androidx.lifecycle:lifecycle-process:2.2.0] C:\Users\Bugz\.gradle\caches\transforms-2\files-2.1\58629c19fa6c616abd60edc0d2bb07b8\lifecycle-process-2.2.0\AndroidManifest.xml:26:13-79
-71            android:authorities="com.example.robot_controller_group8.lifecycle-process"
-71-->[androidx.lifecycle:lifecycle-process:2.2.0] C:\Users\Bugz\.gradle\caches\transforms-2\files-2.1\58629c19fa6c616abd60edc0d2bb07b8\lifecycle-process-2.2.0\AndroidManifest.xml:27:13-69
-72            android:exported="false"
-72-->[androidx.lifecycle:lifecycle-process:2.2.0] C:\Users\Bugz\.gradle\caches\transforms-2\files-2.1\58629c19fa6c616abd60edc0d2bb07b8\lifecycle-process-2.2.0\AndroidManifest.xml:28:13-37
-73            android:multiprocess="true" />
-73-->[androidx.lifecycle:lifecycle-process:2.2.0] C:\Users\Bugz\.gradle\caches\transforms-2\files-2.1\58629c19fa6c616abd60edc0d2bb07b8\lifecycle-process-2.2.0\AndroidManifest.xml:29:13-40
-74    </application>
-75
-76</manifest>
+40        android:theme="@style/AppTheme.NoActionBar" >
+40-->D:\GitHub Res\CZ3004\app\src\main\AndroidManifest.xml:26:9-52
+41        <activity
+41-->D:\GitHub Res\CZ3004\app\src\main\AndroidManifest.xml:27:9-37:20
+42            android:name="com.example.robot_controller_group8.MainActivity"
+42-->D:\GitHub Res\CZ3004\app\src\main\AndroidManifest.xml:28:13-76
+43            android:label="@string/app_name"
+43-->D:\GitHub Res\CZ3004\app\src\main\AndroidManifest.xml:29:13-45
+44            android:theme="@style/AppTheme.NoActionBar"
+44-->D:\GitHub Res\CZ3004\app\src\main\AndroidManifest.xml:30:13-56
+45            android:windowSoftInputMode="adjustPan" >
+45-->D:\GitHub Res\CZ3004\app\src\main\AndroidManifest.xml:31:13-52
+46            <intent-filter>
+46-->D:\GitHub Res\CZ3004\app\src\main\AndroidManifest.xml:32:13-36:29
+47                <action android:name="android.intent.action.MAIN" />
+47-->D:\GitHub Res\CZ3004\app\src\main\AndroidManifest.xml:33:17-69
+47-->D:\GitHub Res\CZ3004\app\src\main\AndroidManifest.xml:33:25-66
+48
+49                <category android:name="android.intent.category.LAUNCHER" />
+49-->D:\GitHub Res\CZ3004\app\src\main\AndroidManifest.xml:35:17-77
+49-->D:\GitHub Res\CZ3004\app\src\main\AndroidManifest.xml:35:27-74
+50            </intent-filter>
+51        </activity>
+52        <activity android:name="com.example.robot_controller_group8.ui.main.BluetoothPopUp" />
+52-->D:\GitHub Res\CZ3004\app\src\main\AndroidManifest.xml:38:9-104
+52-->D:\GitHub Res\CZ3004\app\src\main\AndroidManifest.xml:38:19-92
+53        <activity android:name="com.example.robot_controller_group8.ui.main.MapInformation" />
+53-->D:\GitHub Res\CZ3004\app\src\main\AndroidManifest.xml:39:9-95
+53-->D:\GitHub Res\CZ3004\app\src\main\AndroidManifest.xml:39:19-92
+54        <!-- Needs to be explicitly declared on P+ -->
+55        <uses-library
+55-->[com.google.android.gms:play-services-maps:17.0.0] C:\Users\Bugz\.gradle\caches\transforms-2\files-2.1\a3d702a77cbfacefb23de82416a0cb1f\play-services-maps-17.0.0\AndroidManifest.xml:33:9-35:40
+56            android:name="org.apache.http.legacy"
+56-->[com.google.android.gms:play-services-maps:17.0.0] C:\Users\Bugz\.gradle\caches\transforms-2\files-2.1\a3d702a77cbfacefb23de82416a0cb1f\play-services-maps-17.0.0\AndroidManifest.xml:34:13-50
+57            android:required="false" />
+57-->[com.google.android.gms:play-services-maps:17.0.0] C:\Users\Bugz\.gradle\caches\transforms-2\files-2.1\a3d702a77cbfacefb23de82416a0cb1f\play-services-maps-17.0.0\AndroidManifest.xml:35:13-37
+58
+59        <activity
+59-->[com.google.android.gms:play-services-base:17.0.0] C:\Users\Bugz\.gradle\caches\transforms-2\files-2.1\77c2fc448e2bd0738fd67dce062b1efd\play-services-base-17.0.0\AndroidManifest.xml:23:9-26:75
+60            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+60-->[com.google.android.gms:play-services-base:17.0.0] C:\Users\Bugz\.gradle\caches\transforms-2\files-2.1\77c2fc448e2bd0738fd67dce062b1efd\play-services-base-17.0.0\AndroidManifest.xml:24:13-79
+61            android:exported="false"
+61-->[com.google.android.gms:play-services-base:17.0.0] C:\Users\Bugz\.gradle\caches\transforms-2\files-2.1\77c2fc448e2bd0738fd67dce062b1efd\play-services-base-17.0.0\AndroidManifest.xml:25:13-37
+62            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+62-->[com.google.android.gms:play-services-base:17.0.0] C:\Users\Bugz\.gradle\caches\transforms-2\files-2.1\77c2fc448e2bd0738fd67dce062b1efd\play-services-base-17.0.0\AndroidManifest.xml:26:13-72
+63
+64        <meta-data
+64-->[com.google.android.gms:play-services-basement:17.0.0] C:\Users\Bugz\.gradle\caches\transforms-2\files-2.1\478c61fdfbff8a8ab0ada1ea287f66fb\jetified-play-services-basement-17.0.0\AndroidManifest.xml:23:9-25:69
+65            android:name="com.google.android.gms.version"
+65-->[com.google.android.gms:play-services-basement:17.0.0] C:\Users\Bugz\.gradle\caches\transforms-2\files-2.1\478c61fdfbff8a8ab0ada1ea287f66fb\jetified-play-services-basement-17.0.0\AndroidManifest.xml:24:13-58
+66            android:value="@integer/google_play_services_version" />
+66-->[com.google.android.gms:play-services-basement:17.0.0] C:\Users\Bugz\.gradle\caches\transforms-2\files-2.1\478c61fdfbff8a8ab0ada1ea287f66fb\jetified-play-services-basement-17.0.0\AndroidManifest.xml:25:13-66
+67
+68        <provider
+68-->[androidx.lifecycle:lifecycle-process:2.2.0] C:\Users\Bugz\.gradle\caches\transforms-2\files-2.1\58629c19fa6c616abd60edc0d2bb07b8\lifecycle-process-2.2.0\AndroidManifest.xml:25:9-29:43
+69            android:name="androidx.lifecycle.ProcessLifecycleOwnerInitializer"
+69-->[androidx.lifecycle:lifecycle-process:2.2.0] C:\Users\Bugz\.gradle\caches\transforms-2\files-2.1\58629c19fa6c616abd60edc0d2bb07b8\lifecycle-process-2.2.0\AndroidManifest.xml:26:13-79
+70            android:authorities="com.example.robot_controller_group8.lifecycle-process"
+70-->[androidx.lifecycle:lifecycle-process:2.2.0] C:\Users\Bugz\.gradle\caches\transforms-2\files-2.1\58629c19fa6c616abd60edc0d2bb07b8\lifecycle-process-2.2.0\AndroidManifest.xml:27:13-69
+71            android:exported="false"
+71-->[androidx.lifecycle:lifecycle-process:2.2.0] C:\Users\Bugz\.gradle\caches\transforms-2\files-2.1\58629c19fa6c616abd60edc0d2bb07b8\lifecycle-process-2.2.0\AndroidManifest.xml:28:13-37
+72            android:multiprocess="true" />
+72-->[androidx.lifecycle:lifecycle-process:2.2.0] C:\Users\Bugz\.gradle\caches\transforms-2\files-2.1\58629c19fa6c616abd60edc0d2bb07b8\lifecycle-process-2.2.0\AndroidManifest.xml:29:13-40
+73    </application>
+74
+75</manifest>
