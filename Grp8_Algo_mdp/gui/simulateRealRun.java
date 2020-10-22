@@ -39,7 +39,8 @@ public class simulateRealRun implements Runnable {
 			displayToUI();
 			mGui.displayMsgToUI("Exploration Started, Waiting for sensor data...");
 
-			sendMsg("EX|V0|(0),(0)|(0),(0)");
+			//sendMsg("EX|V0|(0),(0)|(0),(0)");
+			startExploreCalibrate();
 			
 			String recMsg = readMsg();		
 			exploreMap.setExploredCells(robot, recMsg);
