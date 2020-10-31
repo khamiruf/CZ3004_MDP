@@ -20,7 +20,14 @@ import java.awt.event.ItemListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-
+/**
+ * @author Nicholas Yeo Ming Jie
+ * @author Neo Zhao Wei
+ * @author David Loh Shun Hao
+ *
+ * @version 1.0
+ * @since 2020-10-27
+ */
 public class MainGUI extends JFrame{
 	
     private JPanel controlPanel;
@@ -29,16 +36,14 @@ public class MainGUI extends JFrame{
     private JPanel designMap;
     private JLabel[][] resultMap; 			//Use to display simulation
     
- 
-    //ZW NEWLY ADD
-     Thread simExplore, simFastest, simRealRun, simb4;
+     Thread simExplore, simFastest, simRealRun;
 	 Map initialMap;
 	 Robot rBot;
 	 static MainGUI mGui=null;
-    //------------------------------------------
-    
+ 
     /**
-     * Creates the MainGUI.
+     * This method is a private default constructor of this class and it creates the GUI controls 
+     * and instantiate objects for running this simulation.
      */
     private MainGUI() {
     	
@@ -46,18 +51,25 @@ public class MainGUI extends JFrame{
     	 initLayout();
     	 paintResult();
     }
-    
+    /**
+     * This method create the initial Map object and robot object. 
+     */
     private void setMapRobotObj() {
     	initialMap = new Map();
     	rBot = new Robot(1,1,DIRECTION.SOUTH);
     }
+    /** This method return the singleton object of this class
+     * @return MainGUI object
+     */
     public static MainGUI getInstance() {
     	if(mGui==null) {
     		mGui= new MainGUI();
     	}
     	return mGui;
     }
-    
+    /** This method create the main layout and create all the necessary panel 
+     * for the simulator
+     */
     private void initLayout() {
         // Creates and set up a frame window
       
@@ -73,13 +85,13 @@ public class MainGUI extends JFrame{
         setTitle("CX3004 MDP Group 8");
         add(simulationMap);
         add(controlPanel);
-        //add(designMap);
         add(acontrolPanel);
         pack();
         setVisible(true);
        
     }
-
+    /** This method create the panel with main buttons to execute various algorithm
+     */
     private void setupControlPanel() {
         // Define control buttons
     	
@@ -88,11 +100,7 @@ public class MainGUI extends JFrame{
         JButton fastestBtn = new JButton("Fastest Path");
         JButton resetBtn = new JButton("Reset");
         JButton realrunBtn = new JButton("Real Run");
-        JButton realFastBtn = new JButton("Vroom Vroom");
-        
-        JButton b4 = new JButton("button 4");
-        exploreBtn.setPreferredSize(new Dimension(70, 70));
-        
+           
         String[] fileList = FileManager.getAllFileNames();
         fileDDL = new JComboBox(fileList);
                   
@@ -101,7 +109,7 @@ public class MainGUI extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 						
-				simExplore = new Thread(new simulateExploration1(mGui,initialMap,rBot,fileDDL.getSelectedItem().toString()));
+				simExplore = new Thread(new simulateExploration(mGui,initialMap,rBot,fileDDL.getSelectedItem().toString()));
 			    simExplore.start();
 				
 			    exploreBtn.setEnabled(false);	
@@ -113,7 +121,6 @@ public class MainGUI extends JFrame{
     		@Override
     		public void actionPerformed(ActionEvent e) {
 		
- 			
     	    	simFastest = new Thread(new simulateFastestPath(mGui,rBot,initialMap));
     	    	simFastest.start();
     	    	
@@ -148,24 +155,15 @@ public class MainGUI extends JFrame{
 					simFastest = null;
 				}
 				if(simRealRun != null) {
-					System.out.println("RealRunGUIinterrupt");
-					
+				//Close the socket to end any existing reading from RPI
 					TCPComm2.getInstance().closeConnection();
 					simRealRun.interrupt();
 					simRealRun = null;
 				}
 				
-				if(simb4!=null) {
-					System.out.println("Enter");
-					simb4.interrupt();
-					simb4 = null;
-				}
-				
-				
 				setMapRobotObj();
-		        paintResult();							//repaint the map UI
+		        paintResult();	//repaint the map UI
 		       
-		        
 		        //reseting UI control		        
 		        acontrolPanel.waypointRow_cb.setSelectedIndex(0);
 		        acontrolPanel.waypointCol_cb.setSelectedIndex(0);
@@ -178,31 +176,7 @@ public class MainGUI extends JFrame{
 			}
     		
     	});
-    	realFastBtn.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				
-				//main.executeExplorateSimulation(fileDDL.getSelectedItem().toString());
-				Thread simTest;
-				//rBot.setPosRow(7);
-				//rBot.setPosCol(7);
-				simTest = new Thread(new testFastest(mGui,rBot));
-			    simTest.start();
-				
-			    	
-				}
-			});
-    	b4.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				
-				simb4 = new Thread(new testingone());
-			    simb4.start();
-					
-				}
-			});
+    
     	
         // Define panels to hold the control buttons
         controlPanel = new JPanel();
@@ -214,10 +188,7 @@ public class MainGUI extends JFrame{
         controlPanel.add(fastestBtn);
         controlPanel.add(resetBtn);
         controlPanel.add(realrunBtn);
-        controlPanel.add(realFastBtn);
-        controlPanel.add(b4);
-      
-        
+     
         controlPanel.setPreferredSize(new Dimension(300, 700));
         controlPanel.setBackground(Color.blue);
     }
@@ -241,12 +212,7 @@ public class MainGUI extends JFrame{
     	JTextArea ta_speed = new JTextArea("10");
     	JTextArea ta_timelimit = new JTextArea("0");
     	
-    	//JButton upMoveBtn = new JButton("↑");
-    	//JButton leftMoveBtn = new JButton("←");
-    	//JButton rightMoveBtn= new JButton("→");
-    	//JButton downMoveBtn = new JButton("↓");
-    	
-    	
+
     	JComboBox waypointRow_cb = new JComboBox(getNumString(1,18));
     	JComboBox waypointCol_cb = new JComboBox(getNumString(1,13));
     	
@@ -262,24 +228,13 @@ public class MainGUI extends JFrame{
         editTextArea.setEditable(false);
         scroll.getViewport().add(editTextArea);
         
-       // upMoveBtn.setFont(new Font("Monospaced",Font.PLAIN,10));
-       // leftMoveBtn.setFont(new Font("Monospaced",Font.PLAIN,10));
-       // downMoveBtn.setFont(new Font("Monospaced",Font.PLAIN,10));
-       // rightMoveBtn.setFont(new Font("Monospaced",Font.PLAIN,10));
-        
+          
         lb_percentDisplayHeader.setBounds(mainXcoord +10, mainYcoord +10,120,40);
         lb_percentDisplay.setBounds(mainXcoord+150,mainYcoord+10,120,40);
         
         lb_timerDisplayHeader.setBounds(mainXcoord +10, mainYcoord +60,100,40);
         lb_timerDisplay.setBounds(mainXcoord + 150,mainYcoord+60,120,40);
-        
-         // Set the size (x, y, width, height) of the UI label
-        //lb_movecontrol.setBounds(mainXcoord + 10, mainYcoord + 120,100,20);	
-        //  upMoveBtn.setBounds(mainXcoord + 210, mainYcoord + 110,40,30);	
-        // leftMoveBtn.setBounds(mainXcoord + 150, mainYcoord + 150,45,30);	
-        //  downMoveBtn.setBounds(mainXcoord + 210, mainYcoord + 150,40,30);	
-        // rightMoveBtn.setBounds(mainXcoord + 270, mainYcoord + 150,45,30);	
-        
+            
          lb_waypoint.setBounds(mainXcoord + 10, mainYcoord + 110,100,20);
          waypointRow_cb.setBounds(mainXcoord + 150, mainYcoord + 110,100,30);
          waypointCol_cb.setBounds(mainXcoord + 300, mainYcoord + 110,100,30);        
@@ -314,13 +269,7 @@ public class MainGUI extends JFrame{
          add(lb_timerDisplayHeader);
          add(lb_timerDisplay);
          add(lb_percentDisplay);
-                
-         //add(lb_movecontrol);
-         //add(upMoveBtn);
-         //add(rightMoveBtn);
-         //add(leftMoveBtn);
-         //add(downMoveBtn);
-             
+                       
          add(lb_waypoint);
          add(waypointRow_cb);
          add(waypointCol_cb);
@@ -357,19 +306,25 @@ public class MainGUI extends JFrame{
          });
          }
          
-      	
-         private String[] getNumString(int startNum, int endNum) {
-        	 String[] numArr = new String[endNum-startNum+1];
-        	 int counter = 0;
-        	 for(int i=startNum;i<=endNum;i++) {
-        		 numArr[counter] = Integer.toString(i);
-        			counter++;	 
-        	 }
-        	 return numArr;
+    /** This method generate a string array with all numeric value that exist between 2 specified numbers 	
+     * @param startNum The first number to be in the array
+     * @param endNum The last number to be in the array
+     * @return String array that contains all numeric value between specified first and last number
+     */
+    private String[] getNumString(int startNum, int endNum) {
+      String[] numArr = new String[endNum-startNum+1];
+       int counter = 0;
+       for(int i=startNum;i<=endNum;i++) {
+         numArr[counter] = Integer.toString(i);
+       	counter++;	 
+         }
+         return numArr;
          }   
     }
     
-	//This method get user selected waypoint.  int[0] store row, int[1] store col.
+    /** This method get the waypoint coordinates specified by user on GUI
+     * @return int array which represent row and column coordinate of the Waypoint
+     */
 	public int[] getUserWayPoint() {
 		int[] waypointArr = new int[2];
 		waypointArr[0] = Integer.parseInt(this.acontrolPanel.waypointRow_cb.getSelectedItem().toString());
@@ -377,36 +332,53 @@ public class MainGUI extends JFrame{
 		
 		return waypointArr;
 	}
-	//This method get percentage set by user on UI 
+	
+	/**
+	 * This method get the coverage percentage of exploration specified by user from GUI
+	 * @return The coverage percentage specified by user on GUI
+	 */
 	public int getUserPercentage() {
 		int coverage=-1;
-		
 		coverage = Integer.parseInt(this.acontrolPanel.ta_percent.getText().toString());
 		return coverage;
 	}
-	//This method get timelimit set by user on UI
+
+	/** This method get the time limit for exploration specified by user on GUI
+	 * @return the time(seconds) value as type int.
+	 */
 	public int getUserTimeLimit() {
 		int timeLimit = 0;
 		timeLimit = Integer.parseInt(this.acontrolPanel.ta_timelimit.getText().toString());
 		return timeLimit;
 	}
-	//This method get step/sec for robot movement set by user on UI
+
+	/** This method get the step per second input by user on GUI
+	* @return float value specified by user from GUI
+    */
 	public float getUserSpeed() {
 		float speed = 1;
 		speed = Float.parseFloat(this.acontrolPanel.ta_speed.getText().toString());
 		return speed;
 	}
 	
-	//This method display msg to the UI Scroll EditText
+	 /** This method display string text in the scrollview on GUI
+     * @param msg String value to be displayed on GUI.
+     */
     public void displayMsgToUI(String msg) {
     	this.acontrolPanel.editTextArea.append(msg + "\n");
     	this.acontrolPanel.editTextArea.setCaretPosition(this.acontrolPanel.editTextArea.getText().length());
     }
-    //This method display current map coverage
+    
+    /** This method display the percentage of map coverage on GUI
+     * @param percent the percentage in type double to be displayed
+     */
     public void displayMapCoverToUI(double percent) {
     	this.acontrolPanel.lb_percentDisplay.setText((int)percent + " %");
     }
     
+    /** This method display the timer value(seconds) on GUI
+     * @param timeValue the int value which represents time in seconds to be displayed
+     */
     public void displayTimerToUI(int timeValue) {
     	this.acontrolPanel.lb_timerDisplay.setText(String.valueOf(timeValue));
     }
@@ -422,38 +394,39 @@ public class MainGUI extends JFrame{
 			for(int y=0;y<Constants.MAX_COL;y++) {
 				Cell cellObj = initialMap.getMapGrid()[i][y];
 				
-				//resultMap[i+1][y+1].setText(Character.toString(cellObj.getCellType()));
-				if(cellObj.isObstacle()) {
-					resultMap[i+1][y+1].setBackground(getMapColorForCell('W'));
+				if(cellObj.getExploredState()) {
+				
+					if(cellObj.isObstacle()) {
+						resultMap[i+1][y+1].setBackground(getMapColorForCell('W'));
+					}
+					else {
+						//Cell is a path.
+						resultMap[i+1][y+1].setBackground(getMapColorForCell('P'));
+					}
 				}
-				else if(cellObj.getExploredState()) {
-					resultMap[i+1][y+1].setBackground(getMapColorForCell('P'));
-				}
+				
 				else {
-					//Unexplored
+					//Cell is Unexplored.
 					resultMap[i+1][y+1].setBackground(getMapColorForCell('U'));
-				}
-				
-				
+				}		
 			}
-		
 		}
 		Cell startZone = initialMap.getStartGoalPosition();
 		Cell endZone =initialMap.getEndGoalPosition();
-		//print waypoint on label
 		
+		//Paint the waypoint on label
 		resultMap[initialMap.getWayPoint().getRowPos()+1][initialMap.getWayPoint().getColPos()+1].setBackground(getMapColorForCell('B'));
 		
+		//Paint the Start and End Zone (3x3 grid)
 		for(int i: Constants.WITHIN_3BY3) {
 			for(int y: Constants.WITHIN_3BY3) {
 				
 				resultMap[startZone.getRowPos()+i+1][startZone.getColPos()+y+1].setBackground(getMapColorForCell('S'));
 				resultMap[endZone.getRowPos()+i+1][endZone.getColPos()+y+1].setBackground(getMapColorForCell('E'));
-				//resultMap[robot.getPosRow()+i][robot.getPosCol()+y].setBackground(getMapColorForCell('R'));
-				
+					
 			}
 		}
-		
+		//Paint the robot (3x3 grid)
 		for(int i: Constants.WITHIN_3BY3) {
 			for(int y: Constants.WITHIN_3BY3) {
 				resultMap[rBot.getPosRow()+i + 1][rBot.getPosCol()+y+ 1].setBackground(getMapColorForCell('R'));
@@ -461,21 +434,20 @@ public class MainGUI extends JFrame{
 			}
 		}
 		
-	
-		
+		//Paint the front of the robot
 		switch(rBot.getCurrDir().toString()) {
 		
 		case "NORTH":	resultMap[rBot.getPosRow()+2][rBot.getPosCol()+1].setBackground(getMapColorForCell('H'));
-						//resultMap[robot.getPosRow()+2][robot.getPosCol()+1].setText("F");
+						
 						break;
 		case "EAST": 	resultMap[rBot.getPosRow()+1][rBot.getPosCol()+2].setBackground(getMapColorForCell('H'));
-						//resultMap[robot.getPosRow()+1][robot.getPosCol()+2].setText("F");
+						
 						break;
 		case "SOUTH":   resultMap[rBot.getPosRow()][rBot.getPosCol()+1].setBackground(getMapColorForCell('H'));
-						//resultMap[robot.getPosRow()][robot.getPosCol()+1].setText("F");
+						
 						break;
 		case "WEST": 	resultMap[rBot.getPosRow()+1][rBot.getPosCol()].setBackground(getMapColorForCell('H'));
-					 	//resultMap[robot.getPosRow()+1][robot.getPosCol()].setText("F");
+					 	
 					 	break;
 		
 		}
@@ -483,15 +455,13 @@ public class MainGUI extends JFrame{
 	}
     
     /**
-     * This method print the map based what each cell represents and the explored/unexplored state on System Console
-     * @param m
+     * This method print the map based what each cell represents and the explored/unexplored state
+     * on the GUI for user to see.
      */
     public void printFinal() {
     	
-    	System.out.println("Way Point -  Row: "+initialMap.getWayPoint().getRowPos()+ " , Col: "+initialMap.getWayPoint().getColPos());
     	String msg = "Way Point -  Row: "+initialMap.getWayPoint().getRowPos()+ " , Col: "+initialMap.getWayPoint().getColPos()+"\n";
     	
-		System.out.println("-------------------Map--------------------------");
 		 msg += "----------------Map---------------------\n";
 		
 		for(int i=Constants.MAX_ROW-1;i>=0;i--) {
@@ -499,55 +469,44 @@ public class MainGUI extends JFrame{
 			for(int y=0;y<Constants.MAX_COL;y++) {
 				Cell cellObj = initialMap.getMapGrid()[i][y];
 				if(cellObj.getExploredState()) {
-					if(cellObj.isObstacle()) {
-						System.out.print("W"+" ");
+					if(cellObj.isObstacle()) {		
 						msg += "W ";
 					}
-					
 					else {
-						System.out.print("0"+" ");
 						msg += "0 ";
 					}
 				}
 				else {
-					System.out.print("X"+" ");
 					msg += "X ";
 				}
 			}
-			System.out.println("");
 			msg+="\n";
 		}
-		System.out.println("X - Unexplored, 0 - ExploredPath, W - Wall/Obstacles");
-		msg+="X - Unexplored, 0 - ExploredPath, W - Wall/Obstacles \n\n ";
 		
-		System.out.println("----------------ExploreState----------------------");
+		msg+="X - Unexplored, 0 - ExploredPath, W - Wall/Obstacles \n\n ";
 		msg += "----------------ExploreState----------------------\n";
 		for(int i=Constants.MAX_ROW-1;i>=0;i--) {
 			
 			for(int y=0;y<Constants.MAX_COL;y++) {
 				Cell cellObj = initialMap.getMapGrid()[i][y];
-				if(cellObj.getExploredState()) {
-					System.out.print("O" + " ");
+				if(cellObj.getExploredState()) {	
 					msg += "O ";
 				}
-				else {
-					System.out.print("X"+" ");
+				else {				
 					msg += "X ";
-				}
-				
+				}				
 			}
-			System.out.println("");
+			
 			msg+="\n";
 		}
-		System.out.println("X - Unexplored" +"  " +"O - Explored");
 		msg += "X - Unexplored, O - Explored";
 		displayMsgToUI(msg);
 	}
 	
     /**
      * This method return the color of what each celltype represents
-     * @param cellType 
-     * @return
+     * @param cellType char representation
+     * @return cellColor the assigned color based on the input
      */
     private Color getMapColorForCell(char cellType) {
 		
@@ -572,7 +531,6 @@ public class MainGUI extends JFrame{
 
         /**
          * Creates a MapPanel
-         *
          * @param isClickable Allow for mouse click when true.
          */
         public MapPanel(boolean isClickable) {
@@ -623,9 +581,7 @@ public class MainGUI extends JFrame{
                     // Adding mouse listener to the labels to handle mouse click event
                     cellLabels[row][col].addMouseListener(new MouseListener() {
                         @Override
-                        public void mouseClicked(MouseEvent e) {
-
-                        }
+                        public void mouseClicked(MouseEvent e) {}
 
                         @Override
                         public void mousePressed(MouseEvent e) {
@@ -641,14 +597,10 @@ public class MainGUI extends JFrame{
                         }
 
                         @Override
-                        public void mouseReleased(MouseEvent e) {
-
-                        }
+                        public void mouseReleased(MouseEvent e) {}
 
                         @Override
-                        public void mouseEntered(MouseEvent e) {
-
-                        }
+                        public void mouseEntered(MouseEvent e) {}
 
                         @Override
                         public void mouseExited(MouseEvent e) {

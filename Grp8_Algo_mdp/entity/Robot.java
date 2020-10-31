@@ -5,59 +5,76 @@ import constant.Constants.DIRECTION;
 import constant.Constants.MOVEMENT;
 import entity.Cell;
 import entity.Map;
-
+/**
+ * @author Nicholas Yeo Ming Jie
+ * @author Neo Zhao Wei
+ * @author David Loh Shun Hao
+ *
+ * @version 1.0
+ * @since 2020-10-27
+ */
 public class Robot {
 	  
 	private int posRow;					// Y/Row coord of the robot
 	private int posCol;					// X/Col coord of the robot
 	private DIRECTION currDir;			//Direction the robot is facing
-	private boolean reachedGoal;
-	    
+	 /**
+	  * Non-default constructor   
+	  * @param posRow row value of robot's current location
+	  * @param posCol column value of robot's current location
+	  * @param curDir Direction the robot is currently facing
+	  */
 	public Robot(int posRow, int posCol, DIRECTION curDir) {
 	    this.posRow = posRow;
 	    this.posCol = posCol;
 	    this.currDir =curDir;
 	   }
-	
-	 public Robot(int posRow, int posCol, DIRECTION currDir, boolean reachedGoal) {
-	        this.posRow = posRow;
-	        this.posCol = posCol;
-	        this.currDir = currDir;
-	        this.reachedGoal = reachedGoal;
-	    }  
+	/**
+	 * 
+	 * @return row value of the robot's location
+	 */
 	 public int getPosRow() {
 	        return posRow;
 	 }
-
+	 /**
+	  * @param posRow new row value to specify robot's location
+	  */
 	 public void setPosRow(int posRow) {
 	        this.posRow = posRow;
 	    }
-
+	 
+	 	/**
+	  	* @return column value of the robot's location
+	  	*/
 	    public int getPosCol() {
 	        return posCol;
 	    }
-
+	    /**
+	     * 
+	     * @param posCol new column value to specify robot's location
+	     */
 	    public void setPosCol(int posCol) {
 	        this.posCol = posCol;
 	    }
-
+	    /**
+	     * 
+	     * @return direction the robot is currently facing
+	     */
 	    public DIRECTION getCurrDir() {
 	        return currDir;
 	    }
 
+	    /**
+	     * 
+	     * @param currDir new value to update the robot's facing direction
+	     */
 	    public void setCurrDir(DIRECTION currDir) {
 	        this.currDir = currDir;
 	    }
-	    /*
-	    public boolean isReachedGoal() {
-	        return reachedGoal;
-	    }
-
-	    public void setReachedGoal(boolean reachedGoal) {
-	        this.reachedGoal = reachedGoal;
-	    }
+	   /**
+	    * This method move the robot forward regardless of its current direction
+	    * @param m The movement.
 	    */
-	    
 	    public void move(MOVEMENT m){
 	        switch(m){
 	            case FORWARD:
@@ -77,7 +94,10 @@ public class Robot {
 	                break;
 	        }
 	    }
-	    
+	    /**
+	     *  This method rotate the robot by changing it facing direction
+	     * @param m The movement which cause robot to turn 
+	     */
 	    public void turn(MOVEMENT m){
 	        switch(this.currDir){
 	            case NORTH:
@@ -100,7 +120,12 @@ public class Robot {
 	    }
 	    
 	   
-	    //Check is 2 cell ahead of robot is valid for moving.
+	   /**
+	    * This method determine if specified movement is valid for the robot to move.
+	    * @param exploredMap The map object explored by robot
+	    * @param m The movement the robot should take
+	    * @return true if the movement is valid for robot, else false
+	    */
 	    public boolean isMovementValid(Map exploredMap, MOVEMENT m){
 	        Cell destinationCell_1 = new Cell(-1, -1);
 	        Cell destinationCell_2 = new Cell(-1, -1);
@@ -180,7 +205,11 @@ public class Robot {
 	        }
 	        return false;
 	    }
-	    
+	    /** This method determine if robot could move forward in a specific direction
+	     * @param exploredMap The map object explored by robot
+	     * @param d The direction that robot should go toward
+	     * @return true if robot could move toward the specified direction , else false
+	     */
 	    public boolean isDisplacementValid(Map exploredMap, DIRECTION d){
 
 	        Cell destinationCell_1 = new Cell(-1, -1);

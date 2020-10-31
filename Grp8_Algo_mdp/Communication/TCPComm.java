@@ -7,7 +7,14 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 
 import gui.MainGUI;
-
+/**
+ * @author Nicholas Yeo Ming Jie
+ * @author Neo Zhao Wei
+ * @author David Loh Shun Hao
+ *
+ * @version 1.0
+ * @since 2020-10-27
+ */
 public class TCPComm {
 
 	private static final String IPaddr = "192.168.8.1";
@@ -17,9 +24,12 @@ public class TCPComm {
 	private DataOutputStream outputStream;
 	private BufferedReader inputStream;
 
-	
+	/** private default constructor
+     */
 	private TCPComm() {}
-	
+	/** This method return a singleton object of this class
+     * @return TCPcomm object 
+     */
 	public static TCPComm getInstance() {
 		if (tcpObj == null) {
 			tcpObj = new TCPComm();
@@ -27,7 +37,8 @@ public class TCPComm {
 
 		return tcpObj;
 	}
-	
+	/** This method attempts to establish socket connect via the specified RPI address and port.
+     */
 	public String establishConnection() {
 		String msg ="";
 		try {
@@ -43,7 +54,8 @@ public class TCPComm {
 		
 		return msg;
 	}
-
+	/** This method closes the established socket connection to RPI. 
+     */
 	public void closeConnection() {
 		
 		if(clientSocket!=null)
@@ -68,13 +80,13 @@ public class TCPComm {
 		  }
 		 
 	}
-
+	/** This method write message to the RPI through the established connection via socket 
+     *  @param message The string message to be written to RPI
+     */
 	public String sendMessage(String msg) {
 		String rmsg="";
 		try {
 			this.outputStream.writeBytes(msg+"!");
-			//this.outputStream.flush();
-			//System.out.println("Sending msg: " + msg);
 			rmsg = msg;
 		} catch (Exception ex) {
 			System.out.println("TCPComm sendmsg() Exception: " + ex.getMessage());
@@ -83,33 +95,16 @@ public class TCPComm {
 		
 		return rmsg;
 	}
-	
-	/*
-	public String readMessage() throws InterruptedException{
-		String receivedMsg = null;
-
-		try {
-			do {
-				receivedMsg = this.inputStream.readLine();
-			
-				}
-			while(receivedMsg==null||receivedMsg.length()==0);
-		}
-		catch (Exception ex) {
-			System.out.println("Error readMsg(): " + ex.getMessage());
-			throw new InterruptedException("Error readMsg(): " + ex.getMessage());	
-		}
-		//System.out.println("ReturnBackThread--");
-		return receivedMsg;
-	}
-	*/
-	
+	 /** This method read message received from RPi through the established connection via socket.
+     * @return String message that was received.
+     * @throws InterruptedException
+     */
 	public String readMessage() throws InterruptedException {
 		String receivedMsg="";
 		try {
 			receivedMsg = this.inputStream.readLine();
 		} catch (IOException ex) {
-			//e.printStackTrace();
+			
 			System.out.println("TCP ReadMsg() Exception: "+receivedMsg+":" + ex.getMessage());
 			throw new InterruptedException("TCP ReadMsg() Exception");
 		}

@@ -10,7 +10,14 @@ import constant.Constants.MOVEMENT;
 import entity.Cell;
 import entity.Map;
 import entity.Robot;
-
+/**
+ * @author Nicholas Yeo Ming Jie
+ * @author Neo Zhao Wei
+ * @author David Loh Shun Hao
+ *
+ * @version 1.0
+ * @since 2020-10-27
+ */
 public class simulateRealRun implements Runnable {
 
 	private MainGUI mGui;
@@ -18,7 +25,11 @@ public class simulateRealRun implements Runnable {
 	private Robot robot;
 	private TCPComm2 tcpObj;
 
-
+	/** This method is the non-default constructor to create simulateRealRun thread class
+	 *  @param mGUI The GUI object where the result should be displayed to.
+	 *  @param rBot The robot object which specifies the detail of robot.
+	 *  @param eMap The Map object that the robot should explore.
+	 */
 	public simulateRealRun(MainGUI mGUI, Robot rBot, Map eMap) {
 		this.mGui = mGUI;
 		this.exploreMap = eMap;
@@ -26,7 +37,11 @@ public class simulateRealRun implements Runnable {
 		this.tcpObj = TCPComm2.getInstance();
 
 	}
-
+	
+	/** This method represent the starting method for this thread to execute when called from GUI. 
+	 * It will perform the establishment of connection to RPI and direct the physical robot to complete 
+	 * the exploration and fastest path.
+	 */
 	@Override
 	public void run() {
 
@@ -40,13 +55,11 @@ public class simulateRealRun implements Runnable {
 			mGui.displayMsgToUI("Exploration Started, Waiting for sensor data...");
 
 			sendMsg("EX|V0|(0),(0)|(0),(0)");
-			//startExploreCalibrate();
 			
 			String recMsg = readMsg();		
 			exploreMap.setExploredCells(robot, recMsg);
 			sendMDFInfo();
 			
-
 			displayToUI();
 
 			do {
@@ -93,34 +106,10 @@ public class simulateRealRun implements Runnable {
 					exploreMap.setExploredCells(robot, recMsg);
 					sendMDFInfo();
 					forwardCount = centerRepos(forwardCount, recMsg);
-					/*
-					robot.turn(MOVEMENT.RIGHT);
-
-					sendMsg("EX|R0" + exploreMap.rpiImageString(robot));
-					recMsg = readMsg();
-					exploreMap.setExploredCells(robot, recMsg);
-					sendMDFInfo();
-					displayToUI();
-
-					robot.turn(MOVEMENT.RIGHT);
-
-					sendMsg("EX|R0" + exploreMap.rpiImageString(robot));
-					recMsg = readMsg();
-					exploreMap.setExploredCells(robot, recMsg);
-					sendMDFInfo();
-					displayToUI();
-
-					forwardCount++;
-					robot.move(MOVEMENT.FORWARD);
-					sendMsg("EX|F01" + exploreMap.rpiImageString(robot));
-					recMsg = readMsg();
-					exploreMap.setExploredCells(robot, recMsg);
-					sendMDFInfo();
-					forwardCount = centerRepos(forwardCount, recMsg);
-					*/
+				
 				} else {
-					// No Valid movement, therefore throw an exception to display error msg & close
-					// connection
+					// No Valid movement, therefore throw an exception to display error msg 	
+					// & close connection
 					throw new Exception("No Valid Movement for Exploration! kill thread...");
 				}
 				displayToUI();
@@ -129,10 +118,10 @@ public class simulateRealRun implements Runnable {
 					|| !exploreMap.getEndGoalPosition().getExploredState()
 					|| !exploreMap.checkIfRobotAtStartPos(robot));
 			
-			ArrayList<Cell> unexploredList = getUnexploredList(exploreMap);
-			
 			//2nd round exploration
 			/*
+			ArrayList<Cell> unexploredList = getUnexploredList(exploreMap);
+			
 			while (unexploredList.size() > 0) {
 				
 				if(unexploredList.get(0)!=null) {
@@ -140,20 +129,18 @@ public class simulateRealRun implements Runnable {
 					FastestPath fastobj = new FastestPath(robot, exploreMap);
 					ArrayList<Cell> cellStep = fastobj.calculateFastestPath2(exploreMap, unexploredList.get(0).getRowPos(),
 							unexploredList.get(0).getColPos());
-					//System.out.println("Xsize:" + cellStep.size());
+					
 					if (cellStep == null) {
-						//System.out.println("cellstepnull");
+					
 						unexploredList.remove(0);
 					} else {
-						//System.out.println("cellstepISNOTnull");
+					
 						printMovement(cellStep, unexploredList.get(0), true);
-
 						unexploredList = updateUnexploreList(unexploredList);
-						//System.out.println("ysize:" + unexploredList.size());
+						
 					}
 				}
-				                                
-				
+				                               			
 			}*/
 			 
 			if (!exploreMap.checkIfRobotAtStartPos(robot)) {
@@ -175,8 +162,6 @@ public class simulateRealRun implements Runnable {
 			
 			sendMDFInfo(); // Sending MDF1&2 to RPI
 			mGui.printFinal(); // Print the final map that robot knows on system console
-			//mGui.displayMsgToUI("MDF1: " + exploreMap.getMDF1());
-			//mGui.displayMsgToUI("MDF2: " + exploreMap.getMDF2());
 			System.out.println("MDF1: " + exploreMap.getMDF1());
 			System.out.println("MDF2: " + exploreMap.getMDF2());
 
@@ -185,20 +170,18 @@ public class simulateRealRun implements Runnable {
 			FastestPath fastestPath = new FastestPath(this.robot, exploreMap);
 			ArrayList<Cell> cellsInPath = fastestPath.findAllWPEndPaths(exploreMap);
 			String movementString = convertCellsToMovements(cellsInPath); // Generate movement string based on cell
-																		// list.
+																		  // list.
 			waitForFastestPath(); // Waiting for fastest path command
 			sendMsg(movementString);
 
 		} catch (InterruptedException e) {
 			System.out.println("RealRun thread InterruptedException" + e.getMessage());
 			e.printStackTrace();
-			// mGui.displayMsgToUI("********** RealRun Thread Interrupted! **********");
 			tcpObj.closeConnection();
 
 		} catch (Exception e) {
 			System.out.println("RealRun thread exception.." + e.getMessage());
 			e.printStackTrace();
-			// mGui.displayMsgToUI("RealRun thread Exception Error: " + e.getMessage());
 			tcpObj.closeConnection();
 
 		}
@@ -207,13 +190,13 @@ public class simulateRealRun implements Runnable {
 		
 	}
 
-	/**
-	 * This method move and send movement commands meant for fastest path.
-	 * 
-	 * @param cellStep      ArrayList of cells the robot need to move to.
-	 * @param setSensorData To accept sensor data and send obstacle data to android.
+	/** This method take in path (List of cells) and send the respective movement commands to guide the physical robot 
+	 *  to move from cell to cell in the list.
+	 *  @param cellStep      ArrayList of cells the robot need to move to.
+	 *  @param targetCell    The destination cell that robot should face after reaching the destination.
+	 *  @param setSensorData To accept sensor data and send obstacle data to android.
 	 *                      TRUE is to send. FALSE to ignore sensor
-	 * @throws InterruptedException
+	 *  @throws InterruptedException
 	 */
 	private void printMovement(ArrayList<Cell> cellStep, Cell targetCell, boolean setSensorData)
 			throws InterruptedException {
@@ -221,12 +204,11 @@ public class simulateRealRun implements Runnable {
 		int currCol = robot.getPosCol();
 		String recMsg = "";
 		int forwardCount = 0;
-		//System.out.println("printmovesize:" + cellStep.size());
+		
 		for (int i = 0; i < cellStep.size(); i++) {
 			int destRow = cellStep.get(i).getRowPos();
 			int destCol = cellStep.get(i).getColPos();
-			//System.out.println("printmoveRobot:" + cellStep.get(i).getRowPos() + "_" + cellStep.get(i).getColPos() + "-"
-			//		+ currRow + "_" + currCol + ":" + robot.getCurrDir());
+			
 			switch (robot.getCurrDir()) {
 			case NORTH:
 				if (currCol == destCol) {
@@ -756,13 +738,17 @@ public class simulateRealRun implements Runnable {
 					}
 				}
 
-			
-
 			}
 			currRow = robot.getPosRow();
 			currCol = robot.getPosCol();
 		}
 	}
+	
+	/**
+	 * This method return a list of cells that are unexplored in the arena.
+	 * @param exploredMap The arena/map object
+	 * @return ArrayList of cell that contain all unexplored cell of the input arena/map.
+	 */
 	private ArrayList<Cell> getUnexploredList(Map exploredMap) {
 
 		ArrayList<Cell> unexploredList = new ArrayList<Cell>();
@@ -779,6 +765,11 @@ public class simulateRealRun implements Runnable {
 
 	}
 
+	/**
+	 * This method return an updated list of cells that are unexplored.
+	 * @param clist An existing arraylist of cell that are unexplored.
+	 * @return ArrayList of unexplored cell that are updated according to the latest arena/map object. 
+	 */
 	private ArrayList<Cell> updateUnexploreList(ArrayList<Cell> clist) {
 		for (int i = 0; i < clist.size(); i++) {
 			Cell cObj = clist.get(i);
@@ -790,13 +781,11 @@ public class simulateRealRun implements Runnable {
 		return clist;
 	}
 	
-	private void startExploreCalibrate() throws InterruptedException{
-		
-		sendMsg("EX|V0|(0),(0)|(0),(0)");
-		faceDirection(DIRECTION.EAST);
-	}
 	
-	// This method is for calibrating Robot to face North
+	/** This method is for calibrating the physical Robot to perform corner calibration while facing south
+	 *  and to face North direction upon completion.
+	 * @throws InterruptedException
+	 */
 	private void endExploreCalibrate() throws InterruptedException {
 		mGui.displayMsgToUI("Calibrating ROBOT..!");
 		faceDirection(DIRECTION.SOUTH);
@@ -804,6 +793,10 @@ public class simulateRealRun implements Runnable {
 		faceDirection(DIRECTION.NORTH);
 	}
 	
+	/** This method direct the robot to face the specified direction regardless of its current facing direction
+	 * @param dir The direction that the robot should face.
+	 * @throws InterruptedException
+	 */
 	private void faceDirection(DIRECTION dir) throws InterruptedException{
 		
 		String recMsg="";
@@ -988,7 +981,12 @@ public class simulateRealRun implements Runnable {
 			
 	}
 	// ================ FastestPath ===========================
-
+	
+	/** This method convert the list of movement into a string instruction that the physical robot 
+	 * could execute consecutively.
+	 * @param fastestPathMovements Arraylist of movement to reach the destination
+	 * @return String instruction that physical robot could execute consecutively.
+	 */
 	public String parseFPMovement(ArrayList<MOVEMENT> fastestPathMovements) {
 		int i = 0;
 		int j = 0;
@@ -1022,12 +1020,6 @@ public class simulateRealRun implements Runnable {
 					break;
 				}
 			}
-
-//			if (fastestPathMovements.get(i) == MOVEMENT.FORWARD && counter < 10) {
-//				result += "0" + Integer.toString(counter);
-//			} else {
-//				result += Integer.toString(counter);
-//			}
 			
 			if(fastestPathMovements.get(i) == MOVEMENT.FORWARD) {
 				if(counter < 10) {
@@ -1048,6 +1040,11 @@ public class simulateRealRun implements Runnable {
 		return result;
 	}
 
+	/** This method convert a path(List of cell) that the robot should travel along into a string
+	 *  which consist of turns and movements to reach the destination.
+	 *  @param cellsInPath The arraylist of cell that forms a path the robot should take.
+	 *  @return String that consist of turns and movement to reach the destination
+	 */
 	public String convertCellsToMovements(ArrayList<Cell> cellsInPath) {
 
 		Robot mBot = new Robot(this.robot.getPosRow(), this.robot.getPosCol(), this.robot.getCurrDir());
@@ -1075,12 +1072,10 @@ public class simulateRealRun implements Runnable {
 					if (currCol < destCol) {
 						fastestPathMovements.add(MOVEMENT.RIGHT);
 						mBot.turn(MOVEMENT.RIGHT);
-						//mBot.move(MOVEMENT.FORWARD);
 						i--;
 					} else if (currCol > destCol) {
 						fastestPathMovements.add(MOVEMENT.LEFT);
 						mBot.turn(MOVEMENT.LEFT);
-						//mBot.move(MOVEMENT.FORWARD);
 						i--;
 					}
 				}
@@ -1100,12 +1095,10 @@ public class simulateRealRun implements Runnable {
 					if (currCol < destCol) {
 						fastestPathMovements.add(MOVEMENT.LEFT);
 						mBot.turn(MOVEMENT.LEFT);
-						//mBot.move(MOVEMENT.FORWARD);
 						i--;
 					} else if (currCol > destCol) {
 						fastestPathMovements.add(MOVEMENT.RIGHT);
 						mBot.turn(MOVEMENT.RIGHT);
-						//mBot.move(MOVEMENT.FORWARD);
 						i--;
 					}
 				}
@@ -1115,12 +1108,10 @@ public class simulateRealRun implements Runnable {
 					if (currRow < destRow) {
 						fastestPathMovements.add(MOVEMENT.LEFT);
 						mBot.turn(MOVEMENT.LEFT);
-						//mBot.move(MOVEMENT.FORWARD);
 						i--;
 					} else if (currRow > destRow) {
 						fastestPathMovements.add(MOVEMENT.RIGHT);
 						mBot.turn(MOVEMENT.RIGHT);
-						//mBot.move(MOVEMENT.FORWARD);
 						i--;
 					}
 				} else if (currRow == destRow) {
@@ -1140,12 +1131,10 @@ public class simulateRealRun implements Runnable {
 					if (currRow < destRow) {
 						fastestPathMovements.add(MOVEMENT.RIGHT);
 						mBot.turn(MOVEMENT.RIGHT);
-						//mBot.move(MOVEMENT.FORWARD);
 						i--;
 					} else if (currRow > destRow) {
 						fastestPathMovements.add(MOVEMENT.LEFT);
 						mBot.turn(MOVEMENT.LEFT);
-						//mBot.move(MOVEMENT.FORWARD);
 						i--;
 					}
 				} else if (currRow == destRow) {
@@ -1172,7 +1161,12 @@ public class simulateRealRun implements Runnable {
 
 	// ===================== Arduino Commands ===============================
 
-	// function to check conditions for reposition robot into middle of 3x3
+	/** This method issue the physical robot with alignment and calibration instructions depending 
+	 *  on the received sensor reading and number of forward step taken.
+	 *  @param forwardCount The current number of forward step that the physical robot have taken.
+	 *  @param sensorDataInString The sensor reading from the physical robot.
+	 *  @return The updated forwardCount according to the calibration performed.
+	 */
 	private int centerRepos(int forwardCount, String sensorDataInString) {
 		int rightFront = Character.getNumericValue(sensorDataInString.charAt(1));
 		int rightBack = Character.getNumericValue(sensorDataInString.charAt(0));
@@ -1201,31 +1195,22 @@ public class simulateRealRun implements Runnable {
 		return forwardCount;
 	}
 
-	/*
-	private void chooseForward(String sensorDataInString, String rpiImageString) {
-		int frontRight = Character.getNumericValue(sensorDataInString.charAt(3));
-		int frontCenter = Character.getNumericValue(sensorDataInString.charAt(4));
-		int frontLeft = Character.getNumericValue(sensorDataInString.charAt(5));
-
-		if (frontRight == 2 || frontCenter == 2 || frontLeft == 2) {
-			//sendMsg("EX|G0" + rpiImageString); actual code
-			sendMsg("EX|F01" + rpiImageString); // This is testing purpose
-		} else {
-			sendMsg("EX|F01" + rpiImageString);
-		}
-	}
-	*/
+	
 	// ======================= GUI PAINTING ===================================
 
-	// Painting the current map result to GUI with delay
+	/** This method will paint the current map object perceived by the robot to GUI
+	 *  for the users to see the current status of exploration.
+	 */
 	private void displayToUI() {
 		mGui.paintResult();
-		// Thread.sleep((long) (0.1 * 1000));
 	}
 
 	// ================= Communication Methods with RPI =======================
 
-	// Establish connection with RPI
+	/** This method establishes the connection with RPI via WiFi and will recursively attempt
+	 *  to connect until interrupted by GUI.
+	 *  @throws InterruptedException
+	 */
 	private void establishCommsToRPI() throws InterruptedException {
 		String msg = "";
 
@@ -1245,13 +1230,16 @@ public class simulateRealRun implements Runnable {
 		} while (!Thread.currentThread().isInterrupted());
 	}
 
+	/** This method stall the program to read the inputstream for messages from the RPI.
+	 *  This method will also send the MDF information and terminate the program upon receiving the command "N|" from RPI. 
+	 */
 	private String readMsg() throws InterruptedException {
 
 		String msg = "";
 		do {
 			msg = tcpObj.readMessage();
 		} while (msg == null || msg.length() == 0);
-		//System.out.println("O:" + msg+"_"+msg.length());
+		
 		if(msg.substring(0,2).equals("N|")) {
 			sendMDFInfo();
 			throw new InterruptedException();
@@ -1260,9 +1248,11 @@ public class simulateRealRun implements Runnable {
 		return msg;
 	}
 
-	// Send String message to RPI
+	/** This method will send the string parameter as a message to RPI.
+	 *  @param msg The string message to be transmitted to RPI.
+	 */
 	private void sendMsg(String msg) {
-		//String rmsg = tcpObj.sendMessage(msg);
+	
 		tcpObj.sendMessage(msg+"!");
 		mGui.displayMsgToUI("Sent: " + msg);
 
@@ -1270,7 +1260,9 @@ public class simulateRealRun implements Runnable {
 
 	// ==================== Communication Methods with Android =======================
 
-	// plot robot according to start coordinates received from RPI
+	/** This method will stall the program to read the input stream for the start coordinate of the robot from RPI. 
+	 *  It will update the location of the robot object upon receiving from RPI.
+	 */
 	private void checkandPlotSC() throws Exception {
 		String rmsg = "";
 		// SC|[1,1] = 8, SC|[10,10] = 10
@@ -1290,7 +1282,9 @@ public class simulateRealRun implements Runnable {
 
 	}
 
-	// Waiting for fastest path command from RPI
+	/**This method will stall the program to read the input stream for the fastest path command from RPI. 
+	 * @throws Exception
+	 */
 	private void waitForFastestPath() throws Exception {
 		String rmsg = "";
 		mGui.displayMsgToUI("Waiting for command to start FastestPath...");
@@ -1303,7 +1297,9 @@ public class simulateRealRun implements Runnable {
 		} while (true);
 	}
 
-	// Plot the WayPoint coordinates received from RPI
+	/** This method will stall the program to read the input stream for the WayPoint coordinate from RPI. 
+	 *  It will create the WayPoint on the map object upon receiving from RPI.
+	 */
 	private void checkandPlotWP() throws Exception {
 		String rmsg = "";
 		// WP|[1,1] [row ,col]
@@ -1319,87 +1315,13 @@ public class simulateRealRun implements Runnable {
 	}
 
 
-	// Method for sending MDF1 & MDF2
+	/** This method concatenate the MDF1 & MDF2 of the map object 
+	 *  and send it to RPI.
+	 */
 	private void sendMDFInfo() {
 		String mdf1 = exploreMap.getMDF1();
 		String mdf2 = exploreMap.getMDF2();
 		sendMsg("MDF|" + mdf1 + "|" + mdf2);
 	}
 
-	
-	//==============================================================
-	/*
-	private void printFastestPathMovement(String moveString) throws InterruptedException {
-
-		// FP|F6|R0|F1|L0|F2
-		String[] arr = moveString.split("\\|");
-
-		for (int i = 1; i < arr.length; i++) {
-			switch (arr[i].substring(0, 1)) {
-
-			case "F":
-				for (int y = 0; y < Integer.parseInt(arr[i].substring(1, arr[i].length())); y++) {
-					this.robot.move(MOVEMENT.FORWARD);
-					mGui.paintResult();
-					Thread.sleep((long) 500);
-				}
-				break;
-			case "R":
-				for (int y = 0; y < Integer.parseInt(arr[i].substring(1, arr[i].length())); y++) {
-					this.robot.turn(MOVEMENT.RIGHT);
-					mGui.paintResult();
-					Thread.sleep((long) 500);
-					this.robot.move(MOVEMENT.FORWARD);
-					mGui.paintResult();
-					Thread.sleep((long) 500);
-
-				}
-				break;
-			case "L":
-				for (int y = 0; y < Integer.parseInt(arr[i].substring(1, arr[i].length())); y++) {
-					this.robot.turn(MOVEMENT.LEFT);
-					mGui.paintResult();
-					Thread.sleep((long) 500);
-					this.robot.move(MOVEMENT.FORWARD);
-					mGui.paintResult();
-					Thread.sleep((long) 500);
-
-				}
-				break;
-			case "B":
-				for (int y = 0; y < Integer.parseInt(arr[i].substring(1, arr[i].length())); y++) {
-					this.robot.turn(MOVEMENT.RIGHT);
-					mGui.paintResult();
-					Thread.sleep((long) 500);
-					this.robot.turn(MOVEMENT.RIGHT);
-					mGui.paintResult();
-					Thread.sleep((long) 500);
-					this.robot.move(MOVEMENT.FORWARD);
-					mGui.paintResult();
-					Thread.sleep((long) 500);
-
-				}
-				break;
-			default:
-				break;
-			}
-		}
-
-	}
-*/
-	
-	// Method for sending obstacles location
-	/*
-	private void sendObstacleInfo(String rmsg) {
-		if (rmsg.length() != 0) {
-			//rmsg = "OB|" + rmsg + "!MDF|" + exploreMap.getMDF1(); //original
-			//sendMsg(rmsg);										//original
-			sendMsg("OB|"+rmsg);
-			sendMsg("MDF|"+exploreMap.getMDF1());
-		} else {
-			rmsg = "MDF|" + exploreMap.getMDF1();
-			sendMsg(rmsg);
-		}
-	}
-	 */
 }

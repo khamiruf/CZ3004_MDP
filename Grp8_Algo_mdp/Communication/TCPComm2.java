@@ -5,7 +5,14 @@ import java.io.InputStream;
 import java.io.PrintStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
-
+/**
+ * @author Nicholas Yeo Ming Jie
+ * @author Neo Zhao Wei
+ * @author David Loh Shun Hao
+ *
+ * @version 1.0
+ * @since 2020-10-27
+ */
 public class TCPComm2 {
 
 	// initialize socket and input output streams 
@@ -14,29 +21,22 @@ public class TCPComm2 {
     private PrintStream dout = null;
     private static TCPComm2 cs = null;
     
-    
     private static final String IPaddr = "192.168.8.1";
 	private static final int portNum = 5182;
-    
-    private TCPComm2() {
-    	
-    }
-    
+    /** private default constructor
+     */
+    private TCPComm2() {	}
+    /** This method return a singleton object of this class
+     * @return TCPcomm2 object 
+     */
     public static TCPComm2 getInstance() {
     	if (cs == null) {
     		cs = new TCPComm2();
-    		//cs.connectToRPI();
     	}
     	return cs;
     }
-    
-    public static boolean checkConnection() {
-    	if (cs == null) {
-    		return false;
-    	}
-    	return true;
-    }
-    
+    /** This method attempts to establish socket connect via the specified RPI address and port.
+     */
     public String establishConnection() {
     	String msg = "";
     	if (socket == null) {
@@ -60,36 +60,31 @@ public class TCPComm2 {
     	}
     	return msg;
     }
-    
+    /** This method write message to the RPI through the established connection via socket 
+     *  @param message The string message to be written to RPI
+     */
     public void sendMessage(String message) {
     	try {
-    		//System.out.println("Size:" + message.getBytes().length+":"+message.getBytes());
+
     		dout.write(message.getBytes());
     		dout.flush();
     		
-    		//if (debug.get()) {
-    		//	System.out.println('"' + message + '"' + " sent successfully");
-    		//}
     	}
     	catch (IOException IOEx) {
     		System.out.println("IOException in ConnectionSocket sendMessage Function");
     	}
     }
     
-    // Get message from buffer
+    /** This method read message received from RPi through the established connection via socket.
+     * @return String message that was received.
+     * @throws InterruptedException
+     */
     public String readMessage() throws InterruptedException {
 
     	byte[] byteData = new byte[512];
     	try {
     		int size = 0;
-//    		while (din.available() == 0 && connected.get()) {
-//    			try {
-//    				ConnectionManager.getInstance().join(1);
-//    			}
-//    			catch(Exception e) {
-//    				System.out.println("Error in receive message");
-//    			}
-//    		}
+
     		din.read(byteData);
     		
     		// This is to get rid of junk bytes
@@ -110,7 +105,8 @@ public class TCPComm2 {
    
     	
     }
-    
+    /** This method closes the established socket connection to RPI. 
+     */
     public void closeConnection() {
     	if (socket != null) {
     		try {
@@ -128,14 +124,5 @@ public class TCPComm2 {
         	}
     	}
     }
-    /*
-    public static void setDebugTrue() {
-    	debug.set(true);
-    }
-    
-    public static boolean getDebug() {
-    	return debug.get();
-    }
-	*/
-	
+   
 }

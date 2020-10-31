@@ -10,10 +10,17 @@ import constant.Constants.MOVEMENT;
 import entity.Cell;
 import entity.Map;
 import entity.Robot;
-
+/**
+ * @author Nicholas Yeo Ming Jie
+ * @author Neo Zhao Wei
+ * @author David Loh Shun Hao
+ *
+ * @version 1.0
+ * @since 2020-10-27
+ */
 public class FastestPath {
 	
-	 private Cell current;
+		private Cell current;
 	    private ArrayList<Cell> toVisit;        // array of Cells to be visited (frontier for a* search)
 	    private ArrayList<Cell> visited;        // array of visited Cells 
 	    private HashMap<Cell, Cell> parents;    // HashMap of Child --> Parent
@@ -21,7 +28,10 @@ public class FastestPath {
 	    private Robot mockRobot;                // mockRobot in alogrithm
 	    private Cell[] neighbors;               // array of neighbors of current Cell
 	   
-	    
+	    /** Non default constructor 
+	     * @param robot The robot object that contain information of robot
+	     * @param exploredMap The map object that have been explored by the robot 
+	     */
 	    public FastestPath(Robot robot, Map exploredMap){
 	    	
 	    	//setting current with the cell that robot is at.
@@ -30,7 +40,7 @@ public class FastestPath {
 	        this.visited = new ArrayList<>();
 	        this.parents = new HashMap<>();
 	        this.gCosts = new int[Constants.MAX_ROW][Constants.MAX_COL];
-	        this.mockRobot = new Robot(robot.getPosRow(), robot.getPosCol(), robot.getCurrDir(), false);
+	        this.mockRobot = new Robot(robot.getPosRow(), robot.getPosCol(), robot.getCurrDir());
 	        this.neighbors = new Cell[4];
 	       
 	        
@@ -51,7 +61,12 @@ public class FastestPath {
 	        toVisit.add(current);
 	    }
 
-	    //return minimum cost cell from toVisit
+	    /** This method compute the g cost and h cost from the list of cell that need to be visited in order to reach
+	     * the destination.
+	     * @param goalRow The row coordinate of the final destination to reach.
+	     * @param goalCol The column coordinate of the final destination to reach.
+	     * @return the selected cell with the lowest cost to reach the destination
+	     */
 	    private Cell minCostCell(int goalRow, int goalCol) {
 	    	
 	    	//get current size of toVisit 
@@ -60,9 +75,9 @@ public class FastestPath {
 	        Cell result = null;
 	        
 	        for (int i = size - 1; i >= 0; i--) {
-	            int cost = gCosts[toVisit.get(i).getRowPos()][toVisit.get(i).getColPos()] + hCost(toVisit.get(i).getRowPos(), toVisit.get(i).getColPos(), goalRow, goalCol);
-	            System.out.println("Cost: " + cost);
-	            System.out.println("toVisit: Row-" + toVisit.get(i).getRowPos() + "Col-" + toVisit.get(i).getColPos());
+	            int cost = gCosts[toVisit.get(i).getRowPos()][toVisit.get(i).getColPos()] 
+	            		+ hCost(toVisit.get(i).getRowPos(), toVisit.get(i).getColPos(), goalRow, goalCol);
+	            
 	            if (cost < minCost) {
 	                minCost = cost;
 	                result = toVisit.get(i);
@@ -72,7 +87,11 @@ public class FastestPath {
 	        return result;
 	    }
 
-	    //calculates actual cost of robot moving to 1 out of 4 of its neighbors (up, down, left or right)
+	    /** This method compute the actual cost of robot moving to 1 out of 4 of its neighbors (up, down, left or right)
+	     * @param neighborRow The row coordinate of the neighbor cell
+	     * @param neighborCol The column coordinate of the neighbor cell 
+	     * @return The cost of moving to the neighbor cell from the robot's position
+	     */
 	    public int gCost(int neighborRow, int neighborCol){
 
 	        int posRow = mockRobot.getPosRow();
@@ -107,7 +126,14 @@ public class FastestPath {
 
 	    }
 
-	    //calculate heuristics from neighbour cell to goal cell
+	    /** This method computes the heuristic cost between 2 specified cell.
+	     * @param neighborRow The row coordinate of the first cell.
+	     * @param neighborCol The column coordinate of the first cell.
+	     * @param destRow The row coordinate of the second cell.
+	     * @param destCol The column coordinate of the second cell.
+	     * @return the heuristic cost of moving from the first to second cell.
+	     */
+	  
 	    public int hCost(int neighborRow, int neighborCol, int destRow, int destCol){
 	        // movementCost is the total number of cells away vertically and horizontally multiply by movement cost
 	        int movementCost = (Math.abs(destCol - neighborCol) + Math.abs(destRow - neighborRow)) * Constants.MOVE_COST;
@@ -123,7 +149,10 @@ public class FastestPath {
 	        return movementCost + turnCost;
 	    }
 
-	    //get direction of robot using its current position with respect to its parent cell
+	    /** This method will get direction that the robot should be facing using its new cell with respect to its parent cell
+	     * @param current The new cell that the robot should be facing
+	     * @return the direction that the robot will be facing
+	     */
 	    public Constants.DIRECTION getCurrDir(Cell current){
 
 	        Cell child = current;
@@ -150,7 +179,14 @@ public class FastestPath {
 
 	    }
 
-
+	    /** This method perform the A* search computation for the shortest path from the robot's current location 
+	     * to the specified destination
+	     * @param exploredMap The map object that was explored by the robot.
+	     * @param destRow The row coordinate of the destination
+	     * @param destCol The column coordinate of the destination
+	     * @return An arraylist of cells that signifies the path to the destination from the robot's location. 
+	     * 		   A null value will be return when the shortest path could not be determined.
+	     */
 	    public ArrayList<Cell> calculateFastestPath(Map exploredMap, int goalRow, int goalCol){
 
 	        do{
@@ -164,7 +200,7 @@ public class FastestPath {
 
 	            mockRobot.setPosRow(current.getRowPos());
 	            mockRobot.setPosCol(current.getColPos());
-	            //System.out.println("MOCKLOC: " + mockRobot.getPosRow() + ":" + mockRobot.getPosCol());
+	         
 	            visited.add(current);       // add current to visited
 	            toVisit.remove(current);    // remove current from toVisit        
 
@@ -174,20 +210,16 @@ public class FastestPath {
 	                Cell targetCell = exploredMap.getMapGrid()[goalRow][goalCol];
 	                
 	                do{
-	                    
+	                  
 	                    cellsInPath.add(targetCell);
 	                    targetCell = parents.get(targetCell);
-	                   // if(targetCell!=null)
-	                   // System.out.println("PARENTGET: " + targetCell.getRowPos()+","+ targetCell.getColPos());
-
+	                 
 	                }while(targetCell != null);
 	                
 	                Collections.reverse(cellsInPath);
 	                printCellArray(cellsInPath);
-	                return cellsInPath;
-	                
+	                return cellsInPath;             
 	            }
-
 	            //adding valid neighbors 
 	            //neighbors[north, south, east, west]
 	            if(mockRobot.isDisplacementValid(exploredMap, DIRECTION.NORTH)){
@@ -223,11 +255,13 @@ public class FastestPath {
 	                    }
 	                    if (!(toVisit.contains(neighbors[i]))) {
 	                        parents.put(neighbors[i], current); //neighbor added as child from current position as parent cell
-	                        gCosts[neighbors[i].getRowPos()][neighbors[i].getColPos()] = gCosts[current.getRowPos()][current.getColPos()] + gCost(neighbors[i].getRowPos(), neighbors[i].getColPos());
+	                        gCosts[neighbors[i].getRowPos()][neighbors[i].getColPos()] = gCosts[current.getRowPos()][current.getColPos()] 
+	                        															 + gCost(neighbors[i].getRowPos(), neighbors[i].getColPos());
 	                        toVisit.add(neighbors[i]);
 	                    } else {
 	                        int currentGCost = gCosts[neighbors[i].getRowPos()][neighbors[i].getColPos()];
-	                        int newGCost = gCosts[current.getRowPos()][current.getColPos()] + gCost(neighbors[i].getRowPos(), neighbors[i].getColPos());
+	                        int newGCost = gCosts[current.getRowPos()][current.getColPos()] 
+	                        			   + gCost(neighbors[i].getRowPos(), neighbors[i].getColPos());
 	                        if (newGCost < currentGCost) {
 	                            gCosts[neighbors[i].getRowPos()][neighbors[i].getColPos()] = newGCost;
 	                            parents.put(neighbors[i], current);
@@ -241,7 +275,10 @@ public class FastestPath {
 	        System.out.println("Path not found!");
 	        return null;
 	    }
-
+	    
+	    /** This method is print the list of cell on the system console and is used for debugging purposes.
+	     * @param cellsInPath The arraylist of cells to be printed on console.
+	     */
 	    public void printCellArray(ArrayList<Cell> cellsInPath){
 
 	        System.out.println("Cells in Fastest Path:");
@@ -251,109 +288,21 @@ public class FastestPath {
 	        }
 	        System.out.println();
 	    }
-/*
-	    public void convertCellsToMovements(Robot robot, ArrayList<Cell> cellsInPath){
 
-	        int currRow = robot.getPosRow();
-	        int currCol = robot.getPosCol();
-
-	        ArrayList<MOVEMENT> fastestPathMovements = new ArrayList<MOVEMENT>();
-
-	        for(int i=0; i < cellsInPath.size(); i++){
-	            int destRow = cellsInPath.get(i).getRowPos();
-	            int destCol = cellsInPath.get(i).getColPos();
-	            switch(robot.getCurrDir()){
-	                case NORTH:
-	                    if(currCol == destCol){
-	                        if(currRow < destRow){fastestPathMovements.add(MOVEMENT.FORWARD); robot.move(MOVEMENT.FORWARD);}
-	                        else if(currRow > destRow){fastestPathMovements.add(MOVEMENT.BACKWARD); robot.turn(MOVEMENT.RIGHT); robot.turn(MOVEMENT.RIGHT); robot.move(MOVEMENT.FORWARD);}
-	                    }
-	                    else if(currRow == destRow){
-	                        if(currCol < destCol){fastestPathMovements.add(MOVEMENT.RIGHT); robot.turn(MOVEMENT.RIGHT); robot.move(MOVEMENT.FORWARD);}
-	                        else if(currCol > destCol){fastestPathMovements.add(MOVEMENT.LEFT); robot.turn(MOVEMENT.LEFT); robot.move(MOVEMENT.FORWARD);}
-	                    }
-	                    break;
-	                case SOUTH:
-	                    if(currCol == destCol){
-	                        if(currRow < destRow){fastestPathMovements.add(MOVEMENT.BACKWARD); robot.turn(MOVEMENT.RIGHT); robot.turn(MOVEMENT.RIGHT); robot.move(MOVEMENT.FORWARD);}
-	                        else if(currRow > destRow){fastestPathMovements.add(MOVEMENT.FORWARD); robot.move(MOVEMENT.FORWARD);}
-	                    }
-	                    else if(currRow == destRow){
-	                        if(currCol < destCol){fastestPathMovements.add(MOVEMENT.LEFT); robot.turn(MOVEMENT.LEFT); robot.move(MOVEMENT.FORWARD);}
-	                        else if(currCol > destCol){fastestPathMovements.add(MOVEMENT.RIGHT); robot.turn(MOVEMENT.RIGHT); robot.move(MOVEMENT.FORWARD);}
-	                    }
-	                    break;
-	                case EAST:
-	                    if(currCol == destCol){
-	                        if(currRow < destRow){fastestPathMovements.add(MOVEMENT.LEFT); robot.turn(MOVEMENT.LEFT); robot.move(MOVEMENT.FORWARD);}
-	                        else if(currRow > destRow){fastestPathMovements.add(MOVEMENT.RIGHT); robot.turn(MOVEMENT.RIGHT); robot.move(MOVEMENT.FORWARD);}
-	                    }
-	                    else if(currRow == destRow){
-	                        if(currCol < destCol){fastestPathMovements.add(MOVEMENT.FORWARD); robot.move(MOVEMENT.FORWARD);}
-	                        else if(currCol > destCol){fastestPathMovements.add(MOVEMENT.BACKWARD); robot.turn(MOVEMENT.RIGHT); robot.turn(MOVEMENT.RIGHT); robot.move(MOVEMENT.FORWARD);}
-	                    }
-	                    break;
-	                case WEST:
-	                if(currCol == destCol){
-	                    if(currRow < destRow){fastestPathMovements.add(MOVEMENT.RIGHT); robot.turn(MOVEMENT.RIGHT); robot.move(MOVEMENT.FORWARD);}
-	                    else if(currRow > destRow){fastestPathMovements.add(MOVEMENT.LEFT); robot.turn(MOVEMENT.LEFT); robot.move(MOVEMENT.FORWARD);}
-	                }
-	                else if(currRow == destRow){
-	                    if(currCol < destCol){fastestPathMovements.add(MOVEMENT.BACKWARD); robot.turn(MOVEMENT.RIGHT); robot.turn(MOVEMENT.RIGHT); robot.move(MOVEMENT.FORWARD);}
-	                    else if(currCol > destCol){fastestPathMovements.add(MOVEMENT.FORWARD); robot.move(MOVEMENT.FORWARD);}
-	                }
-	                break;
-	            }
-	            
-	            currRow = robot.getPosRow();
-	            currCol = robot.getPosCol();
-	        }
-
-	        printMovementArray(fastestPathMovements);
-
-	    }
-
-	    public void printMovementArray(ArrayList<MOVEMENT> fastestPathMovements){
-
-	        System.out.println("Movements in Fastest Path:");
-	        int i = 0;
-	        int counter = 1;
-	        //while(i<fastestPathMovements.size()){System.out.println(fastestPathMovements.get(i)); i++;}
-	        
-	        while(true){
-	            System.out.print(fastestPathMovements.get(i));
-	            System.out.print(": ");
-	            for(int j = i+1; j< fastestPathMovements.size(); j++){
-	                if(fastestPathMovements.get(i) == fastestPathMovements.get(j)){
-	                    counter++;
-	                }
-	                else{
-	                    System.out.print(counter);
-	                    System.out.print(" | ");
-	                    counter = 1;
-	                    i=j;
-	                    break;
-	                }
-	            }
-	            if(i==fastestPathMovements.size() - 1){
-	                System.out.println();
-	                System.out.println();
-	                break;
-	            }
-	        }
-
-	    }
 	
-*/	    
-	//--------------------------------------------------ZW-----------------------------------------
-	    
-	    // This method returns the entire path from Start point to Waypoint to Goal point
+	    /** This method perform the A* search computation for the shortest path from start to goal through the specified WayPoint
+	     * @param exploredMap The map object that was explored by the robot.
+	     * @param destRow The row coordinate of the destination
+	     * @param destCol The column coordinate of the destination
+	     * @return An arraylist of cells that signifies the path to the destination from the robot's location. 
+	     * 		   A null value will be return when the shortest path could not be determined.
+	     */
 	    public ArrayList<Cell> findAllWPEndPaths(Map exploredMap){
 	    		
 	    	boolean foundWayPoint = false;
 	    	 ArrayList<Cell> cellsInPath = new ArrayList<>();
 	    	 ArrayList<Cell> tempHolder;
-	    	 //System.out.println("PO:" + current.getRowPos() + "_"+current.getColPos());
+	    	
 	        do{
 	            if(!foundWayPoint) {
 	            	  current = minCostCell(exploredMap.getWayPoint().getRowPos(), exploredMap.getWayPoint().getColPos()); 
@@ -362,43 +311,37 @@ public class FastestPath {
 	            	 current = minCostCell(exploredMap.getEndGoalPosition().getRowPos(), exploredMap.getEndGoalPosition().getColPos()); 
 	            }
 
-	            // move mockRobot to current cell by setting its row, column and direction
+	        
 	            if (parents.containsKey(current)) {
 	                mockRobot.setCurrDir(getCurrDir(current));
 	            }
 
 	            mockRobot.setPosRow(current.getRowPos());
 	            mockRobot.setPosCol(current.getColPos());
-	           // System.out.println("MOCKLOC: " + mockRobot.getPosRow() + ":" + mockRobot.getPosCol());
+	        
 	            visited.add(current);       // add current to visited
 	            toVisit.remove(current);    // remove current from toVisit        
 
 	            if (!foundWayPoint && visited.contains(exploredMap.getMapGrid()[exploredMap.getWayPoint().getRowPos()][exploredMap.getWayPoint().getColPos()])) {
 	            	 tempHolder = new ArrayList<>();
-	               // Cell targetCell = exploredMap.getWayPoint();
+	             
 	            	 Cell targetCell = exploredMap.getMapGrid()[exploredMap.getWayPoint().getRowPos()][exploredMap.getWayPoint().getColPos()];
-	               // System.out.println("Size:" + parents.size() + ":" + targetCell.getRowPos() +"-"+targetCell.getColPos());
-	               // parents.forEach((key,value) -> System.out.println(key.getRowPos()+","+key.getColPos() + " = " + value.getRowPos()+","+value.getColPos()));
 	                do{
 	                	tempHolder.add(targetCell);
 	                	targetCell = parents.get(targetCell);
-	                		  
-	                  //  if(targetCell!=null)
-	                  //  System.out.println("PARENTGET: " + targetCell.getRowPos()+","+ targetCell.getColPos());
-
+	                		  	               
 	                }while(targetCell != null);
 	                
 	                Collections.reverse(tempHolder);
-	                //printCellArray(tempHolder);
 	                cellsInPath.addAll(tempHolder);
 	                printCellArray(cellsInPath);
-	                //return cellsInPath;
+	              
 	                foundWayPoint = true;
 	                this.toVisit = new ArrayList<Cell>();
 	    	        this.visited = new ArrayList<Cell>();
 	    	        this.parents = new HashMap<>();
 	    	        this.toVisit.add(exploredMap.getMapGrid()[exploredMap.getWayPoint().getRowPos()][exploredMap.getWayPoint().getColPos()]);
-	               // System.out.println("END " + tempHolder.size() + "-" + cellsInPath.size());
+	             
 	            }
 	            else if(foundWayPoint && visited.contains(exploredMap.getMapGrid()[exploredMap.getEndGoalPosition().getRowPos()][exploredMap.getEndGoalPosition().getColPos()])) {
 	            	 tempHolder = new ArrayList<>();
@@ -414,7 +357,7 @@ public class FastestPath {
 		                Collections.reverse(tempHolder);
 		                cellsInPath.addAll(tempHolder);
 		                printCellArray(cellsInPath);
-		            //System.out.println("END2 " + tempHolder.size() + "-" + cellsInPath.size());
+		         
 	            	return cellsInPath;
 	            }
 
@@ -473,37 +416,36 @@ public class FastestPath {
 	    
 	    	
 	    }
-	
+	    
+	    /** This method perform the A* search computation for the shortest path from the robot's current location 
+	     * to one of the surrounding cells that are 2 grids away from the specified destination
+	     * @param exploredMap The map object that was explored by the robot.
+	     * @param destRow The row coordinate of the destination
+	     * @param destCol The column coordinate of the destination
+	     * @return An arraylist of cells that signifies the path to the destination from the robot's location. 
+	     * 		   A null value will be return when the shortest path could not be determined.
+	     */
 	    public ArrayList<Cell> calculateFastestPath2(Map exploredMap, int destRow, int destCol){
 
 	    	ArrayList<Cell> surroundCellList = can_reach(destRow, destCol);
-	    	//this.toVisit = new ArrayList<Cell>();
-	       // this.visited = new ArrayList<Cell>();
-	        //this.toVisit.add(new Cell(mockRobot.getPosRow(),mockRobot.getPosCol()));
-	    	//System.out.println()
-	        do{
-	            
+	    
+	        do{            
 	            current = minCostCell(destRow, destCol); 
 
-	            // move mockRobot to current cell by setting its row, column and direction
 	            if (parents.containsKey(current)) {
 	                mockRobot.setCurrDir(getCurrDir(current));
 	            }
-	            
-	        
+	            	     
 	            mockRobot.setPosRow(current.getRowPos());
 	            mockRobot.setPosCol(current.getColPos());
 
 	            visited.add(current);       // add current to visited
 	            toVisit.remove(current);    // remove current from toVisit        
-	            
-	          
-	            
+	            	         
 	            if (checkSurroundCells(surroundCellList,current)) {
-
-	            	
+           
 	                ArrayList<Cell> cellsInPath = new ArrayList<>();
-	                //Cell targetCell = exploredMap.getMapGrid()[goalRow][goalCol];
+	               
 	                Cell targetCell = current;
 	                do{
 	                    
@@ -572,21 +514,15 @@ public class FastestPath {
 	        return null;
 	    }
 	    
+	    /** This method return an arraylist of surrounding cells that are 2 grid away from the input cell. 
+	     * @param goalRow The row coordinate of input cell
+	     * @param goalCol The column coordinate of the input cell
+	     * @return Arraylist of all surrounding cells that are 2 grid away from the input cell
+	     */
 	    private ArrayList<Cell> can_reach(int goalRow, int goalCol) {
-	        //int x = end[0];
-	        // int y = end[1];
+	       
 	        ArrayList<Cell> surroundCellList = new ArrayList<Cell>();
-	        //int[][] pos;
-
-	        /*
-	        if (first) {
-	            pos = new int[][] {{x-1, y-2}, {x, y-2}, {x+1, y-2}, {x+2, y-1}, {x+2, y}, {x+2, y+1},
-	                                 {x+1, y+2}, {x, y+2}, {x-1, y+2}, {x-2, y+1}, {x-2, y}, {x-2, y-1}};
-	        } else {
-	            pos = new int[][] {{x-1, y-3}, {x, y-3}, {x+1, y-3}, {x+3, y-1}, {x+3, y}, {x+3, y+1},
-	                               {x+1, y+3}, {x, y+3}, {x-1, y+3}, {x-3, y+1}, {x-3, y}, {x-3, y-1}};
-	        }
-	        */
+	    
 	        //surroundCellList.add(new Cell(goalRow,goalCol)); 		//add end goal into list
 	        //surroundCellList.add(new Cell(goalRow-2,goalCol-1));    //
 	        surroundCellList.add(new Cell(goalRow-2,goalCol));
@@ -604,14 +540,14 @@ public class FastestPath {
 	        surroundCellList.add(new Cell(goalRow,goalCol-2));
 	        //surroundCellList.add(new Cell(goalRow+1,goalCol-2));    //
 	        
-	      //  for(int i=0;i<surroundCellList.size();i++) {
-	      //  	System.out.println(surroundCellList.get(i).getRowPos() + "_" + surroundCellList.get(i).getColPos() +"_"+"_"+surroundCellList.get(i).getExploredState());
-	       // }
-	        
 	        return surroundCellList;
 	    }
 	    
-	
+	 /** This method check if the input cell exist in the arraylist of cell.
+	 * @param clist The arraylist of cell
+	 * @param ac The cell that needed to be check if it exist in the list
+	 * @return True when the cell exist in arraylist , else return false.
+	 */
        private boolean checkSurroundCells(ArrayList<Cell> clist, Cell ac) {
     		
     	   for(int i=0;i<clist.size();i++) {
@@ -622,7 +558,5 @@ public class FastestPath {
 	    	return false;
 	    }
        
-       public void setMockRobot(Robot curBot) {
-    	   this.mockRobot = curBot;
-       }
+      
 }

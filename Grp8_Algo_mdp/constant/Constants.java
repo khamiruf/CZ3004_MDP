@@ -1,5 +1,12 @@
 package constant;
-
+/**
+ * @author Nicholas Yeo Ming Jie
+ * @author Neo Zhao Wei
+ * @author David Loh Shun Hao
+ *
+ * @version 1.0
+ * @since 2020-10-27
+ */
 public class Constants {
 
 	public static final int MAX_ROW = 20;

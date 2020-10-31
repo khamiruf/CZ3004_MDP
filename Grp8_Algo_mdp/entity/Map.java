@@ -5,7 +5,14 @@ import java.util.ArrayList;
 import constant.Constants;
 import constant.Constants.DIRECTION;
 import entity.Cell;
-
+/**
+ * @author Nicholas Yeo Ming Jie
+ * @author Neo Zhao Wei
+ * @author David Loh Shun Hao
+ *
+ * @version 1.0
+ * @since 2020-10-27
+ */
 public class Map {
 
 	private Cell[][] mapArena;
@@ -13,6 +20,8 @@ public class Map {
 	private Cell endGoal;
 	private Cell wayPoint;
 	
+	/** Default Constructor  - instantiate default 2D arena, start goal, end goal and WayPoint cell object. 
+	 */
 	public Map() {
 		this.mapArena = new Cell[Constants.MAX_ROW][Constants.MAX_COL];
 		
@@ -26,34 +35,51 @@ public class Map {
 		endGoal = this.mapArena[18][13];
 		wayPoint = this.mapArena[1][1];		
 	}
-	
+	/** Non-default constructor
+	 * @param sMap The 2D array of cell object which represent the arena
+	 */
 	public Map(Cell[][] sMap) {
 		this.mapArena = sMap;
 	}
 	
-	
+	/**
+	 * @return 2D array of cell object which represent the arena
+	 */
 	public Cell[][] getMapGrid(){
 		return this.mapArena;
 	}
-	
+	/**
+	 * @return StartGoal cell
+	 */
 	public Cell getStartGoalPosition() {
 		return this.startGoal;
 	}
-	
+	/**
+	 * @return EndGoal cell
+	 */
 	public Cell getEndGoalPosition() {
 		return this.endGoal;
 	}
 	
+	/**
+	 * @return WayPoint Cell
+	 */
 	public Cell getWayPoint() {
 		return this.wayPoint;
 	}
 	
+	/**
+	 * @param rowPos New value to set Waypoint's row coordinate
+	 * @param colPos New value to set the Waypoint's column coordinate
+	 */
 	public void setWayPoint(int rowPos, int colPos) {
 		this.wayPoint = new Cell(rowPos, colPos);
 	}
 	
-	//---ZW ADDED
-	
+	/** This method check if robot was at the specified start goal cell.
+	 * @param r The robot object 
+	 * @return true if robot is at start goal, else false.
+	 */
 	public boolean checkIfRobotAtStartPos(Robot r) {
 		
 		if(r.getPosRow() == startGoal.getRowPos() && r.getPosCol() == startGoal.getColPos()) {
@@ -61,44 +87,11 @@ public class Map {
 		}
 		return false;
 	}
-	//-------------
-	/*
-	public boolean checkIfRobotHere(Robot robot, int cellRow, int cellCol){
-        if(cellRow == robot.getPosRow() || cellRow == robot.getPosRow() + 1 || cellRow == robot.getPosRow() - 1){
-            if(cellCol == robot.getPosCol() || cellCol == robot.getPosCol() + 1 || cellCol == robot.getPosCol() - 1){
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean checkIfRobotFrontHere(Robot robot, int cellRow, int cellCol){
-        int robotFrontRow = -1;
-        int robotFrontCol = -1;
-
-        switch(robot.getCurrDir()){
-            case NORTH:
-                robotFrontRow = robot.getPosRow() + 1;
-                robotFrontCol = robot.getPosCol();
-                break;
-            case SOUTH:
-                robotFrontRow = robot.getPosRow() - 1;
-                robotFrontCol = robot.getPosCol();
-                break;
-            case EAST:
-                robotFrontRow = robot.getPosRow();
-                robotFrontCol = robot.getPosCol() + 1;
-                break;
-            case WEST:
-                robotFrontRow = robot.getPosRow();
-                robotFrontCol = robot.getPosCol() -1;
-                break;    
-        }
-        
-        return (robotFrontRow == cellRow && robotFrontCol == cellCol);
-    }
-    */
-    //Set what the robot can see(from its direction & sensor)from its current position against the real map
+	
+	/** This method updates the 2D array of cell(Arena) according to the input map and robot object
+	 * @param robot The robot object
+	 * @param realMap The Map object that will be verified against.
+	 */
     public void setExploredCells(Robot robot, Map realMap){
         ArrayList<Cell> explorableCells =new ArrayList<Cell>();
 
@@ -130,30 +123,33 @@ public class Map {
          
         }
 
-       
         for(int i=0; i< explorableCells.size(); i++){
-            //System.out.println("Row: " + explorableCells.get(i).getRow() + " Col: " + explorableCells.get(i).getCol());
+           
             Cell explorableCell = explorableCells.get(i);
        
             this.getMapGrid()[explorableCell.getRowPos()][explorableCell.getColPos()].setExploredState(true);
-            //if the cell is an obstacle in the realmap, set it as obstacle in the robot's map.
+            
             if(realMap.getMapGrid()[explorableCell.getRowPos()][explorableCell.getColPos()].isObstacle()) {
             	this.getMapGrid()[explorableCell.getRowPos()][explorableCell.getColPos()].setObstacle(true);
-            	 for(int r : Constants.WITHIN_3BY3){ //set cells around obstacle cell as virtual wall
+            	 for(int r : Constants.WITHIN_3BY3){ 
                      for(int c : Constants.WITHIN_3BY3){                     
                     	  Cell tempCell = new Cell(explorableCell.getRowPos() + r, explorableCell.getColPos() + c);
-                          if(tempCell.isCellValid()){ //check if virtual wall is within arena
+                          if(tempCell.isCellValid()){ 
                               this.getMapGrid()[tempCell.getRowPos()][tempCell.getColPos()].setVirtualWall(true);
-                             // System.out.println("virtual wall: "+tempCell.getRowPos() + "_"+tempCell.getColPos());
+                             
                           }  
                      }
                  }
             }
-          
-            
+             
         }
     }
-    
+    /** This method retrieve the cells that the robot could see from its current location and 
+     *  with reference to an actual map representation of arena. The robot is facing North direction.
+     * @param robot The robot object
+     * @param realMap The Map object that will be verified against.
+     * @return arraylist of cells that the robot have explored at it current location.
+     */
     public ArrayList<Cell> northExploredCells(Robot robot, Map realMap){
         ArrayList<Cell> explorableCells =new ArrayList<Cell>();
 
@@ -221,7 +217,12 @@ public class Map {
 
         return explorableCells;
     }
-
+    /** This method retrieve the cells that the robot could see from its current location and 
+     *  with reference to an actual map representation of arena. The robot is facing East direction.
+     * @param robot The robot object
+     * @param realMap The Map object that will be verified against.
+     * @return arraylist of cells that the robot have explored at it current location.
+     */
     public ArrayList<Cell> eastExploredCells(Robot robot, Map realMap){
         ArrayList<Cell> explorableCells =new ArrayList<Cell>();
 
@@ -290,7 +291,12 @@ public class Map {
 
         return explorableCells;
     }
-
+    /** This method retrieve the cells that the robot could see from its current location and 
+     *  with reference to an actual map representation of arena. The robot is facing South direction.
+     * @param robot The robot object
+     * @param realMap The Map object that will be verified against.
+     * @return arraylist of cells that the robot have explored at it current location.
+     */
     public ArrayList<Cell> southExploredCells(Robot robot, Map realMap){
         ArrayList<Cell> explorableCells =new ArrayList<Cell>();
 
@@ -356,7 +362,12 @@ public class Map {
 
         return explorableCells;
     }
-
+    /** This method retrieve the cells that the robot could see from its current location and 
+     *  with reference to an actual map representation of arena. The robot is facing West direction.
+     * @param robot The robot object
+     * @param realMap The Map object that will be verified against.
+     * @return arraylist of cells that the robot have explored at it current location.
+     */
     public ArrayList<Cell> westExploredCells(Robot robot, Map realMap){
         ArrayList<Cell> explorableCells =new ArrayList<Cell>();
 
@@ -425,7 +436,10 @@ public class Map {
 
         return explorableCells;
     }
- 
+    
+    /** This method generates the MDF1 based on the explore status of each cell in the 2D array of cells
+     * @return String value of the explored status of the arena, represented in hexadecimal
+     */
     public String getMDF1() {
     	String msg="11";
     	String mdfString ="";
@@ -444,6 +458,9 @@ public class Map {
     	return mdfString;
     }
     
+    /** This method generates the MDF2 based on the explored each cell in the 2D array of cells
+     * @return String value of the path and obstacles in the explored arena, represented in hexadecimal
+     */
     public String getMDF2() {
     	String msg="";
     	String mdfString ="";
@@ -456,7 +473,6 @@ public class Map {
 			}
 		}
 		int bytelength= msg.length() % 4;
-		//System.out.println("Byte:" + msg +":"+bytelength);
 		if(bytelength!=0) {
 			switch(bytelength) {
 			case 1: msg += "000"; break;
@@ -477,6 +493,11 @@ public class Map {
     
     
     //=========================== Real Run Exploration ==================================
+    /**
+     * This method updates the 2D array of cell(Arena) according to the sensor input and robot object
+     * @param robot The robot object
+     * @param sensorDataInString The sensor reading received from physical robot
+     */
     public void setExploredCells(Robot robot, String sensorDataInString){
         //sensorData refers to the data received from the sensor
         //sensorData[0] refers to right back sensor
@@ -493,10 +514,7 @@ public class Map {
             }
         }
     	
-    	//String result = "";
-    	
-    	
-    	
+      	
         ArrayList<Integer> sensorData = new ArrayList<>();
         for (int i = 0; i < sensorDataInString.length(); i++) {
             sensorData.add(Character.getNumericValue(sensorDataInString.charAt(i)));
@@ -528,29 +546,6 @@ public class Map {
             int tempRow = obstacleCells.get(i).getRowPos();
             int tempCol = obstacleCells.get(i).getColPos();
             String tempSensor = obstacleCells.get(i).getSensor();
-
-//            if(isCellValid(tempRow, tempCol) && !this.getMapGrid()[tempRow][tempCol].getExploredState()){
-//           // if(isCellValid(tempRow, tempCol)){
-//                this.getMapGrid()[tempRow][tempCol].setExploredState(true);
-//                this.getMapGrid()[tempRow][tempCol].setObstacle(true);
-//                setVirtualWall(this.getMapGrid()[tempRow][tempCol]);
-//                result += tempCol +"," + tempRow + "|";
-//     
-//            }
-            /* overriding R2 and F2
-            if(isCellValid(tempRow, tempCol)) {
-            	if(!this.getMapGrid()[tempRow][tempCol].getExploredState() || 
-            			(this.getMapGrid()[tempRow][tempCol].getSensor().equals("l") && !tempSensor.equals("l")) ||
-            			(!this.getMapGrid()[tempRow][tempCol].getSensor().equals("r1") && !this.getMapGrid()[tempRow][tempCol].getSensor().equals("f1") && tempSensor.equals("f1")) ||
-            			(!this.getMapGrid()[tempRow][tempCol].getSensor().equals("r1") && !this.getMapGrid()[tempRow][tempCol].getSensor().equals("f1") && tempSensor.equals("r1"))) {
-            		this.getMapGrid()[tempRow][tempCol].setExploredState(true);
-            		this.getMapGrid()[tempRow][tempCol].setObstacle(true);
-            		this.getMapGrid()[tempRow][tempCol].setSensor(tempSensor);
-            		setVirtualWall(this.getMapGrid()[tempRow][tempCol]);
-            		//result += tempCol +"," + tempRow + "|";
-            	}
-            }
-            */
             
             if(isCellValid(tempRow, tempCol)) {
             	if(!this.getMapGrid()[tempRow][tempCol].getExploredState() || 
@@ -558,8 +553,7 @@ public class Map {
             		this.getMapGrid()[tempRow][tempCol].setExploredState(true);
             		this.getMapGrid()[tempRow][tempCol].setObstacle(true);
             		this.getMapGrid()[tempRow][tempCol].setSensor(tempSensor);
-            		//setVirtualWall(this.getMapGrid()[tempRow][tempCol]);
-            		//result += tempCol +"," + tempRow + "|";
+            		
             	}
             }
             
@@ -583,24 +577,6 @@ public class Map {
             int tempCol = emptyCells.get(i).getColPos();
             String tempSensor = emptyCells.get(i).getSensor();
 
-//           if(isCellValid(tempRow, tempCol) && !this.getMapGrid()[tempRow][tempCol].getExploredState()){
-//           //if(isCellValid(tempRow, tempCol)){
-//                this.getMapGrid()[tempRow][tempCol].setExploredState(true);
-//                this.getMapGrid()[tempRow][tempCol].setObstacle(false);
-//            }
-            
-            /* Overriding R2 and F2
-            if(isCellValid(tempRow, tempCol)) {
-            	if(!this.getMapGrid()[tempRow][tempCol].getExploredState() || 
-            			(this.getMapGrid()[tempRow][tempCol].getSensor().equals("l") && !tempSensor.equals("l")) ||
-            			(!this.getMapGrid()[tempRow][tempCol].getSensor().equals("r1") && !this.getMapGrid()[tempRow][tempCol].getSensor().equals("f1") && tempSensor.equals("f1")) ||
-            			(!this.getMapGrid()[tempRow][tempCol].getSensor().equals("r1") && !this.getMapGrid()[tempRow][tempCol].getSensor().equals("f1") && tempSensor.equals("r1"))) {
-            		this.getMapGrid()[tempRow][tempCol].setExploredState(true);
-            		this.getMapGrid()[tempRow][tempCol].setObstacle(false);
-            		this.getMapGrid()[tempRow][tempCol].setSensor(tempSensor);
-            	}
-            }
-            */
             if(isCellValid(tempRow, tempCol)) {
             	if(!this.getMapGrid()[tempRow][tempCol].getExploredState() || 
             			(this.getMapGrid()[tempRow][tempCol].getSensor().equals("l") && !tempSensor.equals("l")) ) {
@@ -619,10 +595,14 @@ public class Map {
             }
         }
         
-        //System.out.println(result);
-        //return result;
+      
     }
-
+    /** This method retrieve the obstacle cells that the physical robot could see from its current location and 
+     *  with reference to the received sensor reading. The robot is facing North direction.
+     * @param robot The robot object which represent the physical robot
+  	 * @param sensorData The reading from each of the sensor of physical robot
+     * @return arraylist of obstacle cells that the robot cab see from its current location.
+     */
     public ArrayList<Cell> northObstacleCells(Robot robot, ArrayList<Integer> sensorData){
         
         ArrayList<Cell> obstacleCells = new ArrayList<Cell>();
@@ -706,7 +686,12 @@ public class Map {
         
         return obstacleCells;
     }
-
+    /** This method retrieve the empty cells that the physical robot could see from its current location and 
+     *  with reference to the received sensor reading. The robot is facing North direction.
+     * @param robot The robot object which represent the physical robot
+  	 * @param sensorData The reading from each of the sensor of physical robot
+     * @return arraylist of empty cells that the robot cab see from its current location.
+     */
     public ArrayList<Cell> northEmptyCells(Robot robot, ArrayList<Integer> sensorData){
         
         ArrayList<Cell> emptyCells = new ArrayList<Cell>();
@@ -795,7 +780,13 @@ public class Map {
 
         return emptyCells;
     }
-
+    
+    /** This method retrieve the obstacle cells that the physical robot could see from its current location and 
+     *  with reference to the received sensor reading. The robot is facing South direction.
+     * @param robot The robot object which represent the physical robot
+  	 * @param sensorData The reading from each of the sensor of physical robot
+     * @return arraylist of obstacle cells that the robot cab see from its current location.
+     */
     public ArrayList<Cell> southObstacleCells(Robot robot, ArrayList<Integer> sensorData){
         
         ArrayList<Cell> obstacleCells = new ArrayList<Cell>();
@@ -879,7 +870,12 @@ public class Map {
         
         return obstacleCells;
     }
-
+    /** This method retrieve the empty cells that the physical robot could see from its current location and 
+     *  with reference to the received sensor reading. The robot is facing South direction.
+     * @param robot The robot object which represent the physical robot
+  	 * @param sensorData The reading from each of the sensor of physical robot
+     * @return arraylist of empty cells that the robot cab see from its current location.
+     */
     public ArrayList<Cell> southEmptyCells(Robot robot, ArrayList<Integer> sensorData){
         
         ArrayList<Cell> emptyCells = new ArrayList<Cell>();
@@ -968,7 +964,13 @@ public class Map {
 
         return emptyCells;
     }
-
+    
+    /** This method retrieve the obstacle cells that the physical robot could see from its current location and 
+     *  with reference to the received sensor reading. The robot is facing East direction.
+     * @param robot The robot object which represent the physical robot
+  	 * @param sensorData The reading from each of the sensor of physical robot
+     * @return arraylist of obstacle cells that the robot cab see from its current location.
+     */
     public ArrayList<Cell> eastObstacleCells(Robot robot, ArrayList<Integer> sensorData){
         
         ArrayList<Cell> obstacleCells = new ArrayList<Cell>();
@@ -1052,7 +1054,12 @@ public class Map {
         
         return obstacleCells;
     }
-
+    /** This method retrieve the empty cells that the physical robot could see from its current location and 
+     *  with reference to the received sensor reading. The robot is facing East direction.
+     * @param robot The robot object which represent the physical robot
+  	 * @param sensorData The reading from each of the sensor of physical robot
+     * @return arraylist of empty cells that the robot cab see from its current location.
+     */
     public ArrayList<Cell> eastEmptyCells(Robot robot, ArrayList<Integer> sensorData){
         
         ArrayList<Cell> emptyCells = new ArrayList<Cell>();
@@ -1142,6 +1149,12 @@ public class Map {
         return emptyCells;
     }
 
+    /** This method retrieve the obstacle cells that the physical robot could see from its current location and 
+     *  with reference to the received sensor reading. The robot is facing West direction.
+     * @param robot The robot object which represent the physical robot
+  	 * @param sensorData The reading from each of the sensor of physical robot
+     * @return arraylist of obstacle cells that the robot cab see from its current location.
+     */
     public ArrayList<Cell> westObstacleCells(Robot robot, ArrayList<Integer> sensorData){
         
         ArrayList<Cell> obstacleCells = new ArrayList<Cell>();
@@ -1225,7 +1238,12 @@ public class Map {
         
         return obstacleCells;
     }
-    
+    /** This method retrieve the empty cells that the physical robot could see from its current location and 
+     *  with reference to the received sensor reading. The robot is facing West direction.
+     * @param robot The robot object which represent the physical robot
+  	 * @param sensorData The reading from each of the sensor of physical robot
+     * @return arraylist of empty cells that the robot cab see from its current location.
+     */
     public ArrayList<Cell> westEmptyCells(Robot robot, ArrayList<Integer> sensorData){
         
         ArrayList<Cell> emptyCells = new ArrayList<Cell>();
@@ -1314,7 +1332,10 @@ public class Map {
 
         return emptyCells;
     }
-
+    
+    /** 
+	* @return true if cell is within the width and length of arena
+ 	*/
     public boolean isCellValid(int row, int col){
         if(row >= Constants.MAX_ROW){
             return false;
@@ -1331,6 +1352,10 @@ public class Map {
         return true;
     }
 
+    /**
+     * This method set the surrounding cells of an input cell as virtual wall type.
+     * @param cell The cell object
+     */
     public void setVirtualWall(Cell cell){
         for(int r : Constants.WITHIN_3BY3){
             for(int c : Constants.WITHIN_3BY3){
@@ -1342,7 +1367,10 @@ public class Map {
         }
     }
     
-
+    /** This method generate the 3 cell coordinates that are directly on the right of the robot based on the robot's current facing direction  
+     * @param robot The robot object 
+     * @return String value of the 3 cell coordinates
+     */
     public String rpiImageString(Robot robot){
 
         switch(robot.getCurrDir()){
@@ -1361,7 +1389,10 @@ public class Map {
     	
     	//return "";
     }
-
+    /** This method generate the 3 cell coordinates that are directly on the right of the robot while it is facing North.  
+     * @param robot The robot object 
+     * @return String value of the 3 cell coordinates
+     */
     public String northImageString(Robot robot){
 
         String imageString;
@@ -1383,7 +1414,10 @@ public class Map {
         return imageString;
 
     }
-
+    /** This method generate the 3 cell coordinates that are directly on the right of the robot while it is facing South.  
+     * @param robot The robot object 
+     * @return String value of the 3 cell coordinates
+     */
     public String southImageString(Robot robot){
 
         String imageString;
@@ -1405,7 +1439,10 @@ public class Map {
         return imageString;
 
     }
-
+    /** This method generate the 3 cell coordinates that are directly on the right of the robot while it is facing East.  
+     * @param robot The robot object 
+     * @return String value of the 3 cell coordinates
+     */
     public String eastImageString(Robot robot){
 
         String imageString;
@@ -1427,7 +1464,10 @@ public class Map {
         return imageString;
 
     }
-
+    /** This method generate the 3 cell coordinates that are directly on the right of the robot while it is facing West.  
+     * @param robot The robot object 
+     * @return String value of the 3 cell coordinates
+     */
     public String westImageString(Robot robot){
 
         String imageString;

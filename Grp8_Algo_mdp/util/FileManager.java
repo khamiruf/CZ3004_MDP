@@ -11,7 +11,12 @@ import constant.Constants;
 import entity.Cell;
 
 public class FileManager {
-
+	
+/** This method create a 2D array of cell object which represent the arena from specified file location.
+ * @param mapFile File object which contains information of the arena
+ * @return 2D array of cell which represent the arena.
+ * @throws IOException
+ */
 	 public static Cell[][] readMapFromFile(File mapFile) throws IOException {
 	        Cell[][] tempGrid = new Cell[Constants.MAX_ROW][Constants.MAX_COL];
 
@@ -42,6 +47,10 @@ public class FileManager {
 	        return tempGrid;
 	    }
  
+/** This method retrieve the names of all files that exist in the maps folder 
+ *  in this project file
+ *  @return Array of string that contains file names.
+ */
 	 public static String[] getAllFileNames() {
 		 File folder = new File("maps\\");
 		 File[] listOfFiles = folder.listFiles();
